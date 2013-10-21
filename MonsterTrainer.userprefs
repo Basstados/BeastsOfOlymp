@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\LevelGenerationEditor.cs">
+    <Files>
+      <File FileName="Assets\LevelEditor\Scripts\LevelGeneration.cs" Line="58" Column="5" />
+      <File FileName="Assets\Editor\LevelGenerationEditor.cs" Line="35" Column="3" />
+      <File FileName="Assets\LevelEditor\Scripts\LevelBlockTranslation.cs" Line="11" Column="12" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
