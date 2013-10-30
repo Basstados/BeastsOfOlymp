@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\LevelGenerationEditor.cs" />
+     <None Include="Assets\Prototype\Movement\Shader\Unlit Color Only.shader" />
+     <None Include="Assets\Prototype\Movement\Shader\Unlit Colored Texture.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>

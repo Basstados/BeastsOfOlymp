@@ -8,7 +8,20 @@ public class LevelGeneration : MonoBehaviour {
 	public int columns = 2;
 	public int rows = 2;
 	
-	//public float progress = 1.0f;
+	int[,] penaltyMatrix;
+	GameObject[,] quadMatrix;
+	
+	void Start() {
+		penaltyMatrix = new int[columns,rows];
+		quadMatrix = new GameObject[columns,rows];
+		
+		for(int i=0; i<columns; i++ ) {
+			for(int j=0; j<rows; j++ ) {
+				quadMatrix[i,j] = GameObject.Find(blockPrefab.name + "[" + i + "," + j + "]");
+				penaltyMatrix[i,j] = quadMatrix[i,j].GetComponent<BattlefieldQuad>().movementPenalty;
+			}
+		}
+	}
 	
 	/**
 	 * Instatiate blocks and position them in a grid with given number of columns and rows.
@@ -19,6 +32,10 @@ public class LevelGeneration : MonoBehaviour {
 	}
 	
 	public void DoGeneration() {
+		// instanciate penalty matrix
+		penaltyMatrix = new int[columns,rows];
+		quadMatrix = new GameObject[columns, rows];
+		
 		// Create columns of the grid
 		for(int i=0; i<columns; i++ ) {
 			// Create rows of the grid
@@ -32,10 +49,20 @@ public class LevelGeneration : MonoBehaviour {
 				// Move child to it's position on the grid
 				handle.transform.localPosition = new Vector3( i, 0, j );
 				
-				//progress = (i * j) / (float)((columns-1) * (rows-1));
+				quadMatrix[i,j] = handle;
 				
+				// Set default value of penalty matrix
+				penaltyMatrix[i,j] = 1;
 			}
 		}	
+	}
+	
+	public void UpdatePenalty(int i, int j, int penalty) {
+		if( penaltyMatrix == null ) {
+			// instanciate penalty matrix
+			penaltyMatrix = new int[columns,rows];
+		}
+		penaltyMatrix[i,j] = penalty;	
 	}
 	
 	/**
@@ -56,4 +83,16 @@ public class LevelGeneration : MonoBehaviour {
 			return this.progress;
 		}
 	}*/
+
+	public int[,] PenaltyMatrix {
+		get {
+			return this.penaltyMatrix;
+		}
+	}
+
+	public GameObject[,] QuadMatrix {
+		get {
+			return this.quadMatrix;
+		}
+	}
 }

@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\LevelGenerationEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\Movement\Scripts\GridMovement.cs">
     <Files>
-      <File FileName="Assets\LevelEditor\Scripts\LevelGeneration.cs" Line="58" Column="5" />
-      <File FileName="Assets\Editor\LevelGenerationEditor.cs" Line="35" Column="3" />
-      <File FileName="Assets\LevelEditor\Scripts\LevelBlockTranslation.cs" Line="11" Column="12" />
+      <File FileName="Assets\LevelEditor\Scripts\LevelGeneration.cs" Line="83" Column="31" />
+      <File FileName="Assets\Editor\LevelGenerationEditor.cs" Line="1" Column="1" />
+      <File FileName="Assets\LevelEditor\Scripts\BattlefieldQuad.cs" Line="20" Column="15" />
+      <File FileName="Assets\Prototype\Movement\Scripts\GridMovement.cs" Line="31" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
