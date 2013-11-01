@@ -1,0 +1,1 @@
+Hier sollen alle Graphiken rein, die für Wiki oder Webseite gedacht sind.

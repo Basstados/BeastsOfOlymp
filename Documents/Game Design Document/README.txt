@@ -1,0 +1,1 @@
+Ordner für das GDD und alle sub-dokumente im Gamedesign.
