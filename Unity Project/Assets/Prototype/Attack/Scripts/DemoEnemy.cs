@@ -15,17 +15,17 @@ public class DemoEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if( Input.GetButtonDown("Fire1") && Alive ) {
-			
-			Ray mouseRay = Camera.main.ScreenPointToRay( Input.mousePosition );
-			RaycastHit hit = new RaycastHit();
-			Physics.Raycast(mouseRay, out hit);
-			
-			if( hit.collider.GetInstanceID() == collider.GetInstanceID() ) {
-				Debug.Log("Arrg! You hit me!");
-				TakeDamage(1);
-			}
-		}
+//		if( Input.GetButtonDown("Fire1") && Alive ) {
+//			
+//			Ray mouseRay = Camera.main.ScreenPointToRay( Input.mousePosition );
+//			RaycastHit hit = new RaycastHit();
+//			Physics.Raycast(mouseRay, out hit);
+//			
+//			if( hit.collider.GetInstanceID() == collider.GetInstanceID() ) {
+//				Debug.Log("Arrg! You hit me!");
+//				TakeDamage(1);
+//			}
+//		}
 	}
 	
 	public void TakeDamage(int dmg) {

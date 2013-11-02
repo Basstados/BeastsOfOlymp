@@ -47,7 +47,10 @@
      <Compile Include="Assets\LevelEditor\Scripts\BattlefieldQuad.cs" />
      <Compile Include="Assets\LevelEditor\Scripts\LevelBlockTranslation.cs" />
      <Compile Include="Assets\LevelEditor\Scripts\LevelGeneration.cs" />
+     <Compile Include="Assets\Prototype\Attack\Scripts\Attack.cs" />
+     <Compile Include="Assets\Prototype\Attack\Scripts\DemoAttacker.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoEnemy.cs" />
+     <Compile Include="Assets\Prototype\Attack\Scripts\Range.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMovement.cs" />
      <None Include="Assets\Prototype\Movement\Shader\Unlit Color Only.shader" />
