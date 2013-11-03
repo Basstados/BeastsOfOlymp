@@ -54,6 +54,7 @@
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMovement.cs" />
      <None Include="Assets\Prototype\Movement\Shader\Unlit Color Only.shader" />
+     <None Include="Assets\Resources\attacks.xml" />
      <None Include="Assets\Prototype\Movement\Shader\Unlit Colored Texture.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

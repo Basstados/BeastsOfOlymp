@@ -54,7 +54,7 @@ public class Range {
 			int currValue = distanceMatrix[neighbour[k][0], neighbour[k][1]];
 			int penalty = quadMatrix[neighbour[k][0], neighbour[k][1]].GetComponent<BattlefieldQuad>().movementPenalty;
 			
-			if( currValue > distance && intValue > distance + penalty ) {
+			if( currValue > distance && intValue >= distance + penalty ) {
 				// we are still in range and doesn't have a shorter way to this quad
 				// so continue recursion if quad is passable (penalty > 0)
 				if( penalty > 0 ) {
