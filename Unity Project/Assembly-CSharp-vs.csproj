@@ -169,8 +169,10 @@
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoAttacker.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoEnemy.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\Range.cs" />
+     <Compile Include="Assets\Prototype\Combine\Scripts\CombatMenu.cs" />
      <Compile Include="Assets\Prototype\Combine\Scripts\InputTranslater.cs" />
      <Compile Include="Assets\Prototype\Combine\Scripts\Map.cs" />
+     <Compile Include="Assets\Prototype\Combine\Scripts\Monster.cs" />
      <Compile Include="Assets\Prototype\Combine\Scripts\Quad.cs" />
      <Compile Include="Assets\Prototype\DevelopScripts\FPS.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
