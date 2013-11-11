@@ -95,18 +95,14 @@ public class Map : MonoBehaviour {
 		Quad currentQuad = quadMatrix[(int)pos.x,(int)pos.y];
 		// do something with the taped quad
 
-		foreach( KeyValuePair<Vector2, Monster> pair in monsterList ) {
-			Debug.Log( pair );	
-		}
-		
 		if( monsterList.ContainsKey( currentQuad.position ) ) {
 			// translate map position into screen position
 			Vector3 worldPos = MapToWorldPosition( pos );
-			Debug.Log( worldPos );
 			Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
 			screenPos.z = 0f;
-			Debug.Log( screenPos );
 			combatMenu.SendMessage("MoveTo", screenPos );
+		} else {
+			combatMenu.SendMessage("Hide");
 		}
 	}
 	

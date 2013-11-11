@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\Combine\Scripts\CombatMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\Combine\Scripts\InputTranslater.cs">
     <Files>
-      <File FileName="Assets\Prototype\Combine\Scripts\Map.cs" Line="131" Column="29" />
+      <File FileName="Assets\Prototype\Combine\Scripts\Map.cs" Line="102" Column="21" />
       <File FileName="Assets\LevelEditor\Scripts\BattlefieldQuad.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\Movement\Scripts\GridMovement.cs" Line="27" Column="3" />
-      <File FileName="Assets\Prototype\Combine\Scripts\Quad.cs" Line="12" Column="3" />
-      <File FileName="Assets\Prototype\Combine\Scripts\Monster.cs" Line="13" Column="2" />
-      <File FileName="Assets\Prototype\Combine\Scripts\CombatMenu.cs" Line="16" Column="43" />
+      <File FileName="Assets\Prototype\Movement\Scripts\GridMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Combine\Scripts\Quad.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Combine\Scripts\Monster.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Combine\Scripts\CombatMenu.cs" Line="20" Column="24" />
+      <File FileName="Assets\Prototype\Combine\Scripts\InputTranslater.cs" Line="24" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
