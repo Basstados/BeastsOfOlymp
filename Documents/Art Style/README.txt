@@ -1,1 +1,0 @@
-Hier sollen die Art Bible und diverse Style Guides hin.
