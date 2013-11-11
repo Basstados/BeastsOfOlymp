@@ -94,15 +94,20 @@ public class Map : MonoBehaviour {
 	public void TapOnQuad( Vector2 pos ) {
 		Quad currentQuad = quadMatrix[(int)pos.x,(int)pos.y];
 		// do something with the taped quad
-		Debug.Log( currentQuad );
+
+		foreach( KeyValuePair<Vector2, Monster> pair in monsterList ) {
+			Debug.Log( pair );	
+		}
 		
-		// translate map position into screen position
-		Vector3 worldPos = MapToWorldPosition( pos );
-		Debug.Log( worldPos );
-		Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
-		screenPos.z = 0f;
-		Debug.Log( screenPos );
-		combatMenu.SendMessage("MoveTo", screenPos );
+		if( monsterList.ContainsKey( currentQuad.position ) ) {
+			// translate map position into screen position
+			Vector3 worldPos = MapToWorldPosition( pos );
+			Debug.Log( worldPos );
+			Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
+			screenPos.z = 0f;
+			Debug.Log( screenPos );
+			combatMenu.SendMessage("MoveTo", screenPos );
+		}
 	}
 	
 	/**
@@ -110,7 +115,7 @@ public class Map : MonoBehaviour {
 	 * by taking X- and Z-coordiante and floor them.
 	 */
 	public Vector2 WorldToMapPosition( Vector3 worldPos ) {
-		Vector3 temp = transform.TransformPoint( transform.position );
+		Vector3 temp = transform.TransformPoint( worldPos );
 		Vector2 mapPos = Vector2.zero;
 		mapPos.x = Mathf.Floor( temp.x );
 		mapPos.y = Mathf.Floor( temp.z );
