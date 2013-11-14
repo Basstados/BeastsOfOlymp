@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <attacks>
-	<attack id="1" damage="2" range="1">Tackle</attack>
+	<attack id="1" damage="2" range="2">Tackle</attack>
 </attacks>

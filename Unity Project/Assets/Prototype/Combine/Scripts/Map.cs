@@ -21,7 +21,6 @@ public class Map : MonoBehaviour {
 	int[,] distanceMatrix;
 	int range;
 	Monster activeMonster;
-	int[] pathDestionation = new int[]{-1,-1};
 	Vector3[] wps;
 	TapMode currentTapMode = TapMode.PICK_MONSTER;
 	
@@ -117,43 +116,23 @@ public class Map : MonoBehaviour {
 		switch( currentTapMode ) {
 			case TapMode.PICK_MONSTER:
 				if( monsterList.ContainsKey( currentQuad.position ) ) {
-				// translate map position into screen position
-				Vector3 worldPos = MapToWorldPosition( pos );
-				Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
-				screenPos.z = 0f;
-				combatMenu.OpenForMonster(screenPos, monsterList[currentQuad.position] );
-				} else {
-					combatMenu.SendMessage("Hide");
+					if( monsterList[currentQuad.position].controlable ) {
+						// translate map position into screen position
+						Vector3 worldPos = MapToWorldPosition( pos );
+						Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
+						screenPos.z = 0f;
+						combatMenu.OpenForMonster(screenPos, monsterList[currentQuad.position] );
+					} else {
+						combatMenu.SendMessage("Hide");
+					}
 				}
 				break;
 			case TapMode.PICK_TARGET:
 				if( distanceMatrix[(int) pos.x, (int) pos.y] < range ) {
 					// quad inside action range was clicked
-				
-					if( pathDestionation[0] == (int) pos.x && pathDestionation[1] == (int) pos.y ) {
-						// we clicked target quad a 2nd time
-						// now move there
-						ResetMapDisplay();
-						activeMonster.GetComponent<GridMoveAnimation>().StartMoveAnimation( wps );
-						// update saved monster list
-						monsterList.Remove( activeMonster.CurrentPos );
-						activeMonster.CurrentPos = new Vector2( pathDestionation[0], pathDestionation[1] );
-						monsterList.Add( activeMonster.CurrentPos, activeMonster );
-						currentTapMode = TapMode.PICK_MONSTER;
-					} else {
-						// new quad in range clicked
-						// find path
-						ResetMapDisplay();
-						DisplayDistanceMatrix( distanceMatrix, range );
-						List<int[]> path = CalculatePath( new int[]{ (int) pos.x, (int) pos.y } );
-						pathDestionation = path[ path.Count-1 ];	
-						wps = GetWaypoints( path );
+					Debug.Log("Action target selected");
+					activeMonster.PerformAction( pos );
 					
-						
-					
-						Debug.Log( wps[0] );
-						Debug.Log( path[0][0] + "," + path[0][1] );
-					}
 				} else {
 					// quad outside of action range was clicked
 				
@@ -163,7 +142,6 @@ public class Map : MonoBehaviour {
 					Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
 					screenPos.z = 0f;
 					combatMenu.OpenForMonster(screenPos, activeMonster );
-					currentTapMode = TapMode.PICK_MONSTER;
 				}
 			break;
 		}
@@ -199,7 +177,7 @@ public class Map : MonoBehaviour {
 		}
 	}
 	
-	private void ResetMapDisplay() {
+	public void ResetMapDisplay() {
 		for(int i=0; i<quadMatrix.GetLength(0); i++) {
 			for(int j=0; j<quadMatrix.GetLength(1); j++) {
 				quadMatrix[i,j].ResetMaterial();
@@ -265,7 +243,7 @@ public class Map : MonoBehaviour {
 		return neighbour;
 	}
 	
-	private List<int[]> CalculatePath(int[] currentQuad) {
+	public List<int[]> CalculatePath(int[] currentQuad) {
 		List<int[]> neighbour;
 		int distanceMin;
 		int[] minNeighbour = currentQuad;
@@ -300,7 +278,7 @@ public class Map : MonoBehaviour {
 		return path;
 	}
 	
-	private Vector3[] GetWaypoints(List<int[]> path) {
+	public Vector3[] GetWaypoints(List<int[]> path) {
 		Vector3[] wps = new Vector3[path.Count+1];
 		
 		float x = 0;
@@ -316,6 +294,14 @@ public class Map : MonoBehaviour {
 		}
 		wps[0] = MapToWorldPosition( activeMonster.CurrentPos );
 		return wps;
+	}
+	
+	public void MoveMonster( Monster mon, Vector2 oldPos, Vector2 newPos) {
+		if( mon == monsterList[oldPos] ) {
+			monsterList.Remove( oldPos );
+			monsterList.Add( newPos, mon );
+			currentTapMode = TapMode.PICK_MONSTER;
+		}
 	}
 	
 	/**
@@ -345,5 +331,17 @@ public class Map : MonoBehaviour {
 		get {
 			return this.quadMatrix;
 		}
+	}
+	
+	public Monster GetMonsterAt( Vector2 pos ) {
+		if( monsterList.ContainsKey( pos ) ) {
+			return monsterList[pos];
+		} else {
+			return null;
+		}
+	}
+	
+	public void ActionFinished() {
+		currentTapMode = TapMode.PICK_MONSTER;	
 	}
 }

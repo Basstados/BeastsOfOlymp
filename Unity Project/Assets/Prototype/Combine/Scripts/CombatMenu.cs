@@ -4,13 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(UIPanel))]
 public class CombatMenu : MonoBehaviour {
 	
-	UIPanel panel;
+	public GameObject panel;
 	
 	private Monster target;
 
 	// Use this for initialization
 	void Start () {
-		panel = GetComponent<UIPanel>();
+		//panel = transform.GetChild(0).gameObject;
 	}
 	
 	// Update is called once per frame
@@ -19,7 +19,7 @@ public class CombatMenu : MonoBehaviour {
 	}
 	
 	public void OpenForMonster( Vector3 screenPos, Monster targetMonster ) {
-		panel.enabled = true;
+		panel.SetActive( true );
 		target = targetMonster;
 		screenPos.x -= Screen.width/2;
 		screenPos.y -= Screen.height/2;
@@ -27,15 +27,16 @@ public class CombatMenu : MonoBehaviour {
 	}
 	
 	public void ActionAttack() {
-		Debug.Log("Button Clicked");
+		target.SendMessage("InitAttack");
+		panel.SetActive( false );
 	}
 	
 	public void ActionMove() {
 		target.SendMessage("InitMove");
-		panel.enabled = false;
+		panel.SetActive( false );
 	}
 	
 	public void Hide() {
-		panel.enabled = false;
+		panel.SetActive( false );
 	}
 }

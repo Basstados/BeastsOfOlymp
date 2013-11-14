@@ -7,17 +7,17 @@ using System.Xml.Linq;
 public class Attack {
 	
 	int damage;
-	Range range;
+	int range;
 	
 	GameObject source;
 	
-	public Attack( int dmg, Range rng, GameObject src ) {
+	public Attack( int dmg, int rng, GameObject src ) {
 		damage = dmg;
 		range = rng;
 		source = src;
 	}
 	
-	public Attack( string attackName, BattlefieldQuad[,] battleMatrix, GameObject src ) {
+	public Attack( string attackName, GameObject src ) {
 		// get Attack information from xml file
 		TextAsset textAsset = (TextAsset)Resources.Load("attacks", typeof(TextAsset));
 		XmlDocument xmldoc = new XmlDocument ();
@@ -30,8 +30,8 @@ public class Attack {
 			Debug.Log("AttackeName: " + node.InnerText);
 			if( node.InnerText == attackName ) {
 				damage = XmlConvert.ToInt32(node.Attributes.GetNamedItem("damage").Value );	
-				range = new Range(battleMatrix ,XmlConvert.ToInt32(node.Attributes.GetNamedItem("range").Value ));
-				Debug.Log("Damage: " + damage + " Range: " + range.intValue);
+				range = XmlConvert.ToInt32(node.Attributes.GetNamedItem("range").Value );
+				Debug.Log("Damage: " + damage + " Range: " + range);
 			}
 		}
 		
@@ -40,22 +40,16 @@ public class Attack {
 	
 	public bool IsInRange( int[] target ) {
 		int[] pos = new int[]{(int) source.transform.position.x, (int)source.transform.position.z};
-		range.UpdateCalculations( pos );
-		return range.IsInRange( target );
+		//range.UpdateCalculations( pos );
+		//return range.IsInRange( target );
+		return true;
 	}
 	
-	public void Execute( GameObject target ) {
-		// check if is in range
-		int[] targetPos = new int[]{(int) target.transform.position.x, (int) target.transform.position.z};
-		if( range.IsInRange( targetPos ) ) {
-			// target is in range! yeah! lets burn it!
-			target.SendMessage("TakeDamage", damage);
-		} else {
-			Debug.Log("Out of range!");	
-		}
+	public void Execute( Monster target ) {
+		target.SendMessage("TakeDamage", damage);
 	}
 
-	public Range Range {
+	public int Range {
 		get {
 			return this.range;
 		}
