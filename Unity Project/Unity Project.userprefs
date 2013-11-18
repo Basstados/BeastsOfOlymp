@@ -1,6 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\PerformanceTest\CommonScripts\QuadGenerator.cs">
+    <Files>
+      <File FileName="Assets\Prototype\DevelopScripts\FPS.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\PerformanceTest\Menu\PerformanceTestMenu.cs" Line="14" Column="1" />
+      <File FileName="Assets\Prototype\PerformanceTest\CommonScripts\QuadGenerator.cs" Line="42" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
