@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour {
 	
 	private Action currentAction = Action.IDLE;
 	
-	enum Action {
+	public enum Action {
 		IDLE,
 		MOVE,
 		ATTACK
@@ -130,6 +130,21 @@ public class Monster : MonoBehaviour {
 		}
 		set {
 			currentPos = value;
+		}
+	}
+
+	public Action CurrentAction {
+		get {
+			return currentAction;
+		}
+		set {
+			currentAction = value;
+		}
+	}
+
+	public Attack Attack {
+		get {
+			return attack;
 		}
 	}
 }

@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\CombineWithAI\Map.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs">
     <Files>
-      <File FileName="Assets\Prototype\CombineWithAI\Map.cs" Line="340" Column="16" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs" Line="23" Column="30" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Monster.cs" Line="138" Column="25" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Map.cs" Line="300" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
