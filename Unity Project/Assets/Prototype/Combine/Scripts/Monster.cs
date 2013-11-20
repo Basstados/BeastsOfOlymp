@@ -9,6 +9,8 @@ public class Monster : MonoBehaviour {
 	public int max_hp = 10;
 	
 	public int hp;
+
+	public GameObject renderObject;
 	
 	Color flashColor = Color.red;
 	Color defaultColor;
@@ -36,7 +38,7 @@ public class Monster : MonoBehaviour {
 		map = GameObject.Find("Map").GetComponent<Map>();
 		attack = new Attack("Tackle", this.gameObject );
 		hp = max_hp;
-		defaultColor = renderer.material.color;
+		defaultColor = renderObject.renderer.material.color;
 	}
 	
 	// Update is called once per frame
