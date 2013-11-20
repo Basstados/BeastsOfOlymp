@@ -340,6 +340,16 @@ public class Map : MonoBehaviour {
 			return null;
 		}
 	}
+
+	public List<int[]> GetShortestPath( int[] start, int[] destination ) {
+		// set range to MaxValue to get distance matrix for full map (dirty, slow but easy for now)
+		range = int.MaxValue;
+		distanceMatrix = CalculateDistanceMatrix( new Vector2(start[0], start[1]), range );
+		List<int[]> path = CalculatePath( destination );
+		int cost = distanceMatrix[destination[0], destination[1]];
+
+		return path;
+	}
 	
 	public void ActionFinished() {
 		currentTapMode = TapMode.PICK_MONSTER;	
