@@ -11,6 +11,7 @@ public class Map : MonoBehaviour {
 	
 	public Material reachableMat;
 	public Material pathMat;
+	public GameObject enemy;
 	
 	
 	// data about everything that exists on the map
@@ -304,6 +305,19 @@ public class Map : MonoBehaviour {
 			monsterList.Add( newPos, mon );
 			currentTapMode = TapMode.PICK_MONSTER;
 		}
+	}
+
+	public void RemoveMonster( Vector2 pos ) {
+		// respawn on a random position
+		Vector2 newPos = new Vector2( (int) Random.Range(0, quadMatrix.GetLength(0)-1), (int) Random.Range(0,quadMatrix.GetLength(1)-1));
+		while( monsterList.ContainsKey( newPos ) ) {
+			newPos = new Vector2( (int) Random.Range(0, quadMatrix.GetLength(0)-1), (int) Random.Range(0,quadMatrix.GetLength(1)-1));
+		}
+		Monster mon = monsterList[pos];
+		mon.hp = 10;
+		mon.CurrentPos = newPos;
+		mon.transform.position = new Vector3( newPos.x, 0, newPos.y );
+		MoveMonster( mon, pos, newPos );
 	}
 	
 	/**

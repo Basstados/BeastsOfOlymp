@@ -51,9 +51,9 @@ public class GridMoveAnimation : MonoBehaviour {
 		transform.LookAt(wps[nextWp]);
 		run = true;
 		
-		foreach(Vector3 wp in wps) {
+		/*foreach(Vector3 wp in wps) {
 			Instantiate(waypointGO,wp, Quaternion.identity);	
-		}
+		}*/
 		animation.Play();
 	}
 }

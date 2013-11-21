@@ -51,16 +51,17 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 			run = false;
 			StopCoroutine("TurnLoop");
 		}
+		// choose closed monster
+		int minDist = int.MaxValue;
+		int dst = 0;
+		foreach( Monster enemy in enemies ) {
+			dst = (int)( Mathf.Abs(enemy.CurrentPos.x - puppet.CurrentPos.x) + Mathf.Abs(enemy.CurrentPos.y - puppet.CurrentPos.y));
+			if( dst < minDist ) {
+				minDist = dst;
+				target = enemy;
+			}
+		}
 
-		// if no target selected; pick random one
-		if( !target ) {
-			target = enemies[ Random.Range(0, enemies.Count) ];
-		}
-		// if target is dead; choose new random one
-		else if( target.hp <= 0 ) {
-			enemies.Remove( target );
-			target = enemies[0];
-		}
 		// else continue on current target
 		Debug.Log("Target is: " + target + target.CurrentPos);
 	}

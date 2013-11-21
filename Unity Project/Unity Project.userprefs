@@ -1,14 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\CombineWithAI\Scripts\Map.cs">
     <Files>
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs" Line="60" Column="8" />
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Monster.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Map.cs" Line="304" Column="1" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs" Line="58" Column="123" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Monster.cs" Line="117" Column="19" />
+      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Map.cs" Line="314" Column="13" />
       <File FileName="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" Line="1" Column="1" />
       <File FileName="Assets\Prototype\CombineWithAI\Scripts\InputTranslater.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PathFinder.cs" Line="174" Column="39" />
-      <File FileName="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" Line="48" Column="11" />
+      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PathFinder.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Resources\attacks.xml" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Attack\Scripts\Attack.cs" Line="11" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

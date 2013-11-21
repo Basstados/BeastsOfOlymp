@@ -120,7 +120,8 @@ public class Monster : MonoBehaviour {
 		if( hp <= 0 ) {
 			// enemy died
 			// do something...
-			renderer.enabled = false;
+			Debug.Log("I'm Dead!");
+			map.RemoveMonster( currentPos );
 		}
 	}
 
