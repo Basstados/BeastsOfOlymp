@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Algorithms;
 
 public class PrototypeArtificialIntelligence : MonoBehaviour {
 
@@ -56,7 +57,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 			target = enemies[ Random.Range(0, enemies.Count) ];
 		}
 		// if target is dead; choose new random one
-		if( target.hp <= 0 ) {
+		else if( target.hp <= 0 ) {
 			enemies.Remove( target );
 			target = enemies[0];
 		}
@@ -67,40 +68,56 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 	public void ChooseMoveDestination() {
 		int range = puppet.movement_range;
 
-		int[] myPos = new int[2]{(int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y};
-		int[] targetPos = new int[2]{(int) target.CurrentPos.x, (int) target.CurrentPos.y};
-		List<int[]> path = map.GetShortestPath( myPos, targetPos );
+		byte[,] grid = new byte[map.QuadMatrix.GetLength(0),map.QuadMatrix.GetLength(1)];
+		for( int i=0; i< map.QuadMatrix.GetLength(0); i++ ) {
+			for( int j=0; j<map.QuadMatrix.GetLength(1); j++ ) {
+				grid[i,j] = (map.QuadMatrix[i,j].penalty > 0) ? (byte) 1 : (byte) 0;
+			}
+		}
+
+		PathFinder pf = new PathFinder( grid );
+		pf.Diagonals = false;
+		TestPoint myPos = new TestPoint((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
+		TestPoint targetPos = new TestPoint((int) target.CurrentPos.x, (int) target.CurrentPos.y);
+		Debug.Log( pf );
+		Debug.Log( myPos.ToString() );
+		List<PathFinderNode> path = pf.FindPath( myPos, targetPos );
+		Debug.Log( path );
 
 		if( path.Count <= 1 ) {
 			// we are close enough; dont move
-			map.ResetMapDisplay();
 			puppet.CurrentAction = Monster.Action.IDLE;
 			map.ActionFinished();
 			return;
 		}
 
+		List<int[]> intPath = new List<int[]>();
 		string str = "";
-		foreach( int[] p in path ) {
-			str += "[" + p[0] + "," + p[1] + "]";
+		foreach( PathFinderNode p in path ) {
+			str += "[" + p.X + "," + p.Y + "]";
+			intPath.Add( new int[2]{ p.X, p.Y } );
 		}
 		Debug.Log(str);
 
 		int[] destination = new int[2];
-		if(range < path.Count) {
-			destination = path[range-2];
-			path = path.GetRange(0, range-1);
+		if(range < intPath.Count) {
+			destination = intPath[range-1];
+			intPath = intPath.GetRange(0, range);
 		} else {
-			destination = path[path.Count-2];
-			path = path.GetRange(0, path.Count-1);
+			destination = intPath[intPath.Count-2];
+			intPath = intPath.GetRange(0, intPath.Count-1);
 		}
 		Debug.Log("Move to: " + destination[0] + "." + destination[1] );
 
-
-		map.ResetMapDisplay();
-		Vector3[] wps = map.GetWaypoints( path );
+		Vector3[] wps = map.GetWaypoints( intPath );
+		str = "WPS: ";
+		foreach( Vector3 wp in wps ) {
+			str += wp + " ";
+		}
+		Debug.Log( str );
 		GetComponent<GridMoveAnimation>().StartMoveAnimation( wps );
 		// update saved monster list
-		Vector2 oldPos = new Vector2( myPos[0], myPos[1] );
+		Vector2 oldPos = new Vector2( myPos.X, myPos.Y );
 		Vector2 newPos = new Vector2( destination[0], destination[1] );
 		map.MoveMonster( puppet, puppet.CurrentPos, newPos );
 		puppet.CurrentPos = newPos;

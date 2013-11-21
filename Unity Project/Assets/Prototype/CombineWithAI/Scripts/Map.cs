@@ -152,7 +152,9 @@ public class Map : MonoBehaviour {
 		// set distances to int.MaxValue as default
 		InitDistanceMatrix();
 		range = rng;
-		//activeMonster = monsterList[ pos ];
+		if( monsterList[ pos ] ) {
+			activeMonster = monsterList[ pos ];
+		}
 		
 		// distance to current position is always 0
 		distanceMatrix[(int) pos.x,(int) pos.y] = 0;
@@ -279,7 +281,7 @@ public class Map : MonoBehaviour {
 	}
 	
 	public Vector3[] GetWaypoints(List<int[]> path) {
-		Vector3[] wps = new Vector3[path.Count+1];
+		Vector3[] wps = new Vector3[path.Count];
 		
 		float x = 0;
 		float y = transform.position.y;
@@ -290,9 +292,9 @@ public class Map : MonoBehaviour {
 			x = quadMatrix[path[i][0], path[i][1]].position.x;
 			z = quadMatrix[path[i][0], path[i][1]].position.y;
 			
-			wps[i+1] = new Vector3(x,y,z);
+			wps[i] = new Vector3(x,y,z);
 		}
-		wps[0] = MapToWorldPosition( activeMonster.CurrentPos );
+		//wps[0] = MapToWorldPosition( activeMonster.CurrentPos );
 		return wps;
 	}
 	

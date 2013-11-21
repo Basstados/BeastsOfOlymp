@@ -44,6 +44,8 @@ public class GridMoveAnimation : MonoBehaviour {
 	 * Exspect each quad on the path to be an way point (wp)
 	 */ 
 	public void StartMoveAnimation(Vector3[] waypoints) {
+		if( waypoints.Length <= 1 )
+			return;
 		wps = waypoints;
 		nextWp = 1;
 		transform.LookAt(wps[nextWp]);
