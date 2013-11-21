@@ -152,7 +152,7 @@ public class Map : MonoBehaviour {
 		// set distances to int.MaxValue as default
 		InitDistanceMatrix();
 		range = rng;
-		activeMonster = monsterList[ pos ];
+		//activeMonster = monsterList[ pos ];
 		
 		// distance to current position is always 0
 		distanceMatrix[(int) pos.x,(int) pos.y] = 0;
