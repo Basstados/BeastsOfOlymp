@@ -5,6 +5,8 @@ using System.Collections;
 public class CombatMenu : MonoBehaviour {
 	
 	public GameObject panel;
+	public UIButton attackButton;
+	public UIButton moveButton;
 	
 	private Monster target;
 
@@ -23,7 +25,9 @@ public class CombatMenu : MonoBehaviour {
 		target = targetMonster;
 		screenPos.x -= Screen.width/2;
 		screenPos.y -= Screen.height/2;
-		transform.localPosition = screenPos;	
+		transform.localPosition = screenPos;
+		attackButton.gameObject.SetActive( !target.hasAttacked );
+		moveButton.gameObject.SetActive( !target.hasMoved );
 	}
 	
 	public void ActionAttack() {

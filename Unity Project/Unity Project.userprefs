@@ -1,16 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\CombineWithAI\Scripts\Map.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs">
     <Files>
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs" Line="58" Column="123" />
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Monster.cs" Line="117" Column="19" />
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\Map.cs" Line="314" Column="13" />
-      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\CombineWithAI\Scripts\InputTranslater.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PathFinder.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\attacks.xml" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\Attack\Scripts\Attack.cs" Line="11" Column="20" />
+      <File FileName="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs" Line="95" Column="4" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\Monster.cs" Line="176" Column="27" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\Map.cs" Line="342" Column="3" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\PrototypeArtificialIntelligence.cs" Line="54" Column="44" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\CombatMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\InputTranslater.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" Line="35" Column="23" />
+      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" Line="26" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

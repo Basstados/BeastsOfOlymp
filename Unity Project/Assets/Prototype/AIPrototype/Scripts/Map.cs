@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Algorithms;
 
 public class Map : MonoBehaviour {
 	
@@ -68,6 +69,7 @@ public class Map : MonoBehaviour {
 				mon.CurrentPos = pos;
 				// finally add monster to dictionary, using postion as key
 				monsterList.Add(pos, mon);
+				quadMatrix[ (int) pos.x, (int) pos.y ].penalty = -1;
 			}
 		}
 	}
@@ -122,7 +124,7 @@ public class Map : MonoBehaviour {
 						Vector3 worldPos = MapToWorldPosition( pos );
 						Vector3 screenPos = Camera.main.WorldToScreenPoint( worldPos );
 						screenPos.z = 0f;
-						combatMenu.OpenForMonster(screenPos, monsterList[currentQuad.position] );
+						//combatMenu.OpenForMonster(screenPos, monsterList[currentQuad.position] );
 					} else {
 						combatMenu.SendMessage("Hide");
 					}
@@ -161,6 +163,22 @@ public class Map : MonoBehaviour {
 		distanceMatrix[(int) pos.x,(int) pos.y] = 0;
 		// start recursiv distance calulation
 		CheckNeighbourQuad((int) pos.x, (int) pos.y, 0);
+		
+		return distanceMatrix;
+	}
+
+	public int[,] CalculateDistanceMatrixAttackMode( Vector2 pos, int rng) {
+		// set distances to int.MaxValue as default
+		InitDistanceMatrix();
+		range = rng;
+		if( monsterList[ pos ] ) {
+			activeMonster = monsterList[ pos ];
+		}
+		
+		// distance to current position is always 0
+		distanceMatrix[(int) pos.x,(int) pos.y] = 0;
+		// start recursiv distance calulation
+		CheckNeighbourQuadAttackMode((int) pos.x, (int) pos.y, 0);
 		
 		return distanceMatrix;
 	}
@@ -226,6 +244,33 @@ public class Map : MonoBehaviour {
 			}
 		}
 	}
+
+	/**
+	 * [i,j] are the indices of the previous field
+	 * ignore penelty of field
+	 */ 
+	private void CheckNeighbourQuadAttackMode(int i, int j, int distance) {
+		
+		// neighbour quad indicies
+		List<int[]> neighbour = GetNeighbourList(i,j);
+		
+		// check all neighbours if there are in range and continue recursion
+		for( int k=0; k<neighbour.Count; k++) {
+			int currValue = distanceMatrix[neighbour[k][0], neighbour[k][1]];
+			int penalty = 1;
+			
+			if( currValue > distance && range > distance + penalty ) {
+				// we are still in range and doesn't have a shorter way to this quad
+				// so continue recursion if quad is passable (penalty > 0)
+				if( penalty > 0 ) {
+					distanceMatrix[neighbour[k][0], neighbour[k][1]] = distance + penalty;
+					//quadMatrix[neighbour[k][0], neighbour[k][1]].renderer.material = reachableMat;
+					
+					CheckNeighbourQuad(neighbour[k][0], neighbour[k][1], distance + penalty);
+				}	
+			}
+		}
+	}
 	
 	private List<int[]> GetNeighbourList(int i, int j) {
 		List<int[]> neighbour = new List<int[]>();
@@ -246,39 +291,46 @@ public class Map : MonoBehaviour {
 		return neighbour;
 	}
 	
-	public List<int[]> CalculatePath(int[] currentQuad) {
-		List<int[]> neighbour;
-		int distanceMin;
-		int[] minNeighbour = currentQuad;
-		List<int[]> path = new List<int[]>();
-		
-		// walk backwards from destination to character position
-		while( distanceMatrix[currentQuad[0], currentQuad[1]] > 0 ) {
-			// udpate neighbour list
-			neighbour = GetNeighbourList(currentQuad[0], currentQuad[1]);
-			
-			// find neighbour with lowest distance
-			distanceMin = int.MaxValue;
-			for( int k=0; k<neighbour.Count; k++ ) {
-				if( distanceMatrix[neighbour[k][0], neighbour[k][1]] < distanceMin ) {
-					distanceMin = distanceMatrix[neighbour[k][0], neighbour[k][1]];
-					minNeighbour = neighbour[k];
+	public List<int[]> CalculatePath(int[] start, int[] goal ) {
+		if( start[0] == goal[0] && start[1] == goal[1] ) {
+			List<int[]> result = new List<int[]>();
+			result.Add( start );
+			return result;
+		}
+
+		TestPoint myPos = new TestPoint(start[0], start[1]);
+		TestPoint targetPos = new TestPoint(goal[0], goal[1]);
+
+		byte[,] grid = new byte[quadMatrix.GetLength(0),quadMatrix.GetLength(1)];
+		for( int i=0; i< quadMatrix.GetLength(0); i++ ) {
+			for( int j=0; j<quadMatrix.GetLength(1); j++ ) {
+				grid[i,j] = (quadMatrix[i,j].penalty > 0) ? (byte) 1 : (byte) 0;
+				// grid value for our current pos should be 1, otherwise we get into trouble
+				if( (i == myPos.X && j == myPos.Y) || (i == targetPos.X && j == targetPos.Y ) ){
+					grid[i,j] = 1;
 				}
 			}
-			
-			if( minNeighbour == currentQuad ) {
-				Debug.LogError("Distance Matrix is wrong!");	
-			}
-			
-			// color current quad
-			quadMatrix[currentQuad[0],currentQuad[1]].ChangeMaterial( pathMat );
-			// add current quad to path
-			path.Insert(0, currentQuad);
-			// continue with minNeighbour
-			currentQuad = minNeighbour;
 		}
 		
-		return path;
+		PathFinder pf = new PathFinder( grid );
+		pf.Diagonals = false;
+		
+		Debug.Log( pf );
+		Debug.Log( myPos.ToString() );
+		List<PathFinderNode> path = pf.FindPath( myPos, targetPos );
+		Debug.Log( path );
+		
+		List<int[]> intPath = new List<int[]>();
+		string str = "";
+		foreach( PathFinderNode p in path ) {
+			str += "[" + p.X + "," + p.Y + "]";
+			intPath.Add( new int[2]{ p.X, p.Y } );
+		}
+		Debug.Log( str );
+
+		quadMatrix[goal[0],goal[1]].ChangeMaterial( pathMat );
+
+		return intPath;
 	}
 	
 	public Vector3[] GetWaypoints(List<int[]> path) {
@@ -303,6 +355,8 @@ public class Map : MonoBehaviour {
 		if( mon == monsterList[oldPos] ) {
 			monsterList.Remove( oldPos );
 			monsterList.Add( newPos, mon );
+			quadMatrix[ (int) oldPos.x, (int) oldPos.y ].penalty = 1;
+			quadMatrix[ (int) newPos.x, (int) newPos.y ].penalty = -1;
 			currentTapMode = TapMode.PICK_MONSTER;
 		}
 	}
@@ -361,7 +415,7 @@ public class Map : MonoBehaviour {
 		// set range to MaxValue to get distance matrix for full map (dirty, slow but easy for now)
 		range = int.MaxValue;
 		distanceMatrix = CalculateDistanceMatrix( new Vector2(start[0], start[1]), range );
-		List<int[]> path = CalculatePath( destination );
+		List<int[]> path = CalculatePath( start, destination );
 		int cost = distanceMatrix[destination[0], destination[1]];
 
 		return path;

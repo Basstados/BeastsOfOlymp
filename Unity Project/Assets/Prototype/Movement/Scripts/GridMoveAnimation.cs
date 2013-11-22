@@ -34,9 +34,6 @@ public class GridMoveAnimation : MonoBehaviour {
 				transform.LookAt(wps[nextWp]);
 				Debug.Log(nextWp);
 			}
-			
-			
-			
 		}
 	}
 	

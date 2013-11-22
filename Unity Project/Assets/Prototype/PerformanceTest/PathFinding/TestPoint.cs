@@ -23,7 +23,7 @@ public class TestPoint {
 		return new int[2]{ X, Y};
 	}
 
-	public string ToString() {
+	public override string ToString() {
 		return "Testpoint (" + X + "," + Y + ")";
 	}
 }

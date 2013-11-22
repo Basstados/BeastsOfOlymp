@@ -16,7 +16,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 	float timerProgress = 0.0f;
 	float delay = 6f;
 
-	bool run = true;
+	public bool run = true;
 
 	void Start() {
 		puppet = GetComponent<Monster>();
@@ -45,6 +45,20 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator DoTurn(int range) {
+		run = true;
+		timerProgress = 0.0f;
+		delay = range;
+		ChooseTargetMonster();
+		ChooseMoveDestination();
+		yield return new WaitForSeconds( range );
+		ChooseAttack();
+
+		run = false;
+		// all actions are done; end this turn
+		Prototype_Combat.Instance.NextTurn();
+	}
+
 	public void ChooseTargetMonster() {
 		if(enemies.Count <= 0) {
 			Debug.Log("GameOver");
@@ -69,17 +83,45 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 	public void ChooseMoveDestination() {
 		int range = puppet.movement_range;
 
+		TestPoint myPos = new TestPoint((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
+		TestPoint targetPos = new TestPoint((int) target.CurrentPos.x, (int) target.CurrentPos.y);
+		
+		// find closed field to me, next to target
+		/*TestPoint targetField = targetPos;
+		int minDst = int.MaxValue;
+
+		// get list of all neighbour fields for targetPos
+		int[] x = new int[]{targetPos.X + 1, targetPos.X, targetPos.X - 1, targetPos.X};
+		int[] y = new int[]{targetPos.Y, targetPos.Y + 1, targetPos.Y, targetPos.Y - 1};
+
+		for( int i=0; i<x.Length; i++ ) {
+			// check if field is inside map
+			if( x[i] > 0 && x[i] < map.QuadMatrix.GetLength(0)
+			   && y[i] > 0 && y[i] < map.QuadMatrix.GetLength(1) ) {
+				// calulcate distance with infinty norm
+				int dst = Mathf.Abs( x[i] - myPos.X ) + Mathf.Abs( y[i] - myPos.Y );
+				if( dst < minDst ) {
+					targetField = new TestPoint(x[i], y[i]);
+					minDst = dst;
+				}
+			}
+		}*/
+
+
 		byte[,] grid = new byte[map.QuadMatrix.GetLength(0),map.QuadMatrix.GetLength(1)];
 		for( int i=0; i< map.QuadMatrix.GetLength(0); i++ ) {
 			for( int j=0; j<map.QuadMatrix.GetLength(1); j++ ) {
 				grid[i,j] = (map.QuadMatrix[i,j].penalty > 0) ? (byte) 1 : (byte) 0;
+				// grid value for our current pos should be 1, otherwise we get into trouble
+				if( (i == myPos.X && j == myPos.Y) || (i == targetPos.X && j == targetPos.Y ) ){
+					grid[i,j] = 1;
+				}
 			}
 		}
 
 		PathFinder pf = new PathFinder( grid );
 		pf.Diagonals = false;
-		TestPoint myPos = new TestPoint((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
-		TestPoint targetPos = new TestPoint((int) target.CurrentPos.x, (int) target.CurrentPos.y);
+
 		Debug.Log( pf );
 		Debug.Log( myPos.ToString() );
 		List<PathFinderNode> path = pf.FindPath( myPos, targetPos );
@@ -130,7 +172,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 		Debug.Log("Try to attack!");
 		Attack att = puppet.Attack;
 
-		int[,] distanceMatrix = map.CalculateDistanceMatrix( puppet.CurrentPos, att.Range );
+		int[,] distanceMatrix = map.CalculateDistanceMatrixAttackMode( puppet.CurrentPos, att.Range );
 		if( distanceMatrix[(int)target.CurrentPos.x, (int)target.CurrentPos.y] <= att.Range ) {
 			// monster is in range
 			puppet.PerformAttack( target.CurrentPos );

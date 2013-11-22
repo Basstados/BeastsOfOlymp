@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -167,16 +167,17 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\CombatMenu.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\InputTranslater.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Map.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Monster.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\PrototypeArtificialIntelligence.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Quad.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\Attack.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoAttacker.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoEnemy.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\Range.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\CombatMenu.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\InputTranslater.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\Map.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\Monster.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\PrototypeArtificialIntelligence.cs" />
-     <Compile Include="Assets\Prototype\CombineWithAI\Scripts\Quad.cs" />
+     <Compile Include="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs" />
      <Compile Include="Assets\Prototype\DevelopScripts\FPS.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMovement.cs" />
