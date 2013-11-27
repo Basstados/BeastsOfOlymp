@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -6,7 +6,7 @@ using Algorithms;
 
 public class PathfindingTest : MonoBehaviour {
 
-	public Map map;
+	public Prototype_Map map;
 	public UILabel labelBruteforce;
 	public UILabel labelAStar;
 

@@ -1,15 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\States\Beast.cs">
     <Files>
-      <File FileName="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs" Line="95" Column="4" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\Monster.cs" Line="176" Column="27" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\Map.cs" Line="342" Column="3" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\PrototypeArtificialIntelligence.cs" Line="54" Column="44" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\CombatMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\InputTranslater.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" Line="35" Column="23" />
-      <File FileName="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" Line="26" Column="17" />
+      <File FileName="Assets\TheRealBoB\Scripts\States\ArenaMap.cs" Line="13" Column="16" />
+      <File FileName="Assets\TheRealBoB\Scripts\States\Point.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\States\Attack.cs" Line="1" Column="1" />
+      <File FileName="Assets\Prototype\Attack\Scripts\Prototype_Attack.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\States\Beast.cs" Line="13" Column="20" />
+      <File FileName="Assets\Editor\BeastEditor.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\LevelGenerationEditor.cs" Line="1" Column="1" />
+      <File FileName="Assets\Resources\BeastList.xml" Line="1" Column="1" />
+      <File FileName="Assets\Resources\attacks.xml" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

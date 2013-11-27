@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Algorithms;
 
-public class Map : MonoBehaviour {
+public class Prototype_Map : MonoBehaviour {
 	
 	// parameters used to generate the map
 	public GameObject blockPrefab;

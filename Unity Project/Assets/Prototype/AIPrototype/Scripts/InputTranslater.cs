@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InputTranslater : MonoBehaviour {
 	
-	public Map map;
+	public Prototype_Map map;
 	public Camera uiCamera;
 	
 	void Awake() {

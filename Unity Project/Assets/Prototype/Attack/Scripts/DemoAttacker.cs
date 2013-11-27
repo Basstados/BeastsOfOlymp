@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class DemoAttacker : MonoBehaviour {
@@ -7,7 +7,7 @@ public class DemoAttacker : MonoBehaviour {
 	
 	Range range;
 	BattlefieldQuad[,] battleMatrix;
-	Attack myAttack;
+	Prototype_Attack myAttack;
 	
 	// Use this for initialization
 	void Start () {
@@ -33,7 +33,7 @@ public class DemoAttacker : MonoBehaviour {
 		
 		//DisplayRange( range.DistanceMatrix );
 		
-		myAttack = new Attack(2, range.intValue, this.gameObject );
+		myAttack = new Prototype_Attack(2, range.intValue, this.gameObject );
 		// myAttack = new Attack("Tackle", battleMatrix, this.gameObject);
 		// myAttack.Range.UpdateCalculations( new int[]{ (int) transform.position.x, (int) transform.position.z});
 		// DisplayRange( myAttack.Range.DistanceMatrix );

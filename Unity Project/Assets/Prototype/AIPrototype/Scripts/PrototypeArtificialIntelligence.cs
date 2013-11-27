@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Algorithms;
@@ -6,7 +6,7 @@ using Algorithms;
 public class PrototypeArtificialIntelligence : MonoBehaviour {
 
 	public List<Monster> enemies;
-	public Map map;
+	public Prototype_Map map;
 	public UISlider slider;
 
 
@@ -170,7 +170,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 
 	public void ChooseAttack() {
 		Debug.Log("Try to attack!");
-		Attack att = puppet.Attack;
+		Prototype_Attack att = puppet.Attack;
 
 		int[,] distanceMatrix = map.CalculateDistanceMatrixAttackMode( puppet.CurrentPos, att.Range );
 		if( distanceMatrix[(int)target.CurrentPos.x, (int)target.CurrentPos.y] <= att.Range ) {

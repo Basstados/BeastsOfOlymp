@@ -8,7 +8,7 @@ public class Prototype_Combat : MonoBehaviour {
 	private Prototype_Combat() {} // guarantee this will be always a singelton only - can't use the constructor!
 	private static Prototype_Combat instance = null;
 
-	public Map map;
+	public Prototype_Map map;
 	public UILabel gameoverLabel;
 	public List<Monster> monsterList;
 	private int currentMonsterIndex = 0;

@@ -1,0 +1,5 @@
+﻿interface IRule {
+
+	bool Execute();
+
+}

@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(Map))]
+[CustomEditor(typeof(Prototype_Map))]
 public class MapEditor : Editor {
 	
-	private Map myTarget;
+	private Prototype_Map myTarget;
 	
 	void Awake() {
 		// Get target
-		myTarget = (Map) target;
+		myTarget = (Prototype_Map) target;
 	}
 	
 	public override void OnInspectorGUI() {

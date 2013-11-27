@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,7 +24,7 @@ public class Monster : MonoBehaviour {
 	Color flashColor = Color.red;
 	Color defaultColor;
 	
-	private Map map;
+	private Prototype_Map map;
 	private int[,] distanceMatrix;
 	private Vector2 currentPos = Vector2.zero;
 	
@@ -32,7 +32,7 @@ public class Monster : MonoBehaviour {
 	private int[] pathDestionation = new int[]{-1,-1};
 	private Vector3[] wps;
 	
-	private Attack attack;
+	private Prototype_Attack attack;
 	
 	private Action currentAction = Action.IDLE;
 
@@ -48,8 +48,8 @@ public class Monster : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		map = GameObject.Find("Map").GetComponent<Map>();
-		attack = new Attack("Tackle", this.gameObject );
+		map = GameObject.Find("Map").GetComponent<Prototype_Map>();
+		attack = new Prototype_Attack("Tackle", this.gameObject );
 		hp = max_hp;
 		defaultColor = renderObject.renderer.material.color;
 	}
@@ -199,7 +199,7 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-	public Attack Attack {
+	public Prototype_Attack Attack {
 		get {
 			return attack;
 		}

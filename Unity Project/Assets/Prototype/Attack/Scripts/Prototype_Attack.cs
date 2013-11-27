@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-public class Attack {
+public class Prototype_Attack {
 	
 	int damage;
 	int range;
 	
 	GameObject source;
 	
-	public Attack( int dmg, int rng, GameObject src ) {
+	public Prototype_Attack( int dmg, int rng, GameObject src ) {
 		damage = dmg;
 		range = rng;
 		source = src;
 	}
 	
-	public Attack( string attackName, GameObject src ) {
+	public Prototype_Attack( string attackName, GameObject src ) {
 		// get Attack information from xml file
 		TextAsset textAsset = (TextAsset)Resources.Load("attacks", typeof(TextAsset));
 		XmlDocument xmldoc = new XmlDocument ();
