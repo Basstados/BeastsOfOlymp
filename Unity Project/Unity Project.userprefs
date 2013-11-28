@@ -1,16 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\States\Beast.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Stephan\Scripts\Controller.cs">
     <Files>
-      <File FileName="Assets\TheRealBoB\Scripts\States\ArenaMap.cs" Line="13" Column="16" />
-      <File FileName="Assets\TheRealBoB\Scripts\States\Point.cs" Line="1" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\States\Attack.cs" Line="1" Column="1" />
-      <File FileName="Assets\Prototype\Attack\Scripts\Prototype_Attack.cs" Line="1" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\States\Beast.cs" Line="13" Column="20" />
-      <File FileName="Assets\Editor\BeastEditor.cs" Line="1" Column="1" />
-      <File FileName="Assets\Editor\LevelGenerationEditor.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\BeastList.xml" Line="1" Column="1" />
-      <File FileName="Assets\Resources\attacks.xml" Line="1" Column="1" />
+      <File FileName="Assets\Stephan\Scripts\Units\skrUnit.cs" Line="7" Column="25" />
+      <File FileName="Assets\Stephan\Scripts\Units\skrBUnit.cs" Line="8" Column="11" />
+      <File FileName="Assets\Stephan\Scripts\Controller.cs" Line="27" Column="2" />
+      <File FileName="Assets\Stephan\Scripts\Model.cs" Line="56" Column="25" />
+      <File FileName="Assets\Stephan\Scripts\MapTile.cs" Line="8" Column="47" />
+      <File FileName="Assets\Stephan\Scripts\skrBMap.cs" Line="19" Column="3" />
+      <File FileName="Assets\Stephan\Scripts\skrBMapTile.cs" Line="4" Column="1" />
+      <File FileName="Assets\Prototype\AIPrototype\Scripts\InputTranslater.cs" Line="61" Column="5" />
+      <File FileName="Assets\Stephan\Scripts\skrInputTranslater.cs" Line="44" Column="55" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
