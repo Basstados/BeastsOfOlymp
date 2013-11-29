@@ -3,5 +3,5 @@ using System.Collections;
 
 public class skrBMapTile : MonoBehaviour {
 	
-	public MapTile mapTile;
+	public skrMapTile mapTile;
 }

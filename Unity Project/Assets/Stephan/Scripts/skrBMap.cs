@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class skrBMap : MonoBehaviour {
 	// "B" is for behaviour; its part of the VIEW
 
+	public GameObject unitPrefab;
 	public GameObject blockPrefab;
 	public int width;
 	public int height;
 
-	skrBUnit[] unitViews;
+	List<skrBUnit> unitViews;
 	skrBMapTile[] mapTileViews;
 
-	Controller controller;
+	skrController controller;
 
 	// Use this for initialization
 	void Start () {
@@ -20,8 +23,7 @@ public class skrBMap : MonoBehaviour {
 
 	void Init () 
 	{
-		unitViews = GameObject.FindObjectsOfType<skrBUnit>();
-		controller = new Controller(this);
+		controller = new skrController(this);
 		controller.Initialized += HandleInitialized;
 		controller.Init(width, height);
 
@@ -31,23 +33,35 @@ public class skrBMap : MonoBehaviour {
 	void HandleInitialized (object sender, InitializedEvent e)
 	{
 		InitMapTiles (e.maptiles);
-
-		unitViews[0].unit.mapTile = mapTileViews[55].mapTile;
-		controller.MoveUnit (unitViews [0].unit, mapTileViews [11].mapTile);
 	}
 
-	public void InitMapTiles(MapTile[,] mapTiles) 
+	public void InitMapTiles(skrMapTile[,] mapTiles) 
 	{
 		Generate (mapTiles);
 	}
 
-	public void HandleUnitMoved (object sender, UnitMovedEvent e) 
+	public void HandleUnitMoved (object sender, skrUnitMovedEvent e) 
 	{
 		skrBUnit unitToMove = GetBUnit (e.unit);
 		Vector3 startPosition = GetBMapTile (e.source).transform.position;
 		Vector3 endPosition = GetBMapTile (e.target).transform.position;
 
 		unitToMove.MoveUnit (startPosition, endPosition);
+	}
+
+	public void HandleUnitSpawned (object sender, skrUnitSpawnedEvent e)
+	{
+		Vector3 spawnPosition = GetBMapTile (e.unit.mapTile).transform.position;
+		// instatiate unit prefab
+		GameObject handle = Instantiate (unitPrefab) as GameObject;
+		handle.transform.position = spawnPosition;
+		handle.GetComponent<skrBUnit>().unit = e.unit;
+
+		// add new spawned unit to unitView list
+		if (unitViews == null)
+			unitViews = new List<skrBUnit> ();
+
+		unitViews.Add(handle.GetComponent<skrBUnit>());
 	}
 
 	skrBUnit GetBUnit (skrUnit unit)
@@ -60,19 +74,16 @@ public class skrBMap : MonoBehaviour {
 		return null;
 	}
 
-	skrBMapTile GetBMapTile (MapTile mapTile) {
-		foreach (skrBMapTile view in mapTileViews) {
-			if( view.mapTile == mapTile ) {
-				return view;
-			}
-		}
-		return null;
+	skrBMapTile GetBMapTile (skrMapTile mapTile) 
+	{
+		// use Linq like SQL statements to reduce/order list
+		return mapTileViews.Where (t => t.mapTile == mapTile).FirstOrDefault();
 	}
 
 	/**
 	 * Instatiate blocks and position them in a grid with given number of columns and rows.
 	 */ 
-	public void Generate(MapTile[,] mapTiles) {
+	public void Generate(skrMapTile[,] mapTiles) {
 		mapTileViews = new skrBMapTile[mapTiles.Length];
 
 		// Create rows of the grid

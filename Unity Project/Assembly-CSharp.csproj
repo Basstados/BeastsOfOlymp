@@ -190,19 +190,35 @@
      <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PriorityQueueB.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\PathfindingTest.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Controller.cs" />
-     <Compile Include="Assets\Stephan\Scripts\MapTile.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Model.cs" />
+     <Compile Include="Assets\Stephan\Scripts\Data\skrUnitData.cs" />
+     <Compile Include="Assets\Stephan\Scripts\Data\skrUnitDatabase.cs" />
+     <Compile Include="Assets\Stephan\Scripts\TesLitJson.cs" />
      <Compile Include="Assets\Stephan\Scripts\Units\skrBUnit.cs" />
      <Compile Include="Assets\Stephan\Scripts\Units\skrUnit.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrBMap.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrBMapTile.cs" />
+     <Compile Include="Assets\Stephan\Scripts\skrController.cs" />
+     <Compile Include="Assets\Stephan\Scripts\skrEventProxy.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrInputTranslater.cs" />
+     <Compile Include="Assets\Stephan\Scripts\skrMapTile.cs" />
+     <Compile Include="Assets\Stephan\Scripts\skrModel.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\BInputManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\Controller.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\EventProxy.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\EventProxyManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Combat.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\MapTile.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Model.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\UnitBaseStats.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Rules\IRule.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\States\ArenaMap.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\States\Attack.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\States\Beast.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\States\Point.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
@@ -239,6 +255,10 @@
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{C65DF7E6-5082-3454-2A7F-EDDBED1731B5}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

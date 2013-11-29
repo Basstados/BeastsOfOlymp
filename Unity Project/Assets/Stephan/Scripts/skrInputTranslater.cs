@@ -3,15 +3,15 @@ using System.Collections;
 
 public class skrInputTranslater : MonoBehaviour {
 
-	Controller controller;
+	skrController controller;
 
-	public event System.EventHandler<MapTileTappedEvent> MapTileTapped;
-	void OnMapTileTapped(MapTile mapTile) {
+	public event System.EventHandler<skrMapTileTappedEvent> MapTileTapped;
+	void OnMapTileTapped(skrMapTile mapTile) {
 		if (MapTileTapped != null)
-			MapTileTapped (this, new MapTileTappedEvent(mapTile));
+			MapTileTapped (this, new skrMapTileTappedEvent(mapTile));
 	}
 
-	public void Init(Controller controller) {
+	public void Init(skrController controller) {
 		// TODO move the event registration to another place, doesn't make sense here :/
 		this.controller = controller;
 		MapTileTapped += controller.HandleMapTileTapped;
@@ -38,7 +38,6 @@ public class skrInputTranslater : MonoBehaviour {
 			if( Physics.Raycast(cursorRay, out hit, Mathf.Infinity, mask) ) {
 				
 				// let's see what we hit with the raycast
-				Debug.Log( hit.collider.name );
 				if( hit.collider.gameObject.layer == LayerMask.NameToLayer("UI 3D") ) {
 					// we hit an ui element first
 					// stop looking for map and stuff and just return
@@ -58,10 +57,10 @@ public class skrInputTranslater : MonoBehaviour {
 	}
 }
 
-public class MapTileTappedEvent : System.EventArgs {
-	public MapTile mapTile;
+public class skrMapTileTappedEvent : System.EventArgs {
+	public skrMapTile mapTile;
 
-	public MapTileTappedEvent (MapTile mapTile)
+	public skrMapTileTappedEvent (skrMapTile mapTile)
 	{
 		this.mapTile = mapTile;
 	}

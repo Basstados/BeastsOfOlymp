@@ -3,6 +3,6 @@
 [System.Serializable]
 public class skrUnit  {
 
-	public int speed;
-	public MapTile mapTile;
+	public int speed = 1;
+	public skrMapTile mapTile;
 }
