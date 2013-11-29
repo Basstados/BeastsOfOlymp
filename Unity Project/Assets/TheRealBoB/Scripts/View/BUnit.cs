@@ -4,14 +4,15 @@ using System.Collections;
 public class BUnit : MonoBehaviour {
 
 	public Unit unit;
+	public BCombatMenu bCombatMenu;
 
-	// Use this for initialization
-	void Start () {
-	
+	public void Init(Unit unit, BCombatMenu bCombatMenu) {
+		this.unit = unit;
+		this.bCombatMenu = bCombatMenu;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void PopupCombatMenu() 
+	{
+		bCombatMenu.OpenForBUnit(this);
 	}
 }

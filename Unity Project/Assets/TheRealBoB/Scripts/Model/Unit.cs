@@ -7,6 +7,9 @@ public class Unit : IComparable
 	public string name;
 	public UnitBaseStats baseStats;
 	public MapTile mapTile { get; set; }
+	public Team team;
+	public bool canAttack;
+	public bool canMove;
 
 	public int Speed 
 	{ 
@@ -14,6 +17,27 @@ public class Unit : IComparable
 		{
 			return this.baseStats.speed;
 		}
+	}
+
+	public bool AIControled
+	{
+		get
+		{
+			return team == Team.AI;
+		}
+	}
+
+	public enum Team 
+	{
+		PLAYER,
+		AI
+	}
+
+	public void ResetTurn()
+	{
+		canMove = true;
+		canAttack = true;
+
 	}
 
 	/**
