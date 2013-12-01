@@ -11,13 +11,10 @@ public class Unit : IComparable
 	public bool canAttack;
 	public bool canMove;
 
-	public int Speed 
-	{ 
-		get 
-		{
-			return this.baseStats.speed;
-		}
-	}
+	#region properties
+	public int Speed 			{get{return this.baseStats.speed;}}
+	public int MovementRange 	{get{return this.baseStats.movementRange;}}
+	#endregion
 
 	public bool AIControled
 	{

@@ -1,25 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\View\BView.cs">
     <Files>
-      <File FileName="Assets\TheRealBoB\Scripts\Control\CStartRound.cs" Line="1" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\Model\GameState\Combat.cs" Line="15" Column="21" />
-      <File FileName="Assets\TheRealBoB\Scripts\Model\Model.cs" Line="48" Column="22" />
-      <File FileName="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" Line="70" Column="22" />
-      <File FileName="Assets\TheRealBoB\Scripts\Control\Controller.cs" Line="23" Column="22" />
-      <File FileName="Assets\TheRealBoB\Scripts\Model\Unit.cs" Line="49" Column="13" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="15" Column="3" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="27" Column="60" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" Line="25" Column="73" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\Monster.cs" Line="15" Column="9" />
-      <File FileName="Assets\Prototype\AIPrototype\Scripts\Prototype_Map.cs" Line="35" Column="9" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" Line="426" Column="3" />
+      <File FileName="Assets\TheRealBoB\Scripts\Model\Model.cs" Line="77" Column="26" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" Line="37" Column="12" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="38" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="97" Column="56" />
+      <File FileName="Assets\TheRealBoB\Scripts\BInputManager.cs" Line="24" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\Controller.cs" Line="55" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BMapTile.cs" Line="13" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="C:\Users\David\Documents\GitHub\MonsterTrainer\Unity Project\Assets\TheRealBoB\Scripts\Model\GameState\Combat.cs" line="24" />
-      <Breakpoint file="C:\Users\David\Documents\GitHub\MonsterTrainer\Unity Project\Assets\TheRealBoB\Scripts\Model\GameState\Combat.cs" line="36" />
-      <Breakpoint file="C:\Users\David\Documents\GitHub\MonsterTrainer\Unity Project\Assets\TheRealBoB\Scripts\View\BView.cs" line="28" />
+      <Breakpoint file="C:\Users\David\Documents\GitHub\MonsterTrainer\Unity Project\Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" line="24" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

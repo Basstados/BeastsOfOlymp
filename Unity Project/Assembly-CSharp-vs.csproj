@@ -165,9 +165,9 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
      <Compile Include="Assets\Prototype\AIPrototype\Scripts\CombatMenu.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\InputTranslater.cs" />
      <Compile Include="Assets\Prototype\AIPrototype\Scripts\Monster.cs" />
      <Compile Include="Assets\Prototype\AIPrototype\Scripts\PrototypeArtificialIntelligence.cs" />
+     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Prototype_InputTranslater.cs" />
      <Compile Include="Assets\Prototype\AIPrototype\Scripts\Prototype_Map.cs" />
      <Compile Include="Assets\Prototype\AIPrototype\Scripts\Quad.cs" />
      <Compile Include="Assets\Prototype\Attack\Scripts\DemoAttacker.cs" />
@@ -185,9 +185,6 @@
      <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\FPSWithWarning.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\QuadGenerator.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\Menu\PerformanceTestMenu.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\IPathFinder.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PathFinder.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\ExternAlgos\PriorityQueueB.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\PathfindingTest.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" />
      <Compile Include="Assets\Stephan\Scripts\Data\skrUnitData.cs" />
@@ -203,9 +200,13 @@
      <Compile Include="Assets\Stephan\Scripts\skrMapTile.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrModel.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\BInputManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\CStartRound.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Controller.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\ICommand.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\IPathFinder.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PriorityQueueB.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxy.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\GameState\Combat.cs" />

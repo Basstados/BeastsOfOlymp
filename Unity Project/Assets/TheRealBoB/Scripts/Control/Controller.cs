@@ -1,6 +1,6 @@
 using UnityEngine;
-
 using System;
+using Algorithms;
 
 public class Controller
 {
@@ -12,7 +12,7 @@ public class Controller
 	}
 
 	void Init() {
-		EventProxyManager.RegisterForEvent(EventName.MapTileTapped, HandleMapTileTapped);
+		//EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleMapTileTapped);
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
 		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleUnitActivated);
 
@@ -23,6 +23,7 @@ public class Controller
 		model.InitCombat();
 	}
 
+	#region event handler
     void HandleRoundSetup(object sender, EventArgs args)
     {
         // after round setup start it
@@ -45,6 +46,21 @@ public class Controller
 	void HandleMapTileTapped(object sender, EventArgs args)
 	{
 		Debug.Log("Tap Event triggert");
+	}
+	#endregion
+
+	public void MoveUnit(Unit unit, MapTile mapTile)
+	{
+		new CMoveUnit(model,unit,mapTile).Execute();
+	}
+
+	public byte[][] GetDistanceMatrix(Point position, int range)
+	{
+		byte[,] grid = model.GetGrid();
+		PathFinder pathFinder = new PathFinder(grid);
+		pathFinder.Diagonals = false;
+		pathFinder.PunishChangeDirection = false;
+		return pathFinder.GetDistanceMatrix(position, range);
 	}
 }
 
