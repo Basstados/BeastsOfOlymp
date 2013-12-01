@@ -5,43 +5,34 @@ using Algorithms;
 public class Controller
 {
 	Model model;
+	BView bView;
 
-	public Controller ()
+	public Controller (BView bView)
 	{
+		this.bView = bView;
 		Init();
 	}
 
 	void Init() {
-		//EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleMapTileTapped);
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
-		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleUnitActivated);
 
 		// TODO try to read this from an json-file
 		model = new Model();
 		model.InitMap(10, 10);
 		model.SpawnUnit(model.mapTiles[2][2], Unit.Team.PLAYER);
 		model.InitCombat();
+
+		// this is just for debugging/develop builds an be removed savely
+		if(Debug.isDebugBuild)
+			GameObject.FindObjectOfType<DevelopPanelMaster>().Init(this, model, bView);
 	}
 
 	#region event handler
     void HandleRoundSetup(object sender, EventArgs args)
     {
         // after round setup start it
-		new CStartRound(model).Execute();
+		new CStartTurn(model).Execute();
     }
-
-	void HandleUnitActivated (object sender, EventArgs args)
-	{
-		UnitActivatedEvent e = args as UnitActivatedEvent;
-
-		if(e.unit.AIControled) {
-			// start AI
-		} else {
-			// players turn
-			EventProxyManager.FireEvent(EventName.PlayersTurnStarted, this, args);
-		}
-
-	}
 	
 	void HandleMapTileTapped(object sender, EventArgs args)
 	{
@@ -52,6 +43,11 @@ public class Controller
 	public void MoveUnit(Unit unit, MapTile mapTile)
 	{
 		new CMoveUnit(model,unit,mapTile).Execute();
+	}
+
+	public void StartTurn()
+	{
+		new CStartTurn(model).Execute();
 	}
 
 	public byte[][] GetDistanceMatrix(Point position, int range)

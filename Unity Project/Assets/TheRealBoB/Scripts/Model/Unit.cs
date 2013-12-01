@@ -51,6 +51,12 @@ public class Unit : IComparable
 		else
 			throw new ArgumentException("Object is not a Unit");
 	}
+
+	public override string ToString ()
+	{
+		return string.Format ("[Unit: name={0}, baseStats={1}, team={2}, canAttack={3}, canMove={4}, mapTile={5}]", name, baseStats, team, canAttack, canMove, mapTile);
+	}
+	
 }
 
 

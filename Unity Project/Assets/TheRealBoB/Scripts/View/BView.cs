@@ -28,7 +28,7 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleInitialized);
 		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleUnitSpawned);
 		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleUnitActivated);
-		EventProxyManager.RegisterForEvent(EventName.PlayersTurnStarted, HandlePlayerTurnStarted);
+		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
 		EventProxyManager.RegisterForEvent(EventName.MoveActionSelected, HandleMoveSelected);
 		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleBMapTileTapped);
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleUnitMoved);
@@ -37,7 +37,7 @@ public class BView : MonoBehaviour
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
 		bCameraMover = GameObject.FindObjectOfType<BCameraMover>();
 		// start the game
-		controller = new Controller();
+		controller = new Controller(this);
 	}
 
 	#region event handler
@@ -63,11 +63,12 @@ public class BView : MonoBehaviour
 		bCameraMover.Focus(activeBUnit.gameObject);
 	}
 
-	void HandlePlayerTurnStarted(object sender, EventArgs args)
+	void HandleTurnStarted(object sender, EventArgs args)
 	{
-		UnitActivatedEvent e = args as UnitActivatedEvent;
+		TurnStartedEvent e = args as TurnStartedEvent;
 		BUnit bUnit = GetBUnit(e.unit);
-		bUnit.PopupCombatMenu();
+		if(e.unit.team == Unit.Team.PLAYER)
+			bUnit.PopupCombatMenu();
 	}
 
 	void HandleMoveSelected (object sender, EventArgs args)

@@ -40,6 +40,7 @@ public class CMoveUnit : ICommand
 		// we are now sure, that unit is allowed to move and target is in range
 		// now performce actual move
 		model.MoveUnit(unit, target);
+		unit.canMove = false;
 
 		// after everything is done here let's fire an event to notify others
 		EventProxyManager.FireEvent(EventName.UnitMoved,this,new UnitMovedEvent(unit, path));
