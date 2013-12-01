@@ -6,15 +6,16 @@ public class Model
 	// representation of the map
 	public MapTile[][] mapTiles;
 	// all units in the game
-	List<Unit> units = new List<Unit>();
+	public List<Unit> units = new List<Unit>();
+    public Unit activeUnit;
 	// stores the current combat stiuation
-	Combat combat;
+	public Combat combat;
 
 	public Model() 
 	{
 	}
 
-	public void Init(int mapWidth, int mapHeight)
+	public void InitMap(int mapWidth, int mapHeight)
 	{
 		// init 1st dimension 
 		mapTiles = new MapTile[mapWidth][];
@@ -28,20 +29,34 @@ public class Model
 			}
 		}
 		// map is now initiliazed
-		EventProxyManager.Instance.FireEvent(EventName.Initialized, this, new MapInitializedEvent (mapTiles));
+		EventProxyManager.FireEvent(EventName.Initialized, this, new MapInitializedEvent (mapTiles));
 	}
 
-	public void SpawnUnit(MapTile mapTile)
+    public void InitCombat()
+    {
+        combat = new Combat();
+        combat.SetupRound(units);
+    }
+
+	public void SpawnUnit(MapTile mapTile, Unit.Team team)
 	{
 		// IMPORTANT! Keep refence synced
 		Unit unit = new Unit();
 		unit.mapTile = mapTile;
 		mapTile.unit = unit;
+
+		// add unit to list
+		units.Add(unit);
+
 		// unit is spawned
-		EventProxyManager.Instance.FireEvent(EventName.UnitSpawned, this, new UnitSpawnedEvent (unit));
+		EventProxyManager.FireEvent(EventName.UnitSpawned, this, new UnitSpawnedEvent (unit));
 	}
 
-
+    public void ActivateUnit(Unit unit)
+    {
+        activeUnit = unit;
+		EventProxyManager.FireEvent(EventName.UnitActivated, this, new UnitActivatedEvent(unit));
+    }
 }
 
 public class MapInitializedEvent : System.EventArgs
@@ -59,6 +74,16 @@ public class UnitSpawnedEvent : System.EventArgs
 	public Unit unit;
 
 	public UnitSpawnedEvent (Unit unit)
+	{
+		this.unit = unit;
+	}
+}
+
+public class UnitActivatedEvent : System.EventArgs
+{
+	public Unit unit;
+
+	public UnitActivatedEvent (Unit unit)
 	{
 		this.unit = unit;
 	}

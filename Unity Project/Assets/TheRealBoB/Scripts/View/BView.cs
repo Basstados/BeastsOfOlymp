@@ -1,19 +1,33 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class BView : MonoBehaviour
 {
 	public GameObject bMapTilePrefab;
 	public GameObject bUnitPrefab;
+	public GameObject bCombatMenuPrefab;
 
 	BMapTile[][] bMapTiles;
 	List<BUnit> bUnits = new List<BUnit>();
+	
+	BCombatMenu bCombatMenu;
 
 	void Awake() {
-		EventProxyManager.Instance.RegisterForEvent(EventName.Initialized, HandleInitialized);
-		EventProxyManager.Instance.RegisterForEvent(EventName.UnitSpawned, HandleUnitSpawned);
-		Controller controller = new Controller ();
+		Init();
+	}
+
+	void Init() {
+		// register event
+		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleInitialized);
+		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleUnitSpawned);
+		EventProxyManager.RegisterForEvent(EventName.PlayersTurnStarted, HandlePlayerTurnStarted);
+		// find scene references
+		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
+
+		// start the game
+		Controller controller = new Controller();
 	}
 
 	void HandleInitialized(object sender, EventArgs args)
@@ -23,7 +37,7 @@ public class BView : MonoBehaviour
 		}
 	}
 
-	void HandleUnitSpawned (object sender, EventArgs args)
+	void HandleUnitSpawned(object sender, EventArgs args)
 	{
 		UnitSpawnedEvent e = args as UnitSpawnedEvent;
 
@@ -32,16 +46,24 @@ public class BView : MonoBehaviour
 		go.transform.position = GetBMapTile(e.unit.mapTile).transform.position;
 		// set references 
 		BUnit bUnit = go.GetComponent<BUnit>();
-		bUnit.unit = e.unit;
+		bUnit.Init(e.unit, bCombatMenu);
 		// add to list
 		bUnits.Add(bUnit);
+	}
+
+	void HandlePlayerTurnStarted(object sender, EventArgs args)
+	{
+		UnitActivatedEvent e = args as UnitActivatedEvent;
+		BUnit bUnit = GetBUnit(e.unit);
+		bUnit.PopupCombatMenu();
 	}
 
 	/// <summary>
 	/// Instatiates the map grid.
 	/// </summary>
 	/// <param name="mapTiles">Reference to the mapTile instances</param>
-	void InstatiateMap(MapTile[][] mapTiles) {
+	void InstatiateMap(MapTile[][] mapTiles) 
+	{
 		bMapTiles = new BMapTile[mapTiles.Length][];
 
 		for (int i = 0; i < bMapTiles.Length; i++) {
@@ -62,8 +84,14 @@ public class BView : MonoBehaviour
 		}
 	}
 
-	BMapTile GetBMapTile(MapTile mapTile) {
+	BMapTile GetBMapTile(MapTile mapTile) 
+	{
 		return bMapTiles[mapTile.x][mapTile.y];
+	}
+
+	BUnit GetBUnit(Unit unit)
+	{
+		return bUnits.Where(t => t.unit == unit).FirstOrDefault();
 	}
 }
 

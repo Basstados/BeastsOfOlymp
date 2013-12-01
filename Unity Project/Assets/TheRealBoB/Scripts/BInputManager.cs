@@ -46,7 +46,7 @@ public class BInputManager : MonoBehaviour {
 	
 				// fire event for the tapped mapTile
 				MapTile mapTile = hit.collider.GetComponent<BMapTile>().mapTile;
-				EventProxyManager.Instance.FireEvent(EventName.MapTileTapped,this, new MapTileTappedEvent(mapTile));
+				EventProxyManager.FireEvent(EventName.MapTileTapped,this, new MapTileTappedEvent(mapTile));
 			}
 		}
 	}
