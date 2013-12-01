@@ -63,7 +63,7 @@ public enum EventName {
 	UnitSpawned,
 	UnitActivated,
 	UnitMoved,
-	MapTileTapped,
+	BMapTileTapped,
     RoundSetup,
 	PlayersTurnStarted,
 	MoveActionSelected,
