@@ -80,7 +80,7 @@ namespace Algorithms
 
         #region Methods
         void FindPathStop();
-        List<PathFinderNode> FindPath(TestPoint start, TestPoint end);
+        List<PathFinderNode> FindPath(Point start, Point end);
         #endregion
 
     }

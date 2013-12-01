@@ -62,9 +62,6 @@ namespace Algorithms
 	
     public class PathFinder : IPathFinder
     {
-       // [System.Runtime.InteropServices.DllImport("KERNEL32.DLL", EntryPoint="RtlZeroMemory")]
-        //public unsafe static extern bool ZeroMemory(byte* destination, int length);
-
         #region Events
         public event PathFinderDebugHandler PathFinderDebug;
         #endregion
@@ -167,11 +164,11 @@ namespace Algorithms
 
         #region Methods
         public void FindPathStop()
-        {
+		{
             mStop = true;
         }
 
-        public List<PathFinderNode> FindPath(TestPoint start, TestPoint end)
+        public List<PathFinderNode> FindPath(Point start, Point end)
         {
            // HighResolutionTime.Start();
 
@@ -187,9 +184,9 @@ namespace Algorithms
 
             #if DEBUGON
             if (mDebugProgress && PathFinderDebug != null)
-                PathFinderDebug(0, 0, start.X, start.Y, PathFinderNodeType.Start, -1, -1);
+                PathFinderDebug(0, 0, start.x, start.y, PathFinderNodeType.Start, -1, -1);
             if (mDebugProgress && PathFinderDebug != null)
-                PathFinderDebug(0, 0, end.X, end.Y, PathFinderNodeType.End, -1, -1);
+                PathFinderDebug(0, 0, end.x, end.y, PathFinderNodeType.End, -1, -1);
             #endif
 
             sbyte[,] direction;
@@ -201,8 +198,8 @@ namespace Algorithms
             parentNode.G         = 0;
             parentNode.H         = mHEstimate;
             parentNode.F         = parentNode.G + parentNode.H;
-            parentNode.X         = start.X;
-            parentNode.Y         = start.Y;
+            parentNode.X         = start.x;
+            parentNode.Y         = start.y;
             parentNode.PX        = parentNode.X;
             parentNode.PY        = parentNode.Y;
             mOpen.Push(parentNode);
@@ -215,7 +212,7 @@ namespace Algorithms
                     PathFinderDebug(0, 0, parentNode.X, parentNode.Y, PathFinderNodeType.Current, -1, -1);
                 #endif
 
-                if (parentNode.X == end.X && parentNode.Y == end.Y)
+                if (parentNode.X == end.x && parentNode.Y == end.y)
                 {
                     mClose.Add(parentNode);
                     found = true;
@@ -301,24 +298,24 @@ namespace Algorithms
                     {
                         default:
                         case HeuristicFormula.Manhattan:
-                            newNode.H       = mHEstimate * (Math.Abs(newNode.X - end.X) + Math.Abs(newNode.Y - end.Y));
+                            newNode.H       = mHEstimate * (Math.Abs(newNode.X - end.x) + Math.Abs(newNode.Y - end.y));
                             break;
                         case HeuristicFormula.MaxDXDY:
-                            newNode.H       = mHEstimate * (Math.Max(Math.Abs(newNode.X - end.X), Math.Abs(newNode.Y - end.Y)));
+                            newNode.H       = mHEstimate * (Math.Max(Math.Abs(newNode.X - end.x), Math.Abs(newNode.Y - end.y)));
                             break;
                         case HeuristicFormula.DiagonalShortCut:
-                            int h_diagonal  = Math.Min(Math.Abs(newNode.X - end.X), Math.Abs(newNode.Y - end.Y));
-                            int h_straight  = (Math.Abs(newNode.X - end.X) + Math.Abs(newNode.Y - end.Y));
+                            int h_diagonal  = Math.Min(Math.Abs(newNode.X - end.x), Math.Abs(newNode.Y - end.y));
+                            int h_straight  = (Math.Abs(newNode.X - end.x) + Math.Abs(newNode.Y - end.y));
                             newNode.H       = (mHEstimate * 2) * h_diagonal + mHEstimate * (h_straight - 2 * h_diagonal);
                             break;
                         case HeuristicFormula.Euclidean:
-                            newNode.H       = (int) (mHEstimate * Math.Sqrt(Math.Pow((newNode.X - end.X) , 2) + Math.Pow((newNode.Y - end.Y), 2)));
+                            newNode.H       = (int) (mHEstimate * Math.Sqrt(Math.Pow((newNode.X - end.x) , 2) + Math.Pow((newNode.Y - end.y), 2)));
                             break;
                         case HeuristicFormula.EuclideanNoSQR:
-                            newNode.H       = (int) (mHEstimate * (Math.Pow((newNode.X - end.X) , 2) + Math.Pow((newNode.Y - end.Y), 2)));
+                            newNode.H       = (int) (mHEstimate * (Math.Pow((newNode.X - end.x) , 2) + Math.Pow((newNode.Y - end.y), 2)));
                             break;
                         case HeuristicFormula.Custom1:
-                            TestPoint dxy       = new TestPoint(Math.Abs(end.X - newNode.X), Math.Abs(end.Y - newNode.Y));
+                            TestPoint dxy       = new TestPoint(Math.Abs(end.x - newNode.X), Math.Abs(end.y - newNode.Y));
                             int Orthogonal  = Math.Abs(dxy.X - dxy.Y);
                             int Diagonal    = Math.Abs(((dxy.X + dxy.Y) - Orthogonal) / 2);
                             newNode.H       = mHEstimate * (Diagonal + Orthogonal + dxy.X + dxy.Y);
@@ -326,10 +323,10 @@ namespace Algorithms
                     }
                     if (mTieBreaker)
                     {
-                        int dx1 = parentNode.X - end.X;
-                        int dy1 = parentNode.Y - end.Y;
-                        int dx2 = start.X - end.X;
-                        int dy2 = start.Y - end.Y;
+                        int dx1 = parentNode.X - end.x;
+                        int dy1 = parentNode.Y - end.y;
+                        int dx2 = start.x - end.x;
+                        int dy2 = start.y - end.y;
                         int cross = Math.Abs(dx1 * dy2 - dx2 * dy1);
                         newNode.H = (int) (newNode.H + cross * 0.001);
                     }
@@ -381,6 +378,72 @@ namespace Algorithms
             mStopped = true;
             return null;
         }
+
+		/// <summary>
+		/// Calculate an distance matrix for a limited range.
+		/// The distance matrix tells you which fields are in range and how far they are.
+		/// </summary>
+		/// <returns>The distance matrix.</returns>
+		/// <param name="position">The position the distancematrix should be calulated</param>
+		/// <param name="range">The range limit</param>
+		public byte[][] GetDistanceMatrix(Point position, int range)
+		{
+			// init distance matrix
+			byte[][] distMatrix = new byte[mGrid.GetLength(0)][];
+
+			for (int i = 0; i < distMatrix.Length; i++) {
+				distMatrix[i] = new byte[mGrid.GetLength(1)];
+
+				for (int j = 0; j < distMatrix[i].Length; j++) {
+					distMatrix[i][j] = 0;
+				}
+			}
+
+			Queue<Point> checkOpen = new Queue<Point>();
+			List<Point> neighbours = new List<Point>();
+			Point currentPoint;
+
+			checkOpen.Enqueue(position);
+
+			while(checkOpen.Count > 0) {
+				currentPoint = checkOpen.Dequeue();
+				neighbours = GetNeighbours(currentPoint);
+				foreach(Point p in neighbours) {
+					// save cost for neighbour (= cost current point + penalty neighbour point)
+					byte cost = (byte) (distMatrix[currentPoint.x][currentPoint.y] + mGrid[p.x,p.y]);
+					// continue with this neighbour if
+					// 		cost is less then current know shortest distance OR current know shortest distance is not set
+					//		AND cost is in range
+					if((cost < distMatrix[p.x][p.y] || distMatrix[p.x][p.y] == 0) && cost <= range) {
+						distMatrix[p.x][p.y] = cost;
+						checkOpen.Enqueue(p);
+					}
+				}
+			}
+
+			return distMatrix;
+		}
+
+		private List<Point> GetNeighbours(Point position)
+		{
+			List<Point> neighbours = new List<Point>();
+			sbyte[][] direction = new sbyte[4][]{ 
+				new sbyte[2]{0,-1},
+				new sbyte[2]{1,0}, 
+				new sbyte[2]{0,1}, 
+				new sbyte[2]{-1,0}
+			};
+
+			foreach(sbyte[] dir in direction) {
+				// check if neighbour coordinates are on the grid
+				if(position.x + dir[0] > 0 && position.x + dir[0] < mGrid.GetLength(0)
+				   && position.y + dir[1] > 0 && position.y + dir[1] < mGrid.GetLength(1)) {
+					neighbours.Add(new Point(position.x + dir[0], position.y + dir[1]));
+				}
+			}
+
+			return neighbours;
+		}
         #endregion
 
         #region Inner Classes
