@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputTranslater : MonoBehaviour {
+public class Prototype_InputTranslater : MonoBehaviour {
 	
 	public Prototype_Map map;
 	public Camera uiCamera;
