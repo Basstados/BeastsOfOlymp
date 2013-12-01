@@ -3,6 +3,13 @@ using System.Collections;
 
 public class BInputManager : MonoBehaviour {
 
+	public InputPhase phase;
+
+	public enum InputPhase {
+		DEFAULT,
+		PICKTARGET
+	}
+
 	// Use this for initialization
 	void Start () {
 	
@@ -11,7 +18,7 @@ public class BInputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetButtonDown("Fire1")) {
+		if(Input.GetButtonDown("Fire1") && phase == InputPhase.PICKTARGET) {
 			OnTap();
 		}
 	}
@@ -40,24 +47,24 @@ public class BInputManager : MonoBehaviour {
 				// stop looking for map and stuff and just return
 				return;
 			}
-			
+
 			if( hit.collider.CompareTag("GridQuad") ) {
 				// we hit an quad of the map
 	
 				// fire event for the tapped mapTile
-				MapTile mapTile = hit.collider.GetComponent<BMapTile>().mapTile;
-				EventProxyManager.FireEvent(EventName.MapTileTapped,this, new MapTileTappedEvent(mapTile));
+				BMapTile bMapTile = hit.collider.GetComponent<BMapTile>();
+				EventProxyManager.FireEvent(EventName.BMapTileTapped,this, new BMapTileTappedEvent(bMapTile));
 			}
 		}
 	}
 }
 
 
-public class MapTileTappedEvent : System.EventArgs {
-	public MapTile mapTile;
+public class BMapTileTappedEvent : System.EventArgs {
+	public BMapTile bMapTile;
 	
-	public MapTileTappedEvent (MapTile mapTile)
+	public BMapTileTappedEvent (BMapTile bMapTile)
 	{
-		this.mapTile = mapTile;
+		this.bMapTile = bMapTile;
 	}
 }
