@@ -4,14 +4,30 @@ using System.Collections;
 public class BMapTile : MonoBehaviour {
 
 	public MapTile mapTile;
+	public ColorState colorState;
 
-	// Use this for initialization
-	void Start () {
-	
+	public enum ColorState {
+		INRANGE,
+		DEFAULT
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void ChangeColorState(BMapTile.ColorState colorState)
+	{
+		this.colorState = colorState;
+		renderer.material.color = GetStateColor();
+	}
+
+
+	Color GetStateColor()
+	{
+		switch(colorState) {
+		case ColorState.INRANGE:
+			return Color.green;
+			break;
+		case ColorState.DEFAULT:
+		default:
+			return Color.white;
+			break;
+		}
 	}
 }
