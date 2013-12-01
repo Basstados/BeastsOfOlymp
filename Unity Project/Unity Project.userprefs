@@ -1,15 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\View\BView.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\Control\Controller.cs">
     <Files>
-      <File FileName="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" Line="426" Column="3" />
-      <File FileName="Assets\TheRealBoB\Scripts\Model\Model.cs" Line="77" Column="26" />
-      <File FileName="Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" Line="37" Column="12" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="38" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="97" Column="56" />
-      <File FileName="Assets\TheRealBoB\Scripts\BInputManager.cs" Line="24" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\Control\Controller.cs" Line="55" Column="1" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BMapTile.cs" Line="13" Column="2" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Model\Model.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\BInputManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\Controller.cs" Line="18" Column="3" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BMapTile.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

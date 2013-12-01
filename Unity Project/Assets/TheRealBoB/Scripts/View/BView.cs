@@ -15,6 +15,7 @@ public class BView : MonoBehaviour
 	BUnit activeBUnit;
 	BCombatMenu bCombatMenu;
 	BInputManager bInputManager;
+	BCameraMover bCameraMover;
 
 	public Controller controller;
 
@@ -34,6 +35,7 @@ public class BView : MonoBehaviour
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
+		bCameraMover = GameObject.FindObjectOfType<BCameraMover>();
 		// start the game
 		controller = new Controller();
 	}
@@ -58,6 +60,7 @@ public class BView : MonoBehaviour
 		UnitActivatedEvent e = args as UnitActivatedEvent;
 
 		activeBUnit = GetBUnit(e.unit);
+		bCameraMover.Focus(activeBUnit.gameObject);
 	}
 
 	void HandlePlayerTurnStarted(object sender, EventArgs args)

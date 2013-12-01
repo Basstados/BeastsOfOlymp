@@ -10,15 +10,20 @@ public class BCombatMenu : MonoBehaviour {
 
 	BUnit bUnit;
 
+	void Update() 
+	{
+		if(panel.activeSelf) {
+			Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
+			screenPosition.x -= Screen.width/2;
+			screenPosition.y -= Screen.height/2;
+			transform.localPosition = screenPosition;
+		}
+	}
+
 	public void OpenForBUnit(BUnit bUnit) 
 	{
 		this.bUnit = bUnit;
-
-		Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
 		panel.SetActive(true);
-		screenPosition.x -= Screen.width/2;
-		screenPosition.y -= Screen.height/2;
-		transform.localPosition = screenPosition;
 		attackButton.gameObject.SetActive( bUnit.unit.canAttack );
 		moveButton.gameObject.SetActive( bUnit.unit.canMove );
 	}

@@ -19,7 +19,7 @@ public class Controller
 		// TODO try to read this from an json-file
 		model = new Model();
 		model.InitMap(10, 10);
-		model.SpawnUnit(model.mapTiles[5][5], Unit.Team.PLAYER);
+		model.SpawnUnit(model.mapTiles[2][2], Unit.Team.PLAYER);
 		model.InitCombat();
 	}
 

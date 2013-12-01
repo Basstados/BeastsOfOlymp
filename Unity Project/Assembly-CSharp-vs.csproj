@@ -207,6 +207,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\IPathFinder.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PriorityQueueB.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\DevelopPanel\ToggleButton.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxy.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\GameState\Combat.cs" />
@@ -218,6 +219,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\Camera\BCameraMover.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
