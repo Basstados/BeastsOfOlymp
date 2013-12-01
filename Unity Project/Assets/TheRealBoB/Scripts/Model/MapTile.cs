@@ -17,6 +17,7 @@ public class MapTile
 	{
 		this.x = x;
 		this.y = y;
+		this.penalty = 1;
 	}
 }
 
