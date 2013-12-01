@@ -10,8 +10,8 @@ public class PathfindingTest : MonoBehaviour {
 	public UILabel labelBruteforce;
 	public UILabel labelAStar;
 
-	TestPoint start;
-	TestPoint goal;
+	Point start;
+	Point goal;
 
 	// Use this for initialization
 	void Start () {
@@ -30,8 +30,8 @@ public class PathfindingTest : MonoBehaviour {
 		}
 
 		// select 2 random points on the map
-		start = new TestPoint( UnityEngine.Random.Range(0, quadMatrix.GetLength(0)), UnityEngine.Random.Range(0, quadMatrix.GetLength(1)), 1);
-		goal = new TestPoint( UnityEngine.Random.Range(0, quadMatrix.GetLength(0)), UnityEngine.Random.Range(0, quadMatrix.GetLength(1)), 1);
+		start = new Point( UnityEngine.Random.Range(0, quadMatrix.GetLength(0)), UnityEngine.Random.Range(0, quadMatrix.GetLength(1)));
+		goal = new Point( UnityEngine.Random.Range(0, quadMatrix.GetLength(0)), UnityEngine.Random.Range(0, quadMatrix.GetLength(1)));
 
 		Debug.Log("Start: " + start.ToString() );
 		Debug.Log("Goal: " + goal.ToString() );

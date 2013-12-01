@@ -298,15 +298,15 @@ public class Prototype_Map : MonoBehaviour {
 			return result;
 		}
 
-		TestPoint myPos = new TestPoint(start[0], start[1]);
-		TestPoint targetPos = new TestPoint(goal[0], goal[1]);
+		Point myPos = new Point(start[0], start[1]);
+		Point targetPos = new Point(goal[0], goal[1]);
 
 		byte[,] grid = new byte[quadMatrix.GetLength(0),quadMatrix.GetLength(1)];
 		for( int i=0; i< quadMatrix.GetLength(0); i++ ) {
 			for( int j=0; j<quadMatrix.GetLength(1); j++ ) {
 				grid[i,j] = (quadMatrix[i,j].penalty > 0) ? (byte) 1 : (byte) 0;
 				// grid value for our current pos should be 1, otherwise we get into trouble
-				if( (i == myPos.X && j == myPos.Y) || (i == targetPos.X && j == targetPos.Y ) ){
+				if( (i == myPos.x && j == myPos.y) || (i == targetPos.x && j == targetPos.y ) ){
 					grid[i,j] = 1;
 				}
 			}

@@ -83,23 +83,23 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 	public void ChooseMoveDestination() {
 		int range = puppet.movement_range;
 
-		TestPoint myPos = new TestPoint((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
-		TestPoint targetPos = new TestPoint((int) target.CurrentPos.x, (int) target.CurrentPos.y);
+		Point myPos = new Point((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
+		Point targetPos = new Point((int) target.CurrentPos.x, (int) target.CurrentPos.y);
 		
 		// find closed field to me, next to target
 		/*TestPoint targetField = targetPos;
 		int minDst = int.MaxValue;
 
 		// get list of all neighbour fields for targetPos
-		int[] x = new int[]{targetPos.X + 1, targetPos.X, targetPos.X - 1, targetPos.X};
-		int[] y = new int[]{targetPos.Y, targetPos.Y + 1, targetPos.Y, targetPos.Y - 1};
+		int[] x = new int[]{targetPos.x + 1, targetPos.x, targetPos.x - 1, targetPos.x};
+		int[] y = new int[]{targetPos.y, targetPos.y + 1, targetPos.y, targetPos.y - 1};
 
 		for( int i=0; i<x.Length; i++ ) {
 			// check if field is inside map
 			if( x[i] > 0 && x[i] < map.QuadMatrix.GetLength(0)
 			   && y[i] > 0 && y[i] < map.QuadMatrix.GetLength(1) ) {
 				// calulcate distance with infinty norm
-				int dst = Mathf.Abs( x[i] - myPos.X ) + Mathf.Abs( y[i] - myPos.Y );
+				int dst = Mathf.Abs( x[i] - myPos.x ) + Mathf.Abs( y[i] - myPos.y );
 				if( dst < minDst ) {
 					targetField = new TestPoint(x[i], y[i]);
 					minDst = dst;
@@ -113,7 +113,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 			for( int j=0; j<map.QuadMatrix.GetLength(1); j++ ) {
 				grid[i,j] = (map.QuadMatrix[i,j].penalty > 0) ? (byte) 1 : (byte) 0;
 				// grid value for our current pos should be 1, otherwise we get into trouble
-				if( (i == myPos.X && j == myPos.Y) || (i == targetPos.X && j == targetPos.Y ) ){
+				if( (i == myPos.x && j == myPos.y) || (i == targetPos.x && j == targetPos.y ) ){
 					grid[i,j] = 1;
 				}
 			}
@@ -160,7 +160,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 		Debug.Log( str );
 		GetComponent<GridMoveAnimation>().StartMoveAnimation( wps );
 		// update saved monster list
-		Vector2 oldPos = new Vector2( myPos.X, myPos.Y );
+		Vector2 oldPos = new Vector2( myPos.x, myPos.y );
 		Vector2 newPos = new Vector2( destination[0], destination[1] );
 		map.MoveMonster( puppet, puppet.CurrentPos, newPos );
 		puppet.CurrentPos = newPos;
