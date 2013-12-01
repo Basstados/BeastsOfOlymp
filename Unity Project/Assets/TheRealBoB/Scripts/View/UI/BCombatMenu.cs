@@ -8,8 +8,12 @@ public class BCombatMenu : MonoBehaviour {
 	public UIButton attackButton;
 	public UIButton moveButton;
 
+	BUnit bUnit;
+
 	public void OpenForBUnit(BUnit bUnit) 
 	{
+		this.bUnit = bUnit;
+
 		Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
 		panel.SetActive(true);
 		screenPosition.x -= Screen.width/2;
@@ -28,11 +32,21 @@ public class BCombatMenu : MonoBehaviour {
 	public void ActionMove() 
 	{
 		panel.SetActive( false );
-		EventProxyManager.FireEvent(EventName.MoveActionSelected,this,null);
+		EventProxyManager.FireEvent(EventName.MoveActionSelected,this,new MoveActionSelectedEvent(bUnit));
 	}
 	
 	public void Hide() 
 	{
 		panel.SetActive( false );
+	}
+}
+
+public class MoveActionSelectedEvent : System.EventArgs
+{
+	public BUnit bUnit;
+
+	public MoveActionSelectedEvent (BUnit bUnit)
+	{
+		this.bUnit = bUnit;
 	}
 }
