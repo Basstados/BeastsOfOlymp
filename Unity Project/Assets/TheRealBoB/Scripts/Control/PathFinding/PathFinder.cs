@@ -436,8 +436,8 @@ namespace Algorithms
 
 			foreach(sbyte[] dir in direction) {
 				// check if neighbour coordinates are on the grid
-				if(position.x + dir[0] > 0 && position.x + dir[0] < mGrid.GetLength(0)
-				   && position.y + dir[1] > 0 && position.y + dir[1] < mGrid.GetLength(1)) {
+				if(position.x + dir[0] >= 0 && position.x + dir[0] < mGrid.GetLength(0)
+				   && position.y + dir[1] >= 0 && position.y + dir[1] < mGrid.GetLength(1)) {
 					neighbours.Add(new Point(position.x + dir[0], position.y + dir[1]));
 				}
 			}
