@@ -7,6 +7,7 @@ public class BCombatMenu : MonoBehaviour {
 	public GameObject panel;
 	public UIButton attackButton;
 	public UIButton moveButton;
+	public UIButton backButton;
 
 	BUnit bUnit;
 
@@ -24,34 +25,42 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		this.bUnit = bUnit;
 		panel.SetActive(true);
-		attackButton.gameObject.SetActive( bUnit.unit.canAttack );
-		moveButton.gameObject.SetActive( bUnit.unit.canMove );
+		attackButton.gameObject.SetActive(bUnit.unit.canAttack);
+		moveButton.gameObject.SetActive(bUnit.unit.canMove);
+		backButton.gameObject.SetActive(false);
 	}
 	
 	public void ActionAttack() 
 	{
-		panel.SetActive( false );
-		EventProxyManager.FireEvent(EventName.AttackActionSelected,this,null);
+		panel.SetActive(false);
+		backButton.gameObject.SetActive(true);
+		//EventProxyManager.FireEvent(EventName.AttackActionSelected,this,null);
 	}
 	
 	public void ActionMove() 
 	{
-		panel.SetActive( false );
-		EventProxyManager.FireEvent(EventName.MoveActionSelected,this,new MoveActionSelectedEvent(bUnit));
+		panel.SetActive(false);
+		backButton.gameObject.SetActive(true);
+		bUnit.DisplayMovementRange();
+	}
+
+	public void Back()
+	{
+		panel.SetActive(true);
+		backButton.gameObject.SetActive(false);
+		bUnit.ClearDisplayRange();
+	}
+
+	public void ActionCompleted()
+	{
+		if(bUnit.unit.canMove || bUnit.unit.canMove)
+			OpenForBUnit (bUnit);
+		else
+			backButton.gameObject.SetActive(false);
 	}
 	
 	public void Hide() 
 	{
-		panel.SetActive( false );
-	}
-}
-
-public class MoveActionSelectedEvent : System.EventArgs
-{
-	public BUnit bUnit;
-
-	public MoveActionSelectedEvent (BUnit bUnit)
-	{
-		this.bUnit = bUnit;
+		panel.SetActive(false);
 	}
 }

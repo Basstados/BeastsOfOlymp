@@ -29,7 +29,6 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleUnitSpawned);
 		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleUnitActivated);
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
-		EventProxyManager.RegisterForEvent(EventName.MoveActionSelected, HandleMoveSelected);
 		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleBMapTileTapped);
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleUnitMoved);
 		// find scene references
@@ -71,12 +70,6 @@ public class BView : MonoBehaviour
 			bUnit.PopupCombatMenu();
 	}
 
-	void HandleMoveSelected (object sender, EventArgs args)
-	{
-		MoveActionSelectedEvent e = args as MoveActionSelectedEvent;
-		e.bUnit.DisplayMovementRange();
-	}
-
 	void HandleBMapTileTapped (object sender, EventArgs args)
 	{
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
@@ -95,10 +88,7 @@ public class BView : MonoBehaviour
 		// send movement path to BUnit
 		GetBUnit(e.unit).MoveAlongPath(path);
 
-		// clean up map color
-		foreach(BMapTile[] column in bMapTiles)
-			foreach(BMapTile tile in column)
-				tile.ChangeColorState(BMapTile.ColorState.DEFAULT);
+		CleanMap();
 	}
 
 	#endregion
@@ -164,6 +154,16 @@ public class BView : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	/// <summary>
+	/// Change color of all MapTile to default.
+	/// </summary>
+	public void CleanMap ()
+	{
+		foreach(BMapTile[] column in bMapTiles)
+			foreach(BMapTile tile in column)
+				tile.ChangeColorState(BMapTile.ColorState.DEFAULT);
 	}
 
 	/// <summary>

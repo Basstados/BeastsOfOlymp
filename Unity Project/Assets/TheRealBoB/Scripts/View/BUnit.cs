@@ -33,6 +33,12 @@ public class BUnit : MonoBehaviour {
 		context.DisplayRange(this, unit.MovementRange);
 	}
 
+	public void ClearDisplayRange ()
+	{
+		action = Action.IDLE;
+		context.CleanMap();
+	}
+
 	public void SetTarget(BMapTile bMapTile)
 	{
 		switch(action) {
@@ -52,6 +58,9 @@ public class BUnit : MonoBehaviour {
 	{
 		//TODO implement fancy animated movement
 		transform.position = path[path.Length-1].transform.position;
+
+		if (unit.canMove || unit.canAttack)
+			PopupCombatMenu ();
 	}
 
 }
