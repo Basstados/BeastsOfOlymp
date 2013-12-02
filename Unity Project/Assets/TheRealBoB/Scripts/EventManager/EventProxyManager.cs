@@ -17,7 +17,7 @@ public class EventProxyManager
 
 	Dictionary<EventName, EventProxy> proxyDict = new Dictionary<EventName, EventProxy>();
 
-    #region exterior
+    #region external
     public static void FireEvent(EventName name, object sender, EventArgs args)
     {
         Instance._FireEvent(name, sender, args);
@@ -34,7 +34,8 @@ public class EventProxyManager
     }
 
     #endregion
-    #region interior
+
+    #region internal
     void _FireEvent(EventName name, object sender, EventArgs args)
 	{
 		if (proxyDict.ContainsKey(name))

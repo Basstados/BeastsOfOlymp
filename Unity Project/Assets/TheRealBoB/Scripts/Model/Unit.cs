@@ -47,7 +47,7 @@ public class Unit : IComparable
 
 		Unit otherUnit = obj as Unit;
 		if (otherUnit != null) 
-			return this.Speed.CompareTo(otherUnit.Speed);
+			return otherUnit.Speed.CompareTo(this.Speed);
 		else
 			throw new ArgumentException("Object is not a Unit");
 	}
