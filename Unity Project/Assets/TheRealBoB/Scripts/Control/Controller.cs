@@ -45,9 +45,12 @@ public class Controller
 		new CMoveUnit(model,unit,mapTile).Execute();
 	}
 
-	public void StartTurn()
+	public void EndTurn()
 	{
-		new CStartTurn(model).Execute();
+		if (model.combat.TurnsLeft () > 0)
+			new CStartTurn (model).Execute ();
+		else
+			model.combat.SetupRound (model.units);
 	}
 
 	public byte[][] GetDistanceMatrix(Point position, int range)

@@ -24,6 +24,11 @@ public class Combat
 		return unitQueue.Dequeue();
     }
 
+	public int TurnsLeft()
+	{
+		return unitQueue.Count;
+	}
+
 	void FillUnitQueue(List<Unit> unitList) 
 	{
 		// sort unit list

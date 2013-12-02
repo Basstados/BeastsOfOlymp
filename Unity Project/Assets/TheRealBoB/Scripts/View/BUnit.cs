@@ -54,6 +54,11 @@ public class BUnit : MonoBehaviour {
 		action = Action.IDLE;
 	}
 
+	public void EndTurn()
+	{
+		context.EndTurn();
+	}
+
 	public void MoveAlongPath(BMapTile[] path)
 	{
 		//TODO implement fancy animated movement

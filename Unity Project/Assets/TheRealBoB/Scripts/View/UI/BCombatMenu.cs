@@ -44,6 +44,12 @@ public class BCombatMenu : MonoBehaviour {
 		bUnit.DisplayMovementRange();
 	}
 
+	public void ActionEndTurn()
+	{
+		Hide();
+		bUnit.EndTurn();
+	}
+
 	public void Back()
 	{
 		panel.SetActive(true);

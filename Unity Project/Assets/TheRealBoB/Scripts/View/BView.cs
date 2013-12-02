@@ -167,6 +167,14 @@ public class BView : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Ends the turn.
+	/// </summary>
+	public void EndTurn ()
+	{
+		controller.EndTurn();
+	}
+
+	/// <summary>
 	/// Gets the BMapTile representation for a MapTile
 	/// </summary>
 	/// <returns>The BMapTile.</returns>
