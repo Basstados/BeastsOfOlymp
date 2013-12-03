@@ -14,14 +14,15 @@ public class Controller
 	}
 
 	void Init() {
+		Database.LoadFromFile();
+		MapData mapData = Database.GetMapData();
+
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
 
 		// TODO try to read this from an json-file
 		model = new Model();
-		model.InitMap(10, 10);
-		model.SpawnUnit(model.mapTiles[2][2], Unit.Team.PLAYER);
-		model.SpawnUnit(model.mapTiles[6][2], Unit.Team.PLAYER);
-		model.mapTiles[6][2].unit.baseStats.speed = 5;
+		model.InitMap(mapData);
+		model.InitUnits(mapData);
 		model.InitCombat();
 
 		// this is just for debugging/develop builds an be removed savely

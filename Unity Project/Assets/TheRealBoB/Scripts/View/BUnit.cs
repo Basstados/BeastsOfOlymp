@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BUnit : MonoBehaviour {
@@ -30,7 +30,7 @@ public class BUnit : MonoBehaviour {
 	public void DisplayMovementRange()
 	{
 		action = Action.MOVE;
-		context.DisplayRange(this, unit.MovementRange);
+		context.DisplayRange(this, unit.Movement);
 	}
 
 	public void ClearDisplayRange ()

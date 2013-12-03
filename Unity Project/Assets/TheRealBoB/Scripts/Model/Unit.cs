@@ -5,15 +5,15 @@ using System.Collections;
 public class Unit : IComparable
 {
 	public string name;
-	public UnitBaseStats baseStats;
+	public UnitData data;
 	public MapTile mapTile { get; set; }
 	public Team team;
 	public bool canAttack;
 	public bool canMove;
 
 	#region properties
-	public int Speed 			{get{return this.baseStats.speed;}}
-	public int MovementRange 	{get{return this.baseStats.movementRange;}}
+	public int Initiative 			{get{return this.data.baseInitiative;}}
+	public int Movement 	{get{return this.data.baseMovement;}}
 	#endregion
 
 	public bool AIControled
@@ -26,8 +26,8 @@ public class Unit : IComparable
 
 	public enum Team 
 	{
-		PLAYER,
-		AI
+		PLAYER = 0,
+		AI = 1
 	}
 
 	public void ResetTurn()
@@ -47,16 +47,10 @@ public class Unit : IComparable
 
 		Unit otherUnit = obj as Unit;
 		if (otherUnit != null) 
-			return otherUnit.Speed.CompareTo(this.Speed);
+			return otherUnit.Initiative.CompareTo(this.Initiative);
 		else
 			throw new ArgumentException("Object is not a Unit");
 	}
-
-	public override string ToString ()
-	{
-		return string.Format ("[Unit: name={0}, baseStats={1}, team={2}, canAttack={3}, canMove={4}, mapTile={5}]", name, baseStats, team, canAttack, canMove, mapTile);
-	}
-	
 }
 
 

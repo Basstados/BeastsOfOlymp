@@ -16,21 +16,36 @@ public class Model
 	{
 	}
 
-	public void InitMap(int mapWidth, int mapHeight)
+	public void InitMap(MapData mapData)
 	{
 		// init 1st dimension 
-		mapTiles = new MapTile[mapWidth][];
-		
-		for (int i = 0; i < mapWidth; i++) {
+		mapTiles = new MapTile[mapData.width][];
+
+		// instantiate maptile from mapData
+		for (int i = 0; i < mapData.width; i++) {
 			// init 2nd dimension
-			mapTiles[i] = new MapTile[mapHeight];
+			mapTiles[i] = new MapTile[mapData.height];
 			
-			for (int j = 0; j < mapHeight; j++) {
+			for (int j = 0; j < mapData.height; j++) {
 				mapTiles[i][j] = new MapTile(i,j);
+				mapTiles[i][j].penalty = mapData.penaltys[i][j];
 			}
 		}
+
 		// map is now initiliazed
 		EventProxyManager.FireEvent(EventName.Initialized, this, new MapInitializedEvent (mapTiles));
+	}
+
+	public void InitUnits(MapData mapData)
+	{
+		// spawn units for all teams
+		int teamID = 0;
+		foreach(MapData.TeamUnit[] team in mapData.teamUnits) {
+			foreach(MapData.TeamUnit tUnit in team) {
+				SpawnUnit(mapTiles[tUnit.position.x][tUnit.position.y], (Unit.Team)teamID, tUnit.name);
+			}
+			teamID++;
+		}
 	}
 
     public void InitCombat()
@@ -79,15 +94,14 @@ public class Model
 		return cost;
 	}
 
-	public void SpawnUnit(MapTile mapTile, Unit.Team team)
+	public void SpawnUnit(MapTile mapTile, Unit.Team team, string name)
 	{
 		// IMPORTANT! Keep refence synced
 		Unit unit = new Unit();
 		unit.mapTile = mapTile;
 		mapTile.unit = unit;
 
-		// TODO remove since its only a test
-		unit.baseStats.movementRange = 2;
+		UnitData unitData = Database.GetUnitData(name);
 
 		// add unit to list
 		units.Add(unit);

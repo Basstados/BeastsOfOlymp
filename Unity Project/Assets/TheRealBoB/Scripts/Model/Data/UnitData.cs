@@ -2,11 +2,13 @@
 using System.Collections;
 
 [System.Serializable]
-public struct UnitData {
-
+public struct UnitData 
+{
 	public string name;
-	public int maxHealthPoints;
-	public int attackPoints;
-	public int movementRange;
-	public int initiative;
+	public int baseHealth;
+	public int baseAttack;
+	public int baseMovement;
+	public int baseInitiative;
+	public int baseActionPoints;
+	public string[] attackNames;
 }

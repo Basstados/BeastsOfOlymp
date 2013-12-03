@@ -34,7 +34,7 @@ public class CMoveUnit : ICommand
 		MapTile[] path = model.ConvertPathToMapTiles(result);
 		int cost = model.GetPathCost(path);
 		// stop if target is to for unit move
-		if(cost > unit.MovementRange)
+		if(cost > unit.Movement)
 			return;
 
 		// we are now sure, that unit is allowed to move and target is in range

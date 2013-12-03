@@ -215,8 +215,9 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatState\Combat.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\AttackCollection.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\Database.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\MapData.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\UnitCollection.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\UnitData.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\UnitDatabase.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\MapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Model.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit.cs" />
@@ -227,7 +228,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Camera\BCameraMover.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\_Temp\JSONdbTest.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\_Temp\DatabaseToFile.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
@@ -235,7 +236,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
-     <None Include="Assets\Resources\BeastList.xml" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
@@ -255,7 +255,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\NGUI\Examples\Other\French.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
-     <None Include="Assets\Resources\attacks.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
