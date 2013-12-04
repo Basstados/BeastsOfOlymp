@@ -3,22 +3,22 @@ using System;
 public class CStartTurn : ICommand
 {
 	Model model;
+	Controller controller;
 
-	public CStartTurn (Model model)
+	public CStartTurn (Model model, Controller controller)
 	{
 		this.model = model;
+		this.controller = controller;
 	}
 
 	public void Execute()
 	{
 		Unit unit = model.combat.GetNextUnit ();
-		int i = 0;
-		while(!unit.Alive && i < model.units.Count) {
-			unit = model.combat.GetNextUnit ();
-			i++;
-		}
 
-		//TODO do something if no unit is alive
+		if(!unit.Alive) {
+			controller.EndTurn();
+			return;
+		}
 
 		model.ActivateUnit(unit);
 		EventProxyManager.FireEvent (EventName.TurnStarted, this, new TurnStartedEvent (unit));

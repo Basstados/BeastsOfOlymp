@@ -25,8 +25,8 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		this.bUnit = bUnit;
 		panel.SetActive(true);
-		attackButton.gameObject.SetActive(bUnit.unit.canAttack);
-		moveButton.gameObject.SetActive(bUnit.unit.canMove);
+		attackButton.gameObject.SetActive(bUnit.unit.CanAttack);
+		moveButton.gameObject.SetActive(bUnit.unit.CanMove);
 		backButton.gameObject.SetActive(false);
 	}
 	
@@ -59,7 +59,7 @@ public class BCombatMenu : MonoBehaviour {
 
 	public void ActionCompleted()
 	{
-		if(bUnit.unit.canMove || bUnit.unit.canAttack)
+		if(bUnit.unit.CanMove || bUnit.unit.CanAttack)
 			OpenForBUnit (bUnit);
 		else
 			backButton.gameObject.SetActive(false);

@@ -8,7 +8,7 @@ public class MapTile
 	// 1 = default
 	public byte penalty;
 	// which unit is sitting here
-	public Unit unit;
+	public Unit unit = new Unit();
 	// coordinates
 	public int x;
 	public int y;

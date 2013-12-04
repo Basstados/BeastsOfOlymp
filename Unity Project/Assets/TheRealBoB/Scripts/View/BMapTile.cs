@@ -6,9 +6,16 @@ public class BMapTile : MonoBehaviour {
 	public MapTile mapTile;
 	public ColorState colorState;
 
+	Color defaultColor;
+
 	public enum ColorState {
 		INRANGE,
 		DEFAULT
+	}
+
+	void Start() 
+	{
+		defaultColor = renderer.material.color;
 	}
 
 	public void ChangeColorState(BMapTile.ColorState colorState)
@@ -23,11 +30,9 @@ public class BMapTile : MonoBehaviour {
 		switch(colorState) {
 		case ColorState.INRANGE:
 			return Color.green;
-			break;
 		case ColorState.DEFAULT:
 		default:
-			return Color.white;
-			break;
+			return defaultColor;
 		}
 	}
 }

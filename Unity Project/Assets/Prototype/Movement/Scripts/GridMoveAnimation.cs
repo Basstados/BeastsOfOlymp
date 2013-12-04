@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GridMoveAnimation : MonoBehaviour {
 	
-	public Animation animation;
+//	public Animation animation;
 	public GameObject waypointGO;
 	
 	private bool run = false;
@@ -13,7 +13,7 @@ public class GridMoveAnimation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if( run ) {
-			float distance = (wps[nextWp] - transform.position).magnitude;
+//			float distance = (wps[nextWp] - transform.position).magnitude;
 			
 			Vector3 move = (wps[nextWp] - wps[nextWp-1]);
 			move = transform.InverseTransformDirection( move );

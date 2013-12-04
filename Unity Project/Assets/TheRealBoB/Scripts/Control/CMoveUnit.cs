@@ -41,9 +41,9 @@ public class CMoveUnit : ICommand
 		// now performce actual move
 		model.MoveUnit(unit, target);
 		unit.UseAP(cost);
-		unit.canMove = false;
+		unit.CanMove = false;
 
-		if(unit.ActionPoints == 0)
+		if(!unit.CanAttack)
 			controller.EndTurn();
 
 		// after everything is done here let's fire an event to notify others

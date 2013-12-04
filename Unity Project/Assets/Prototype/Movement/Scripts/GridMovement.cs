@@ -15,7 +15,7 @@ public class GridMovement : MonoBehaviour {
 	
 	int[] currentPos = new int[2];
 	
-	bool pathSelected = false;
+//	bool pathSelected = false;
 	List<int[]> path = new List<int[]>();
 	
 	private GridMoveAnimation moveAnimation;

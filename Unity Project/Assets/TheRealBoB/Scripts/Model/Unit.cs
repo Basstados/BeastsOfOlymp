@@ -5,26 +5,32 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Unit : IComparable
 {
-	public string name;
-	public UnitData data;
+	public UnitData data = new UnitData();
 	public MapTile mapTile { get; set; }
-	public Team team;
+	public Team team ;
 	public Dictionary<string,Attack> attacks = new Dictionary<string, Attack>();
 
-	public bool canMove;
-	public bool canAttack;
+	bool canMove;
+	bool canAttack;
 	public string defaultAttack;
 	int apUsed = 0;
 	int currentHealth;
 
 	#region properties
-	public int 	Initiative 		{get{return this.data.baseInitiative;}}
-	public int 	Movement 		{get{return this.data.baseMovement;}}
-	public int	Attack			{get{return this.data.baseAttack;}}
-	public int 	ActionPoints 	{get{return this.data.baseActionPoints - apUsed;}}
-	public int 	HealthPoints	{get{return this.currentHealth;}}
-	public bool AIControled		{get{return team == Team.AI;}}
-	public bool Alive			{get{return (currentHealth > 0);}}
+	public string	Name				{get{return this.data.name;}}
+	public int 		Initiative 			{get{return this.data.baseInitiative;}}
+	public int 		Movement 			{get{return this.data.baseMovement;}}
+	public int		Attack				{get{return this.data.baseAttack;}}
+	public int 		ActionPoints 		{get{return this.data.baseActionPoints - apUsed;}}
+	public int		MaxActionPoints 	{get{return this.data.baseActionPoints;}}
+	public int 		HealthPoints		{get{return this.currentHealth;}}
+	public int		MaxHealthPoints		{get{return this.data.baseHealth;}}
+	public bool 	AIControled			{get{return team == Team.AI;}}
+	public bool 	Alive				{get{return (currentHealth > 0);}}
+	public bool 	CanMove				{get{return (canMove && ActionPoints > 0);}
+											set{canMove = value;}}
+	public bool		CanAttack			{get{return (canAttack && ActionPoints > attacks[defaultAttack].apCost);}
+											set{canAttack = value;}}
 	#endregion
 	
 	public enum Team 

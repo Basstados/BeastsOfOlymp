@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Combat
 {
 	public int round = 0;
-	Queue<Unit> unitQueue;
+	Queue<Unit> unitQueue = new Queue<Unit>();
 
     public void SetupRound(List<Unit> unitList)
     {

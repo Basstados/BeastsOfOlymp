@@ -160,7 +160,7 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 		Debug.Log( str );
 		GetComponent<GridMoveAnimation>().StartMoveAnimation( wps );
 		// update saved monster list
-		Vector2 oldPos = new Vector2( myPos.x, myPos.y );
+//		Vector2 oldPos = new Vector2( myPos.x, myPos.y );
 		Vector2 newPos = new Vector2( destination[0], destination[1] );
 		map.MoveMonster( puppet, puppet.CurrentPos, newPos );
 		puppet.CurrentPos = newPos;

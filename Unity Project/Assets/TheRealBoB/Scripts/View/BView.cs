@@ -97,7 +97,7 @@ public class BView : MonoBehaviour
 	void HandleUnitAttacked (object sender, EventArgs args)
 	{
 		UnitAttackedEvent e = args as UnitAttackedEvent;
-		Debug.Log("Hit: " + e.hit + " " + e.target.name + " " + e.target.HealthPoints);
+		Debug.Log("Hit: " + e.hit + " " + e.target.Name + " " + e.target.HealthPoints);
 		GetBUnit(e.source).PlayAttack(e.attack, e.hit);
 		GetBUnit(e.target).PlayHitAnimation(e.hit);
 		CleanMap();
@@ -142,7 +142,7 @@ public class BView : MonoBehaviour
 	/// </summary>
 	/// <param name="unit">The Unit we create an representation for</param>
 	void SpawnBUnit(Unit unit) {
-		GameObject go = Instantiate(bUnitPrefab) as GameObject;
+		GameObject go = (GameObject) Instantiate(bUnitPrefab);
 		// positioning
 		go.transform.position = GetBMapTile(unit.mapTile).transform.position;
 		// set references 

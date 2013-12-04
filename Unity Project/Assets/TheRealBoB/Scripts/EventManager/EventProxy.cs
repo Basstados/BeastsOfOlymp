@@ -7,7 +7,7 @@ public class EventProxy
 	public event EventProxyHandler EventFired;
 	
 	public void FireEvent(object sender, System.EventArgs e)
-	{	
+	{
 		if (EventFired != null)
 			EventFired(sender, e);
 	}

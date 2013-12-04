@@ -34,7 +34,7 @@ public class Controller
     void HandleRoundSetup(object sender, EventArgs args)
     {
         // after round setup start it
-		new CStartTurn(model).Execute();
+		new CStartTurn(model,this).Execute();
     }
 	
 	void HandleMapTileTapped(object sender, EventArgs args)
@@ -55,8 +55,9 @@ public class Controller
 
 	public void EndTurn()
 	{
-		if (model.combat.TurnsLeft () > 0)
-			new CStartTurn (model).Execute ();
+
+		if (model.combat.TurnsLeft() > 0)
+			new CStartTurn(model,this).Execute ();
 		else
 			model.combat.SetupRound (model.units);
 	}

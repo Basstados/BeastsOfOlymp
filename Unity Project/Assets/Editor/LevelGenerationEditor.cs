@@ -6,7 +6,6 @@ using System.Collections;
 public class LevelGenerationEditor : Editor {
 	
 	private LevelGeneration myTarget;
-	private float progress = 0.0f;
 	
 	void Awake() {
 		// Get target

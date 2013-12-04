@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BUnit : MonoBehaviour {
 
+	public UILabel label;
+
 	BView context;
 	Action action;
 
@@ -106,14 +108,20 @@ public class BUnit : MonoBehaviour {
 		}
 	}
 
-	public void Died ()
+	public void Died()
 	{
 		renderer.enabled = false;
+		label.enabled = false; 
 	}
 
-	private IEnumerator DamageFlash() {
+	private IEnumerator DamageFlash() 
+	{
 		renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
 		renderer.material.color = defaultColor;
+	}
+
+	void Update() {
+		label.text = unit.Name + " HP: " + unit.HealthPoints + "/" + unit.MaxHealthPoints + " AP: " + unit.ActionPoints + "/" + unit.MaxActionPoints;
 	}
 }

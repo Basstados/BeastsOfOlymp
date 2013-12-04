@@ -8,9 +8,9 @@ public class Model
 	public MapTile[][] mapTiles;
 	// all units in the game
 	public List<Unit> units = new List<Unit>();
-    public Unit activeUnit;
+    public Unit activeUnit = new Unit();
 	// stores the current combat stiuation
-	public Combat combat;
+	public Combat combat = new Combat();
 
 	public Model() 
 	{

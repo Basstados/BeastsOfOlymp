@@ -3,7 +3,7 @@ using System.Collections;
 
 public class skrInputTranslater : MonoBehaviour {
 
-	skrController controller;
+//	skrController controller;
 
 	public event System.EventHandler<skrMapTileTappedEvent> MapTileTapped;
 	void OnMapTileTapped(skrMapTile mapTile) {
@@ -13,7 +13,7 @@ public class skrInputTranslater : MonoBehaviour {
 
 	public void Init(skrController controller) {
 		// TODO move the event registration to another place, doesn't make sense here :/
-		this.controller = controller;
+//		this.controller = controller;
 		MapTileTapped += controller.HandleMapTileTapped;
 	}
 	

@@ -8,12 +8,12 @@ public class Prototype_Attack {
 	int damage;
 	int range;
 	
-	GameObject source;
+//	GameObject source;
 	
 	public Prototype_Attack( int dmg, int rng, GameObject src ) {
 		damage = dmg;
 		range = rng;
-		source = src;
+//		source = src;
 	}
 	
 	public Prototype_Attack( string attackName, GameObject src ) {
@@ -34,11 +34,11 @@ public class Prototype_Attack {
 			}
 		}
 		
-		source = src;
+//		source = src;
 	}
 	
 	public bool IsInRange( int[] target ) {
-		int[] pos = new int[]{(int) source.transform.position.x, (int)source.transform.position.z};
+//		int[] pos = new int[]{(int) source.transform.position.x, (int)source.transform.position.z};
 		//range.UpdateCalculations( pos );
 		//return range.IsInRange( target );
 		return true;

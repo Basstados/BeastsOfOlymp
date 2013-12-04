@@ -416,7 +416,7 @@ public class Prototype_Map : MonoBehaviour {
 		range = int.MaxValue;
 		distanceMatrix = CalculateDistanceMatrix( new Vector2(start[0], start[1]), range );
 		List<int[]> path = CalculatePath( start, destination );
-		int cost = distanceMatrix[destination[0], destination[1]];
+//		int cost = distanceMatrix[destination[0], destination[1]];
 
 		return path;
 	}
