@@ -31,6 +31,8 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
 		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleBMapTileTapped);
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleUnitMoved);
+		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleUnitAttacked);
+		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
@@ -66,8 +68,9 @@ public class BView : MonoBehaviour
 	{
 		TurnStartedEvent e = args as TurnStartedEvent;
 		BUnit bUnit = GetBUnit(e.unit);
-		if(e.unit.team == Unit.Team.PLAYER)
-			bUnit.PopupCombatMenu();
+		//TODO implement AI
+		// if(e.unit.team == Unit.Team.PLAYER)
+		bUnit.PopupCombatMenu();
 	}
 
 	void HandleBMapTileTapped (object sender, EventArgs args)
@@ -87,8 +90,23 @@ public class BView : MonoBehaviour
 		}
 		// send movement path to BUnit
 		GetBUnit(e.unit).MoveAlongPath(path);
-
+		bCameraMover.Focus(GetBUnit(e.unit).gameObject);
 		CleanMap();
+	}
+
+	void HandleUnitAttacked (object sender, EventArgs args)
+	{
+		UnitAttackedEvent e = args as UnitAttackedEvent;
+		Debug.Log("Hit: " + e.hit + " " + e.target.name + " " + e.target.HealthPoints);
+		GetBUnit(e.source).PlayAttack(e.attack, e.hit);
+		GetBUnit(e.target).PlayHitAnimation(e.hit);
+		CleanMap();
+	}
+
+	void HandleUnitDied (object sender, EventArgs args)
+	{
+		UnitDiedEvent e = args as UnitDiedEvent;
+		GetBUnit(e.unit).Died();
 	}
 
 	#endregion
@@ -142,6 +160,8 @@ public class BView : MonoBehaviour
 	{
 		// update InputPhase
 		bInputManager.phase = BInputManager.InputPhase.PICKTARGET;
+
+		Debug.Log(bInputManager.phase);
 
 		// get distance matrix
 		Point position = new Point(bUnit.unit.mapTile.x, bUnit.unit.mapTile.y);

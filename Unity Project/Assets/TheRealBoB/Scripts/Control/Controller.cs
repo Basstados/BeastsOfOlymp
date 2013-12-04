@@ -45,7 +45,12 @@ public class Controller
 
 	public void MoveUnit(Unit unit, MapTile mapTile)
 	{
-		new CMoveUnit(model,unit,mapTile).Execute();
+		new CMoveUnit(model,unit,mapTile, this).Execute();
+	}
+
+	public void AttackUnit(Unit source, Unit target, Attack attack )
+	{
+		new CAttackUnit(source,target,attack, this).Execute();
 	}
 
 	public void EndTurn()
@@ -56,13 +61,13 @@ public class Controller
 			model.combat.SetupRound (model.units);
 	}
 
-	public byte[][] GetDistanceMatrix(Point position, int range)
+	public byte[][] GetDistanceMatrix(Point position, int actionPoints)
 	{
 		byte[,] grid = model.GetGrid();
 		PathFinder pathFinder = new PathFinder(grid);
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;
-		return pathFinder.GetDistanceMatrix(position, range);
+		return pathFinder.GetDistanceMatrix(position, actionPoints);
 	}
 }
 

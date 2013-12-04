@@ -101,7 +101,8 @@ public class Model
 		unit.mapTile = mapTile;
 		mapTile.unit = unit;
 
-		UnitData unitData = Database.GetUnitData(name);
+		unit.Init(Database.GetUnitData(name));
+		unit.team = team;
 
 		// add unit to list
 		units.Add(unit);

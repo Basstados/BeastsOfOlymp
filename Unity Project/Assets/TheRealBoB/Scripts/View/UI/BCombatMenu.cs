@@ -34,7 +34,7 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		panel.SetActive(false);
 		backButton.gameObject.SetActive(true);
-		//EventProxyManager.FireEvent(EventName.AttackActionSelected,this,null);
+		bUnit.DisplayAttackRange();
 	}
 	
 	public void ActionMove() 
@@ -59,7 +59,7 @@ public class BCombatMenu : MonoBehaviour {
 
 	public void ActionCompleted()
 	{
-		if(bUnit.unit.canMove || bUnit.unit.canMove)
+		if(bUnit.unit.canMove || bUnit.unit.canAttack)
 			OpenForBUnit (bUnit);
 		else
 			backButton.gameObject.SetActive(false);

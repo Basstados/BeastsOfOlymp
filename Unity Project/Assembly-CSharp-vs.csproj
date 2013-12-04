@@ -200,6 +200,7 @@
      <Compile Include="Assets\Stephan\Scripts\skrMapTile.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrModel.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\BInputManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\CAttackUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\CMoveUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\CStartTurn.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Controller.cs" />
