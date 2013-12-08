@@ -4,6 +4,7 @@ using System.Collections;
 public class BUnit : MonoBehaviour {
 
 	public UILabel label;
+	public float movementSpeed = 2;
 
 	BView context;
 	Action action;
@@ -90,8 +91,7 @@ public class BUnit : MonoBehaviour {
 
 	public void MoveAlongPath(BMapTile[] path)
 	{
-		//TODO implement fancy animated movement
-		transform.position = path[path.Length-1].transform.position;
+		StartCoroutine(MoveRoutine(path));
 
 		bCombatMenu.ActionCompleted();
 	}
@@ -104,7 +104,7 @@ public class BUnit : MonoBehaviour {
 	public void PlayHitAnimation (bool hit)
 	{
 		if(hit) {
-			StartCoroutine(DamageFlash());
+			StartCoroutine(DamageFlashRoutine());
 		}
 	}
 
@@ -114,11 +114,30 @@ public class BUnit : MonoBehaviour {
 		label.enabled = false; 
 	}
 
-	private IEnumerator DamageFlash() 
+	private IEnumerator DamageFlashRoutine() 
 	{
 		renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
 		renderer.material.color = defaultColor;
+	}
+
+	private IEnumerator MoveRoutine(BMapTile[] path)
+	{
+		for (int i = 1; i < path.Length; i++) {
+			Vector3 nextWp = path[i].transform.position;
+			do{
+				Vector3 translation = nextWp - transform.position;
+				float distance = translation.magnitude;
+				translation = translation.normalized * Time.deltaTime * movementSpeed;
+				if(distance < translation.magnitude) {
+					transform.position = nextWp;
+					break;
+				} else {
+					transform.Translate(translation);
+				}
+				yield return 0;
+			}while(transform.position != nextWp);
+		}
 	}
 
 	void Update() {
