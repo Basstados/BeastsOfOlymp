@@ -91,9 +91,8 @@ public class BUnit : MonoBehaviour {
 
 	public void MoveAlongPath(BMapTile[] path)
 	{
-		StartCoroutine(MoveRoutine(path));
-
 		bCombatMenu.ActionCompleted();
+		StartCoroutine(MoveRoutine(path));
 	}
 
 	public void PlayAttack (Attack attack, bool hit)
@@ -105,6 +104,8 @@ public class BUnit : MonoBehaviour {
 	{
 		if(hit) {
 			StartCoroutine(DamageFlashRoutine());
+		} else {
+			EventProxyManager.FireEvent(this, new EventDoneEvent());
 		}
 	}
 
@@ -119,6 +120,7 @@ public class BUnit : MonoBehaviour {
 		renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
 		renderer.material.color = defaultColor;
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	private IEnumerator MoveRoutine(BMapTile[] path)
@@ -136,8 +138,9 @@ public class BUnit : MonoBehaviour {
 					transform.Translate(translation);
 				}
 				yield return 0;
-			}while(transform.position != nextWp);
+			} while(transform.position != nextWp);
 		}
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void Update() {

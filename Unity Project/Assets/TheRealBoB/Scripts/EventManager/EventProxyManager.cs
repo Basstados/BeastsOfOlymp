@@ -18,9 +18,9 @@ public class EventProxyManager
 	Dictionary<EventName, EventProxy> proxyDict = new Dictionary<EventName, EventProxy>();
 
     #region external
-    public static void FireEvent(EventName name, object sender, EventArgs args)
+	public static void FireEvent(object sender, EventProxyArgs args)
     {
-        Instance._FireEvent(name, sender, args);
+        Instance._FireEvent(sender, args);
     }
 
     public static void RegisterForEvent(EventName name, EventProxy.EventProxyHandler handler)
@@ -36,10 +36,10 @@ public class EventProxyManager
     #endregion
 
     #region internal
-    void _FireEvent(EventName name, object sender, EventArgs args)
+	void _FireEvent(object sender, EventProxyArgs args)
 	{
-		if (proxyDict.ContainsKey(name))
-			proxyDict[name].FireEvent(sender, args);
+		if (proxyDict.ContainsKey(args.name))
+			proxyDict[args.name].FireEvent(sender, args);
 		// else
 		// fire error event
 	}
@@ -60,6 +60,7 @@ public class EventProxyManager
 }
 
 public enum EventName {
+	DefaultEvent, // just a placehoder for EventProxyArgs
 	Initialized,
 	UnitSpawned,
 	UnitActivated,
@@ -69,5 +70,6 @@ public enum EventName {
 	BMapTileTapped,
     RoundSetup,
 	TurnStarted,
-	Gameover
+	Gameover,
+	EventDone
 }

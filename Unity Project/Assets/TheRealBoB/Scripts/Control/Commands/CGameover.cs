@@ -36,17 +36,18 @@ public class CGameover : ICommand
 			aiDefeated = true;
 
 		if(playerDefeated || aiDefeated)
-			EventProxyManager.FireEvent(EventName.Gameover, this, new GameoverEvent(playerDefeated,aiDefeated));
+			EventProxyManager.FireEvent(this, new GameoverEvent(playerDefeated,aiDefeated));
 	}
 }
 
-public class GameoverEvent : System.EventArgs
+public class GameoverEvent : EventProxyArgs
 {
 	public bool playerDefeated;
 	public bool aiDefeated;
 
 	public GameoverEvent (bool playerDefeated, bool aiDefeated)
 	{
+		this.name = EventName.Gameover;
 		this.playerDefeated = playerDefeated;
 		this.aiDefeated = aiDefeated;
 	}

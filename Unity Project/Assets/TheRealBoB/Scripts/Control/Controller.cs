@@ -18,9 +18,8 @@ public class Controller
 		MapData mapData = Database.GetMapData();
 
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
-		EventProxyManager.RegisterForEvent(EventName.UnitDied,HandleUnitDied);
-
-		// TODO try to read this from an json-file
+		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
+		
 		model = new Model();
 		model.InitMap(mapData);
 		model.InitUnits(mapData);

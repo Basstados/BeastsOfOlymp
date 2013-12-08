@@ -33,7 +33,7 @@ public class Model
 		}
 
 		// map is now initiliazed
-		EventProxyManager.FireEvent(EventName.Initialized, this, new MapInitializedEvent (mapTiles));
+		EventProxyManager.FireEvent(this, new MapInitializedEvent (mapTiles));
 	}
 
 	public void InitUnits(MapData mapData)
@@ -108,13 +108,13 @@ public class Model
 		units.Add(unit);
 
 		// unit is spawned
-		EventProxyManager.FireEvent(EventName.UnitSpawned, this, new UnitSpawnedEvent (unit));
+		EventProxyManager.FireEvent(this, new UnitSpawnedEvent (unit));
 	}
 
     public void ActivateUnit(Unit unit)
     {
         activeUnit = unit;
-		EventProxyManager.FireEvent(EventName.UnitActivated, this, new UnitActivatedEvent(unit));
+		EventProxyManager.FireEvent(this, new UnitActivatedEvent(unit));
     }
 
 	public void MoveUnit(Unit unit, MapTile target)
@@ -128,32 +128,35 @@ public class Model
 	}
 }
 
-public class MapInitializedEvent : System.EventArgs
+public class MapInitializedEvent : EventProxyArgs
 {
 	public MapTile[][] mapTiles;
 
 	public MapInitializedEvent (MapTile[][] mapTiles)
 	{
+		this.name = EventName.Initialized;
 		this.mapTiles = mapTiles;
 	}
 }
 
-public class UnitSpawnedEvent : System.EventArgs 
+public class UnitSpawnedEvent : EventProxyArgs
 {
 	public Unit unit;
 
 	public UnitSpawnedEvent (Unit unit)
 	{
+		this.name = EventName.UnitSpawned;
 		this.unit = unit;
 	}
 }
 
-public class UnitActivatedEvent : System.EventArgs
+public class UnitActivatedEvent : EventProxyArgs
 {
 	public Unit unit;
 
 	public UnitActivatedEvent (Unit unit)
 	{
+		this.name = EventName.UnitActivated;
 		this.unit = unit;
 	}
 }

@@ -53,18 +53,19 @@ public class BInputManager : MonoBehaviour {
 	
 				// fire event for the tapped mapTile
 				BMapTile bMapTile = hit.collider.GetComponent<BMapTile>();
-				EventProxyManager.FireEvent(EventName.BMapTileTapped,this, new BMapTileTappedEvent(bMapTile));
+				EventProxyManager.FireEvent(this, new BMapTileTappedEvent(bMapTile));
 			}
 		}
 	}
 }
 
 
-public class BMapTileTappedEvent : System.EventArgs {
+public class BMapTileTappedEvent : EventProxyArgs {
 	public BMapTile bMapTile;
 	
 	public BMapTileTappedEvent (BMapTile bMapTile)
 	{
+		this.name = EventName.BMapTileTapped;
 		this.bMapTile = bMapTile;
 	}
 }

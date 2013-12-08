@@ -16,7 +16,7 @@ public class Combat
 		}
 
         FillUnitQueue(unitList);
-        EventProxyManager.FireEvent(EventName.RoundSetup, this, null);
+        EventProxyManager.FireEvent(this, new RoundSetupEvent());
     }
 
     public Unit GetNextUnit()
@@ -42,6 +42,13 @@ public class Combat
 		{
 			unitQueue.Enqueue(unit);
 		}
+	}
+}
+
+public class RoundSetupEvent : EventProxyArgs
+{
+	public RoundSetupEvent() {
+		this.name = EventName.RoundSetup;
 	}
 }
 

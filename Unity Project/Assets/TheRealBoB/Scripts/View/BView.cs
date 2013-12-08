@@ -17,6 +17,9 @@ public class BView : MonoBehaviour
 	BInputManager bInputManager;
 	BCameraMover bCameraMover;
 
+	Queue<EventProxyArgs> eventQueue = new Queue<EventProxyArgs>();
+	bool performingEvent = false;
+
 	public Controller controller;
 
 	void Awake() {
@@ -25,15 +28,16 @@ public class BView : MonoBehaviour
 
 	void Init() {
 		// register event
-		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleInitialized);
-		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleUnitSpawned);
-		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleUnitActivated);
-		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
-		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleBMapTileTapped);
-		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleUnitMoved);
-		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleUnitAttacked);
-		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
-		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleGameover);
+		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.EventDone, HandleEventDone);
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
@@ -43,11 +47,60 @@ public class BView : MonoBehaviour
 	}
 
 	#region event handler
+	void HandleEvent(object sender, EventProxyArgs args)
+	{
+		eventQueue.Enqueue(args);
+		if(!performingEvent) 
+			EventProxyManager.FireEvent(this, new EventDoneEvent());
+	}
+
+	void HandleEventDone(object sender, EventProxyArgs args)
+	{
+		// continue with next event from queue
+		if(eventQueue.Count > 0) {
+			EventProxyArgs eventArgs = eventQueue.Dequeue();
+			Debug.Log(eventArgs.name);
+			performingEvent = true;
+			// call handler for the next event in the queue
+			switch(eventArgs.name) {
+			case EventName.Initialized:
+				HandleInitialized(null , eventArgs);
+				break;
+			case EventName.UnitSpawned:
+				HandleUnitSpawned(null, eventArgs);
+				break;
+			case EventName.UnitActivated:
+				HandleUnitActivated(null, eventArgs);
+				break;
+			case EventName.TurnStarted:
+				HandleTurnStarted(null, eventArgs);
+				break;
+			case EventName.BMapTileTapped:
+				HandleBMapTileTapped(null, eventArgs);
+				break;
+			case EventName.UnitMoved:
+				HandleUnitMoved(null, eventArgs);
+				break;
+			case EventName.UnitAttacked:
+				HandleUnitAttacked(null, eventArgs);
+				break;
+			case EventName.UnitDied:
+				HandleUnitDied(null, eventArgs);
+				break;
+			case EventName.Gameover:
+				HandleGameover(null, eventArgs);
+				break;
+			}
+		} else {
+			// we are done with event queue
+			performingEvent = false;
+		}
+	}
+
 	void HandleInitialized(object sender, EventArgs args)
 	{
-		if(sender.GetType () == typeof(Model)) {
-			InstatiateMap((args as MapInitializedEvent).mapTiles);
-		}
+		InstatiateMap((args as MapInitializedEvent).mapTiles);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleUnitSpawned(object sender, EventArgs args)
@@ -55,6 +108,7 @@ public class BView : MonoBehaviour
 		UnitSpawnedEvent e = args as UnitSpawnedEvent;
 
 		SpawnBUnit(e.unit);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleUnitActivated(object sender, EventArgs args)
@@ -63,6 +117,7 @@ public class BView : MonoBehaviour
 
 		activeBUnit = GetBUnit(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleTurnStarted(object sender, EventArgs args)
@@ -72,6 +127,7 @@ public class BView : MonoBehaviour
 		//TODO implement AI
 		// if(e.unit.team == Unit.Team.PLAYER)
 		bUnit.PopupCombatMenu();
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleBMapTileTapped (object sender, EventArgs args)
@@ -79,6 +135,7 @@ public class BView : MonoBehaviour
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
 		if(e.bMapTile.colorState == BMapTile.ColorState.INRANGE)
 			activeBUnit.SetTarget(e.bMapTile);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleUnitMoved (object sender, EventArgs args)
@@ -108,6 +165,7 @@ public class BView : MonoBehaviour
 	{
 		UnitDiedEvent e = args as UnitDiedEvent;
 		GetBUnit(e.unit).Died();
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 
@@ -123,6 +181,7 @@ public class BView : MonoBehaviour
 			text = "Defeated";
 
 		bCombatMenu.DisplayGameover(text);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 	#endregion
 
@@ -230,3 +289,10 @@ public class BView : MonoBehaviour
 	}
 }
 
+public class EventDoneEvent : EventProxyArgs
+{
+	public EventDoneEvent() 
+	{
+		this.name = EventName.EventDone;
+	}
+}
