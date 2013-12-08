@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(UIPanel))]
 public class BCombatMenu : MonoBehaviour {
 
+	public GameObject gameoverPanel;
+	public UILabel gameoverLabel;
 	public GameObject panel;
 	public UIButton attackButton;
 	public UIButton moveButton;
@@ -68,5 +70,11 @@ public class BCombatMenu : MonoBehaviour {
 	public void Hide() 
 	{
 		panel.SetActive(false);
+	}
+
+	public void DisplayGameover (string text)
+	{
+		gameoverPanel.SetActive(true);
+		gameoverLabel.text = text;
 	}
 }

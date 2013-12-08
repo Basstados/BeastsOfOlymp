@@ -33,6 +33,7 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleUnitMoved);
 		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleUnitAttacked);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
+		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleGameover);
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
@@ -109,6 +110,20 @@ public class BView : MonoBehaviour
 		GetBUnit(e.unit).Died();
 	}
 
+
+	void HandleGameover (object sender, EventArgs args)
+	{
+		GameoverEvent e = args as GameoverEvent;
+		string text = "";
+		if(e.playerDefeated && e.aiDefeated)
+			text = "Draw";
+		else if(e.aiDefeated)
+			text = "Victory";
+		else if(e.playerDefeated)
+			text = "Defeated";
+
+		bCombatMenu.DisplayGameover(text);
+	}
 	#endregion
 
 	/// <summary>

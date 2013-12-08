@@ -18,6 +18,7 @@ public class Controller
 		MapData mapData = Database.GetMapData();
 
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
+		EventProxyManager.RegisterForEvent(EventName.UnitDied,HandleUnitDied);
 
 		// TODO try to read this from an json-file
 		model = new Model();
@@ -36,6 +37,11 @@ public class Controller
         // after round setup start it
 		new CStartTurn(model,this).Execute();
     }
+
+	void HandleUnitDied (object sender, EventArgs args)
+	{
+		new CGameover(model).Execute();
+	}
 	
 	void HandleMapTileTapped(object sender, EventArgs args)
 	{

@@ -68,5 +68,6 @@ public enum EventName {
 	UnitDied,
 	BMapTileTapped,
     RoundSetup,
-	TurnStarted
+	TurnStarted,
+	Gameover
 }
