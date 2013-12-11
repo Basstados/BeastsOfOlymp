@@ -28,7 +28,7 @@ public class Model
 			
 			for (int j = 0; j < mapData.height; j++) {
 				mapTiles[i][j] = new MapTile(i,j);
-				mapTiles[i][j].penalty = mapData.penaltys[i][j];
+				mapTiles[i][j].Penalty = mapData.penaltys[i][j];
 			}
 		}
 
@@ -58,17 +58,44 @@ public class Model
 	/// Get the penalty values of each MapTile combines as matrix.
 	/// </summary>
 	/// <returns>The grid (penalty matrix)</returns>
-	public byte[,] GetGrid() 
+	public byte[,] GetMoveGrid() 
 	{
 		byte[,] grid = new byte[mapTiles.Length,mapTiles[0].Length];
 
 		for (int i = 0; i < mapTiles.Length; i++) {
 			for (int j = 0; j < mapTiles[i].Length; j++) {
-				grid[i,j] = mapTiles[i][j].penalty;
+				grid[i,j] = mapTiles[i][j].Penalty;
 			}
 		}
 
 		return grid;
+	}
+
+	/// <summary>
+	/// Get the penalty values of each MapTile combines as matrix.
+	/// </summary>
+	/// <returns>The grid (penalty matrix)</returns>
+	public byte[,] GetAttackGrid() 
+	{
+		byte[,] grid = new byte[mapTiles.Length,mapTiles[0].Length];
+		
+		for (int i = 0; i < mapTiles.Length; i++) {
+			for (int j = 0; j < mapTiles[i].Length; j++) {
+				grid[i,j] = mapTiles[i][j].PenaltyIgnoreUnit;
+			}
+		}
+		
+		return grid;
+	}
+
+	public List<Unit> GetUnitsFromTeam(Unit.Team team) 
+	{
+		List<Unit> teamList = new List<Unit>();
+		foreach(Unit unit in units) {
+			if(unit.team == team)
+				teamList.Add(unit);
+		}
+		return teamList;
 	}
 
 	public MapTile[] ConvertPathToMapTiles (List<PathFinderNode> path)
@@ -86,10 +113,10 @@ public class Model
 	{
 		int cost = 0;
 		foreach(MapTile mapTile in path) {
-			cost += mapTile.penalty;
+			cost += mapTile.Penalty;
 		}
 		// don't include the first MapTile; Unit already sits on this MapTile
-		cost -= path[0].penalty;
+		cost -= path[0].Penalty;
 
 		return cost;
 	}
@@ -103,6 +130,8 @@ public class Model
 
 		unit.Init(Database.GetUnitData(name));
 		unit.team = team;
+		if(Unit.Team.AI == team)
+			unit.ai = new ArtificalIntelligence(this, unit);
 
 		// add unit to list
 		units.Add(unit);

@@ -411,10 +411,12 @@ namespace Algorithms
 				foreach(Point p in neighbours) {
 					// save cost for neighbour (= cost current point + penalty neighbour point)
 					byte cost = (byte) (distMatrix[currentPoint.x][currentPoint.y] + mGrid[p.x,p.y]);
+					if(mGrid[p.x,p.y] == 0)
+						cost = 0;
 					// continue with this neighbour if
 					// 		cost is less then current know shortest distance OR current know shortest distance is not set
 					//		AND cost is in range
-					if((cost < distMatrix[p.x][p.y] || distMatrix[p.x][p.y] == 0) && cost <= range) {
+					if((cost < distMatrix[p.x][p.y] || distMatrix[p.x][p.y] == 0) && cost <= range && cost > 0) {
 						distMatrix[p.x][p.y] = cost;
 						checkOpen.Enqueue(p);
 					}

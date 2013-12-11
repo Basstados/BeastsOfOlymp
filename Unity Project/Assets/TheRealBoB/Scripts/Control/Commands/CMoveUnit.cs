@@ -22,7 +22,7 @@ public class CMoveUnit : ICommand
 	{
 		// stop if unit is not allowed to move
 
-		byte[,] grid = model.GetGrid();
+		byte[,] grid = model.GetMoveGrid();
 		PathFinder pathFinder = new PathFinder(grid);
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;

@@ -19,6 +19,7 @@ public class Controller
 
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
+		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
 		
 		model = new Model();
 		model.InitMap(mapData);
@@ -46,6 +47,17 @@ public class Controller
 	{
 		Debug.Log("Tap Event triggert");
 	}
+
+	void HandleTurnStarted (object sender, EventProxyArgs args)
+	{
+		TurnStartedEvent e = args as TurnStartedEvent;
+		if(e.unit.AIControled) {
+			e.unit.ai.PlanTurn();
+
+			MoveUnit(e.unit, e.unit.ai.MoveDestionation);
+			AttackUnit(e.unit, e.unit.ai.AttackTarget, e.unit.ai.AttackChoice);
+		}
+	}
 	#endregion
 
 	public void MoveUnit(Unit unit, MapTile mapTile)
@@ -67,9 +79,14 @@ public class Controller
 			model.combat.SetupRound (model.units);
 	}
 
-	public byte[][] GetDistanceMatrix(Point position, int actionPoints)
+	public byte[][] GetDistanceMatrix(Point position, int actionPoints, bool ignoreUnits)
 	{
-		byte[,] grid = model.GetGrid();
+		byte[,] grid;
+		if(ignoreUnits) {
+			grid = model.GetAttackGrid();
+		} else {
+			grid = model.GetMoveGrid();
+		}
 		PathFinder pathFinder = new PathFinder(grid);
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;
