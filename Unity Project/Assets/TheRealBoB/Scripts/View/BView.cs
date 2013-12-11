@@ -235,11 +235,15 @@ public class BView : MonoBehaviour
 		// update InputPhase
 		bInputManager.phase = BInputManager.InputPhase.PICKTARGET;
 
-		Debug.Log(bInputManager.phase);
+		bool ignoreUnits = false;
+		if(bUnit.CurrentAction == BUnit.Action.ATTACK)
+			ignoreUnits = true;
 
+		Debug.Log(bInputManager.phase);
+		
 		// get distance matrix
 		Point position = new Point(bUnit.unit.mapTile.x, bUnit.unit.mapTile.y);
-		byte[][] distMatrix = controller.GetDistanceMatrix(position, range);
+		byte[][] distMatrix = controller.GetDistanceMatrix(position, range, ignoreUnits);
 		// change color of all BMapTiles in range
 		for (int i = 0; i < distMatrix.Length; i++) {
 			for (int j = 0; j < distMatrix[i].Length; j++) {

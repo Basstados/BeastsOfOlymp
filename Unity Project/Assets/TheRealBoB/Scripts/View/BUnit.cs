@@ -8,8 +8,9 @@ public class BUnit : MonoBehaviour {
 
 	BView context;
 	Action action;
+	public Action CurrentAction {get{return action;}}
 
-	enum Action{
+	public enum Action{
 		MOVE,
 		ATTACK,
 		IDLE

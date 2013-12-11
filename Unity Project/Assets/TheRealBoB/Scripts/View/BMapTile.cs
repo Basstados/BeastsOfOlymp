@@ -13,7 +13,7 @@ public class BMapTile : MonoBehaviour {
 		DEFAULT
 	}
 
-	void Start() 
+	void Awake() 
 	{
 		defaultColor = renderer.material.color;
 	}

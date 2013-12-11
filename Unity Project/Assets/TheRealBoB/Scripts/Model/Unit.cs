@@ -7,8 +7,10 @@ public class Unit : IComparable
 {
 	public UnitData data = new UnitData();
 	public MapTile mapTile { get; set; }
-	public Team team ;
+	public Team team;
 	public Dictionary<string,Attack> attacks = new Dictionary<string, Attack>();
+	public ArtificalIntelligence ai;
+
 
 	bool canMove;
 	bool canAttack;
