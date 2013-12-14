@@ -3,35 +3,23 @@ using System.Collections;
 
 public class BCameraMover : MonoBehaviour {
 
-	public float minSpeed = 2;
+	public float movementDamping = 3.0f;
+	public float minSpeed = 0.3f;
+	public float threshold = 0.1f;
 
-	Vector3 target;
+	GameObject target;
 	bool routineIsRunning = false;
 
 	public void Focus(GameObject go) {
-		target = go.transform.position;
-
-		if(!routineIsRunning)
-			StartCoroutine(SmoothMoveRoutine());
+		target = go;
 	}
 
-	IEnumerator SmoothMoveRoutine() {
-		routineIsRunning = true;
-		Vector3 translation;
-		float distance;
-
-		while(transform.position != target) {
-			translation = target - transform.position;
-			distance = translation.magnitude;
-			float factor = (distance > minSpeed) ? distance : minSpeed;
-			translation = translation.normalized * Time.deltaTime * factor;
-			if(translation.magnitude > distance) {
-				transform.position = target;
-				break;
-			}
-			transform.Translate(translation);
-			yield return 0;
+	void Update() {
+		float distance = (target.transform.position - transform.position).magnitude;
+		if(distance < threshold) {
+			Vector3 translation = (target.transform.position - transform.position).normalized * Time.deltaTime * minSpeed;
+		} else {
+			transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * movementDamping);
 		}
-		routineIsRunning = false;
 	}
 }

@@ -9,6 +9,8 @@ public class BView : MonoBehaviour
 	public GameObject bUnitPrefab;
 	public GameObject bCombatMenuPrefab;
 
+	public BIniativeList bInitativeList;
+
 	// context references
 	BMapTile[][] bMapTiles;
 	List<BUnit> bUnits = new List<BUnit>();
@@ -112,6 +114,7 @@ public class BView : MonoBehaviour
 		UnitSpawnedEvent e = args as UnitSpawnedEvent;
 
 		SpawnBUnit(e.unit);
+		bInitativeList.AddUnit(e.unit);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -120,6 +123,7 @@ public class BView : MonoBehaviour
 		UnitActivatedEvent e = args as UnitActivatedEvent;
 
 		activeBUnit = GetBUnit(e.unit);
+		bInitativeList.ActivateIcon(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -128,8 +132,6 @@ public class BView : MonoBehaviour
 	{
 		TurnStartedEvent e = args as TurnStartedEvent;
 		BUnit bUnit = GetBUnit(e.unit);
-		//TODO implement AI
-		// if(e.unit.team == Unit.Team.PLAYER)
 		bUnit.PopupCombatMenu();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -185,7 +187,6 @@ public class BView : MonoBehaviour
 			text = "Defeated";
 
 		bCombatMenu.DisplayGameover(text);
-		bCombatMenu.Hide();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 	#endregion
