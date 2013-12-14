@@ -17,6 +17,7 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	public void Init(Unit unit)
 	{
 		this.unit = unit;
+		label.text = unit.Name;
 	}
 
 	public void SetActive() 
