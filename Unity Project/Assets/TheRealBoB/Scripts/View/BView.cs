@@ -49,6 +49,10 @@ public class BView : MonoBehaviour
 	#region event handler
 	void HandleEvent(object sender, EventProxyArgs args)
 	{
+		if(args.name == EventName.TurnStarted) {
+			TurnStartedEvent e = (TurnStartedEvent) args;
+			Debug.Log("Round: " + e.round + " Turn: " + e.turn);
+		}
 		eventQueue.Enqueue(args);
 		if(!performingEvent) 
 			EventProxyManager.FireEvent(this, new EventDoneEvent());
@@ -181,6 +185,7 @@ public class BView : MonoBehaviour
 			text = "Defeated";
 
 		bCombatMenu.DisplayGameover(text);
+		bCombatMenu.Hide();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 	#endregion

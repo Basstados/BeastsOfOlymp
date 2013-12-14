@@ -4,12 +4,14 @@ using System.Collections.Generic;
 public class Combat
 {
 	public int round = 0;
+	public int turn = 0;
 	Queue<Unit> unitQueue = new Queue<Unit>();
 
     public void SetupRound(List<Unit> unitList)
     {
 		// count rounds
         round++;
+		turn = 0;
 		// reset units abilitys
 		foreach (Unit unit in unitList) {
 			unit.ResetTurn();	

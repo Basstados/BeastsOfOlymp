@@ -25,10 +25,6 @@ public class Controller
 		model.InitMap(mapData);
 		model.InitUnits(mapData);
 		model.InitCombat();
-
-		// this is just for debugging/develop builds an be removed savely
-		if(Debug.isDebugBuild)
-			GameObject.FindObjectOfType<DevelopPanelMaster>().Init(this, model, bView);
 	}
 
 	#region event handler
@@ -50,6 +46,9 @@ public class Controller
 
 	void HandleTurnStarted (object sender, EventProxyArgs args)
 	{
+		if(!model.matchRunning)
+			return;
+
 		TurnStartedEvent e = args as TurnStartedEvent;
 		if(e.unit.AIControled) {
 			e.unit.ai.PlanTurn();
@@ -68,11 +67,12 @@ public class Controller
 	public void AttackUnit(Unit source, Unit target, Attack attack )
 	{
 		new CAttackUnit(source,target,attack, this).Execute();
+
+		EndTurn();
 	}
 
 	public void EndTurn()
 	{
-
 		if (model.combat.TurnsLeft() > 0)
 			new CStartTurn(model,this).Execute ();
 		else

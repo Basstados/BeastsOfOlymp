@@ -67,8 +67,6 @@ public class BUnit : MonoBehaviour {
 
 	public void SetTarget(BMapTile bMapTile)
 	{
-		Debug.Log("SetTarget for " + action);
-
 		switch(action) {
 		case Action.MOVE:
 			// use target for move

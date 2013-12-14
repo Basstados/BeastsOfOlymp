@@ -20,9 +20,12 @@ public class CMoveUnit : ICommand
 
 	public void Execute()
 	{
-		// stop if unit is not allowed to move
-
 		byte[,] grid = model.GetMoveGrid();
+
+		// check if target mapTile is passable
+		if(grid[target.x,target.y] == 0)
+			return;
+
 		PathFinder pathFinder = new PathFinder(grid);
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;
@@ -45,10 +48,6 @@ public class CMoveUnit : ICommand
 		
 		// after movement fire event
 		EventProxyManager.FireEvent(this,new UnitMovedEvent(unit, path));
-
-		// check if turn is over now
-		if(!unit.CanAttack)
-			controller.EndTurn();
 	}
 }
 

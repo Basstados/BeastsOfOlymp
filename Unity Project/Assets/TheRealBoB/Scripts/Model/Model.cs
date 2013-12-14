@@ -12,6 +12,8 @@ public class Model
 	// stores the current combat stiuation
 	public Combat combat = new Combat();
 
+	public bool matchRunning = true;
+
 	public Model() 
 	{
 	}

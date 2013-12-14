@@ -40,7 +40,6 @@ public class CAttackUnit : ICommand
 			EventProxyManager.FireEvent(this, new UnitDiedEvent(target));
 		}
 		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,success));
-		controller.EndTurn();
 	}
 }
 

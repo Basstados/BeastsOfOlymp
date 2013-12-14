@@ -25,10 +25,12 @@ public class ArtificalIntelligence : MonoBehaviour {
 	
 	public void PlanTurn()
 	{
-		//TODO maybe implement GOAP AI for more intelligent planning
-		ChooseTarget();
-		FindMoveDestination();
-		ChooseAttack();
+		if(model.matchRunning) {
+			//TODO maybe implement GOAP AI for more intelligent planning
+			ChooseTarget();
+			FindMoveDestination();
+			ChooseAttack();
+		}
 	}
 
 	void ChooseTarget()
@@ -37,20 +39,25 @@ public class ArtificalIntelligence : MonoBehaviour {
 		List<Unit> enemies = model.GetUnitsFromTeam(Unit.Team.PLAYER);
 		int closedDistance;
 		// if there is no old target take the first one as old target
-		if(attackTarget == null) {
-			attackTarget = enemies[0];
+		if(attackTarget == null || !attackTarget.Alive) {
+			closedDistance = int.MaxValue;
+		} else {
+			// set distance to old target
+			closedDistance = Mathf.Abs(attackTarget.mapTile.x - controlledUnit.mapTile.x) + Mathf.Abs(attackTarget.mapTile.y - controlledUnit.mapTile.y);
 		}
-		// set distance to old target
-		closedDistance = Mathf.FloorToInt(enemies[0].mapTile.x - controlledUnit.mapTile.x) + Mathf.FloorToInt(enemies[0].mapTile.y - controlledUnit.mapTile.y);
 
 		// get closed enemie unit
 		foreach(Unit unit in enemies) {
+			if(!unit.Alive)
+				continue;
+
 			// TODO use A* for real distance value and not just exspectation
-			int dist = Mathf.FloorToInt(unit.mapTile.x - controlledUnit.mapTile.x) + Mathf.FloorToInt(unit.mapTile.y - controlledUnit.mapTile.y);
+			int dist = Mathf.Abs(unit.mapTile.x - controlledUnit.mapTile.x) + Mathf.Abs(unit.mapTile.y - controlledUnit.mapTile.y);
 			if(dist < closedDistance) {
 				closedDistance = dist;
 				attackTarget = unit;
 			}
+
 		}
 
 		// attackTarget was updated

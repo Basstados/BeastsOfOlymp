@@ -35,8 +35,10 @@ public class CGameover : ICommand
 		if(b == 0)
 			aiDefeated = true;
 
-		if(playerDefeated || aiDefeated)
+		if(playerDefeated || aiDefeated) {
+			model.matchRunning = false;
 			EventProxyManager.FireEvent(this, new GameoverEvent(playerDefeated,aiDefeated));
+		}
 	}
 }
 
