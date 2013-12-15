@@ -61,10 +61,10 @@ public class BCombatMenu : MonoBehaviour {
 
 	public void ActionCompleted()
 	{
-		if(bUnit.unit.CanMove || bUnit.unit.CanAttack)
+//		if(bUnit.unit.CanMove || bUnit.unit.CanAttack)
 			OpenForBUnit (bUnit);
-		else
-			backButton.gameObject.SetActive(false);
+//		else
+//			backButton.gameObject.SetActive(false);
 	}
 	
 	public void Hide() 

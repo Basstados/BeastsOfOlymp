@@ -199,7 +199,6 @@
      <Compile Include="Assets\Stephan\Scripts\skrInputTranslater.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrMapTile.cs" />
      <Compile Include="Assets\Stephan\Scripts\skrModel.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\BInputManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\ArtificalIntelligence.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Commands\CAttackUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Commands\CGameover.cs" />
@@ -216,6 +215,10 @@
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyArgs.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Attack.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatLog\CombatLog.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatLog\ILogEntry.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatLog\LogEntryAttack.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatLog\LogEntryMove.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatState\Combat.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\AttackCollection.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\Database.cs" />
@@ -226,11 +229,16 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Model.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Point.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BInputManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Camera\BCameraMover.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeList.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeListUnit.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BUITooglePanel.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\_Temp\DatabaseToFile.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />

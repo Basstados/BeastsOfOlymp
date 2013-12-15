@@ -54,6 +54,8 @@ public class Model
     {
         combat = new Combat();
         combat.SetupRound(units);
+
+
     }
 
 	/// <summary>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Algorithms;
 
-public class ArtificalIntelligence : MonoBehaviour {
+public class ArtificalIntelligence {
 
 	Model model;
 	Unit controlledUnit;

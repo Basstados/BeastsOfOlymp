@@ -10,7 +10,13 @@ public class BCameraMover : MonoBehaviour {
 	GameObject target;
 	bool routineIsRunning = false;
 
-	public void Focus(GameObject go) {
+	void Awake() 
+	{
+		target = this.gameObject;
+	}
+
+	public void Focus(GameObject go) 
+	{
 		target = go;
 	}
 

@@ -10,6 +10,7 @@ public class BView : MonoBehaviour
 	public GameObject bCombatMenuPrefab;
 
 	public BIniativeList bInitativeList;
+	public BCombatLog bCombatLog;
 
 	// context references
 	BMapTile[][] bMapTiles;
@@ -32,6 +33,7 @@ public class BView : MonoBehaviour
 		// register event
 		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleEvent);
@@ -40,6 +42,8 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.EventDone, HandleEventDone);
+		EventProxyManager.RegisterForEvent(EventName.DebugLog, HandleDebugLog);
+		EventProxyManager.RegisterForEvent(EventName.CombatLogInitialized, HandleCombatLogInitialized);
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
@@ -75,6 +79,9 @@ public class BView : MonoBehaviour
 			case EventName.UnitSpawned:
 				HandleUnitSpawned(null, eventArgs);
 				break;
+			case EventName.RoundSetup:
+				HandleRoundSetup(null, eventArgs);
+				break;
 			case EventName.UnitActivated:
 				HandleUnitActivated(null, eventArgs);
 				break;
@@ -109,12 +116,24 @@ public class BView : MonoBehaviour
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
+	void HandleCombatLogInitialized (object sender, EventProxyArgs args)
+	{
+		bCombatLog.Init((args as CombatLogInitializedEvent).combatLog);
+	}
+
 	void HandleUnitSpawned(object sender, EventArgs args)
 	{
 		UnitSpawnedEvent e = args as UnitSpawnedEvent;
 
 		SpawnBUnit(e.unit);
-		bInitativeList.AddUnit(e.unit);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
+	}
+
+	void HandleRoundSetup (object sender, EventProxyArgs args)
+	{
+		RoundSetupEvent e = args as RoundSetupEvent;
+
+		bInitativeList.UpdateList(e.sortedList);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -125,6 +144,7 @@ public class BView : MonoBehaviour
 		activeBUnit = GetBUnit(e.unit);
 		bInitativeList.ActivateIcon(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject);
+		activeBUnit.PopupCombatMenu();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -189,6 +209,14 @@ public class BView : MonoBehaviour
 		bCombatMenu.DisplayGameover(text);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
+
+	void HandleDebugLog (object sender, EventProxyArgs args)
+	{
+		DebugLogEvent e = args as DebugLogEvent;
+
+		Debug.Log(e.debugLogString);
+	}
+
 	#endregion
 
 	/// <summary>
