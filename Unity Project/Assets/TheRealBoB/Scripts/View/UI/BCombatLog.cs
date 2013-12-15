@@ -16,7 +16,6 @@ public class BCombatLog : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log(combatLog);
 		if(combatLog != null) {
 			lastEntry.text = combatLog.GetLast();
 			fullLog.text = combatLog.ToString();
