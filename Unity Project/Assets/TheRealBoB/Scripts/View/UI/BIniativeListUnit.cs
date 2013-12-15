@@ -13,6 +13,8 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	Color defaultColor = Color.white;
 	Color activeColor = Color.green;
 	Color deadColor = Color.grey;
+	Color aiColor = Color.blue;
+	Color playerColor = Color.cyan;
 
 	public void Init(Unit unit)
 	{
@@ -23,22 +25,25 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	public void SetActive() 
 	{
 		label.color = activeColor;
-		sprite.color = activeColor;
 	}
 
 	public void SetDead()
 	{
 		label.color = deadColor;
-		sprite.color = deadColor;
 	}
 
 	public void Reset()
 	{
 		if(unit.Alive) {
 			label.color = defaultColor;
-			sprite.color = defaultColor;
 		} else {
 			SetDead();
+		}
+
+		if(unit.team == Unit.Team.AI) {
+			sprite.color = aiColor;
+		} else {
+			sprite.color = playerColor;
 		}
 	}
 

@@ -7,6 +7,15 @@ public class Combat
 	public int turn = 0;
 	Queue<Unit> unitQueue = new Queue<Unit>();
 
+	public CombatLog log;
+
+	public Combat() 
+	{
+		log = new CombatLog();
+		log.Init();
+		EventProxyManager.FireEvent(this, new CombatLogInitializedEvent(log));
+	}
+
     public void SetupRound(List<Unit> unitList)
     {
 		// count rounds
@@ -17,8 +26,19 @@ public class Combat
 			unit.ResetTurn();	
 		}
 
-        FillUnitQueue(unitList);
-        EventProxyManager.FireEvent(this, new RoundSetupEvent());
+		foreach(Unit unit in unitList) {
+			EventProxyManager.FireEvent(this, new DebugLogEvent("Unsorded Unit: " + unit.Name + " " + unit.team));
+		}
+
+		// since this include sorting the list we use a refrence type
+		// so we can use the sorted list after
+        FillUnitQueue(ref unitList);
+
+		foreach(Unit unit in unitList) {
+			EventProxyManager.FireEvent(this, new DebugLogEvent("Sorted Unit: " + unit.Name + " " + unit.team));
+		}
+
+        EventProxyManager.FireEvent(this, new RoundSetupEvent(unitList));
     }
 
     public Unit GetNextUnit()
@@ -31,7 +51,7 @@ public class Combat
 		return unitQueue.Count;
 	}
 
-	void FillUnitQueue(List<Unit> unitList) 
+	void FillUnitQueue(ref List<Unit> unitList) 
 	{
 		// sort unit list
 		unitList.Sort();
@@ -47,9 +67,24 @@ public class Combat
 	}
 }
 
+public class CombatLogInitializedEvent : EventProxyArgs
+{
+	public CombatLog combatLog;
+
+	public CombatLogInitializedEvent (CombatLog combatLog)
+	{
+		this.combatLog = combatLog;
+		this.name = EventName.CombatLogInitialized;
+	}
+	
+}
+
 public class RoundSetupEvent : EventProxyArgs
 {
-	public RoundSetupEvent() {
+	public List<Unit> sortedList;
+
+	public RoundSetupEvent(List<Unit> unitList) {
+		this.sortedList = unitList;
 		this.name = EventName.RoundSetup;
 	}
 }
