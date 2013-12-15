@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,9 +7,9 @@ using System.IO;
 public class Database {
 
 	static string basePath = "Assets/Resources/";
-	static string attackCollectionPath = basePath + "AttackCollection.json";
-	static string unitCollectionPath = basePath + "UnitCollection.json";
-	static string mapDataPath = basePath + "MapData.json";
+	static string attackCollectionPath = "AttackCollection";
+	static string unitCollectionPath = "UnitCollection";
+	static string mapDataPath = "MapData";
 
 	AttackCollection atkCollection = new AttackCollection();
 	UnitCollection unitCollection = new UnitCollection();
@@ -25,11 +26,11 @@ public class Database {
 		}
 	}
 	public Database() {
-		atkCollection = new AttackCollection();
+//		basePath = Application.dataPath + "/Resources/";
 	}
 	#endregion
 
-	#region external
+	#region public
 	public static void AddAttack(Attack attack)
 	{
 		Instance.atkCollection.Add(attack);
@@ -90,9 +91,14 @@ public class Database {
 
 	public static void LoadFromFile()
 	{
-		Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(File.ReadAllText(attackCollectionPath));
-		Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(File.ReadAllText(unitCollectionPath));
-		Instance.mapData = LitJson.JsonMapper.ToObject<MapData>(File.ReadAllText(mapDataPath));
+		TextAsset attkCollJSON = (TextAsset) Resources.Load(attackCollectionPath, typeof(TextAsset));
+		Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(attkCollJSON.text);
+
+		TextAsset unitCollJSON = (TextAsset) Resources.Load(unitCollectionPath, typeof(TextAsset));
+		Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
+
+		TextAsset mapDataJSON = (TextAsset) Resources.Load(mapDataPath, typeof(TextAsset));
+		Instance.mapData = LitJson.JsonMapper.ToObject<MapData>(mapDataJSON.text);
 	}
 	#endregion
 }
