@@ -71,5 +71,18 @@ public enum EventName {
     RoundSetup,
 	TurnStarted,
 	Gameover,
-	EventDone
+	EventDone,
+	DebugLog,
+	CombatLogInitialized
+}
+
+public class DebugLogEvent : EventProxyArgs
+{
+	public string debugLogString;
+
+	public DebugLogEvent (string debugLogString)
+	{
+		this.debugLogString = debugLogString;
+		this.name = EventName.DebugLog;
+	}
 }
