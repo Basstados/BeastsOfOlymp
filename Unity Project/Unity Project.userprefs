@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\Model\CombatLog\CombatLog.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\View\BUnit.cs">
     <Files>
-      <File FileName="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" Line="19" Column="24" />
-      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="114" Column="3" />
-      <File FileName="Assets\TheRealBoB\Scripts\Model\CombatState\Combat.cs" Line="16" Column="73" />
-      <File FileName="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" Line="76" Column="22" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="150" Column="33" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\BView.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Model\CombatState\Combat.cs" Line="1" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" Line="1" Column="1" />
       <File FileName="Assets\TheRealBoB\Scripts\Model\CombatLog\CombatLog.cs" Line="32" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>

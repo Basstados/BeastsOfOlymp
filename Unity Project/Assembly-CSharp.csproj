@@ -239,7 +239,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeList.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeListUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BUITooglePanel.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\_Temp\DatabaseToFile.cs" />
+     <Compile Include="Assets\TheRealBoB\_Temp\DatabaseToFile.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />

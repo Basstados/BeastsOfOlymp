@@ -3,8 +3,10 @@ using System.Collections;
 
 public class BUnit : MonoBehaviour {
 
+	public GameObject renderObject;
+	public Animator animator;
 	public UILabel label;
-	public float movementSpeed = 2;
+	public float movementSpeed = 4;
 
 	BView context;
 	Action action;
@@ -31,12 +33,12 @@ public class BUnit : MonoBehaviour {
 		defaultAttack = unit.attacks[unit.defaultAttack];
 
 		if(unit.team == Unit.Team.PLAYER) {
-			renderer.material.color = Color.blue;
+			renderObject.renderer.material.color = Color.blue;
 		} else {
-			renderer.material.color = Color.gray;
+			renderObject.renderer.material.color = Color.gray;
 		}
 
-		defaultColor = renderer.material.color;
+		defaultColor = renderObject.renderer.material.color;
 		flashColor = Color.red;
 
 	}
@@ -116,29 +118,52 @@ public class BUnit : MonoBehaviour {
 
 	private IEnumerator DamageFlashRoutine() 
 	{
-		renderer.material.color = flashColor;
+		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
-		renderer.material.color = defaultColor;
+		renderObject.renderer.material.color = defaultColor;
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	private IEnumerator MoveRoutine(BMapTile[] path)
 	{
 		for (int i = 1; i < path.Length; i++) {
-			Vector3 nextWp = path[i].transform.position;
-			do{
-				Vector3 translation = nextWp - transform.position;
-				float distance = translation.magnitude;
-				translation = translation.normalized * Time.deltaTime * movementSpeed;
-				if(distance < translation.magnitude) {
-					transform.position = nextWp;
-					break;
-				} else {
-					transform.Translate(translation);
-				}
-				yield return 0;
-			} while(transform.position != nextWp);
+			if(animator == null) {
+				// old moveanimation without animator
+				Vector3 nextWp = path[i].transform.position;
+				do{
+					Vector3 translation = nextWp - transform.position;
+					float distance = translation.magnitude;
+					translation = translation.normalized * Time.deltaTime * movementSpeed;
+					if(distance < translation.magnitude) {
+						transform.position = nextWp;
+						break;
+					} else {
+						transform.Translate(translation);
+					}
+					yield return 0;
+				} while(transform.position != nextWp);
+			} else {
+				animator.SetBool("walking", true);
+				Vector3 nextWp = path[i].transform.position;
+				Vector3 lookPoint = nextWp;
+				lookPoint.y = 0;
+				transform.LookAt(lookPoint);
+				do {
+//					Debug.Log("Pos: " + transform.position + " WP: " + nextWp);
+					Vector3 translation = nextWp - transform.position;
+					float distance = translation.magnitude;
+					translation = translation.normalized * Time.deltaTime * movementSpeed;
+//					Debug.Log("Distance: " + distance + " Translation: " + translation.magnitude);
+					if(distance < translation.magnitude) {
+						transform.position = nextWp;
+//						Debug.Log("Set Pos: " + transform.position);
+						break;
+					}
+					yield return 0;
+				} while(transform.position != nextWp);
+			}
 		}
+		animator.SetBool("walking", false);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
