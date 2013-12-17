@@ -99,7 +99,15 @@ public class BUnit : MonoBehaviour {
 	public void PlayAttack(BUnit target, Attack attack, bool hit)
 	{
 		transform.LookAt(target.transform.position);
+		StartCoroutine(AttackRoutine());
 		bCombatMenu.ActionCompleted();
+	}
+
+	IEnumerator AttackRoutine()
+	{
+		animator.SetBool("attack",true);
+		yield return new WaitForSeconds(0.1f);
+		animator.SetBool("attack",false);
 	}
 
 	public void PlayHitAnimation (bool hit)
