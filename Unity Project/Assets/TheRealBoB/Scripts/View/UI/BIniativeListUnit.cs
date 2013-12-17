@@ -12,9 +12,9 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 
 	Color defaultColor = Color.white;
 	Color activeColor = Color.green;
-	Color deadColor = Color.grey;
-	Color aiColor = Color.blue;
-	Color playerColor = Color.cyan;
+	Color deadColor = Color.black;
+	Color aiColor = Color.grey;
+	Color playerColor = Color.blue;
 
 	public void Init(Unit unit)
 	{
