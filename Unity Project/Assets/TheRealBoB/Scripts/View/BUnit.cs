@@ -96,8 +96,9 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(MoveRoutine(path));
 	}
 
-	public void PlayAttack (Attack attack, bool hit)
+	public void PlayAttack(BUnit target, Attack attack, bool hit)
 	{
+		transform.LookAt(target.transform.position);
 		bCombatMenu.ActionCompleted();
 	}
 
@@ -112,7 +113,7 @@ public class BUnit : MonoBehaviour {
 
 	public void Died()
 	{
-		renderer.enabled = false;
+		renderObject.renderer.enabled = false;
 		label.enabled = false; 
 	}
 
@@ -156,8 +157,9 @@ public class BUnit : MonoBehaviour {
 //					Debug.Log("Distance: " + distance + " Translation: " + translation.magnitude);
 					if(distance < translation.magnitude) {
 						transform.position = nextWp;
-//						Debug.Log("Set Pos: " + transform.position);
 						break;
+					} else {
+						transform.Translate( transform.InverseTransformDirection(translation) );
 					}
 					yield return 0;
 				} while(transform.position != nextWp);
