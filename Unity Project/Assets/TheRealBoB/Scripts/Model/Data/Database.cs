@@ -80,13 +80,13 @@ public class Database {
 		string json;
 		// save attack collection to file
 		json = LitJson.JsonMapper.ToJson(Instance.atkCollection);
-		File.WriteAllText(attackCollectionPath,json);
+		File.WriteAllText(basePath + attackCollectionPath + ".json",json);
 		// save unit collection to file
 		json = LitJson.JsonMapper.ToJson(Instance.unitCollection);
-		File.WriteAllText(unitCollectionPath,json);
+		File.WriteAllText(basePath + unitCollectionPath + ".json" ,json);
 		// save map data to file
 		json = LitJson.JsonMapper.ToJson(Instance.mapData);
-		File.WriteAllText(mapDataPath,json);
+		File.WriteAllText(basePath + mapDataPath + ".json" ,json);
 	}
 
 	public static void LoadFromFile()
