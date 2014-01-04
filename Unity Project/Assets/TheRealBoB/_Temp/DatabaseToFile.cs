@@ -54,11 +54,11 @@ public class DatabaseToFile : MonoBehaviour {
 
 		map.width = 10;
 		map.height = 10;
-		map.penaltys = new byte[map.width][];
+		map.penalties = new byte[map.width][];
 		for (int i = 0; i < map.width; i++) {
-			map.penaltys[i] = new byte[map.height];
+			map.penalties[i] = new byte[map.height];
 			for (int j = 0; j < map.height; j++) {
-				map.penaltys[i][j] = 1;
+				map.penalties[i][j] = 1;
 			}
 		}
 		map.teamUnits = new MapData.TeamUnit[2][];

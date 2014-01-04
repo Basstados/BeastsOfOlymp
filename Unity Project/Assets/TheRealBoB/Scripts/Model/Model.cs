@@ -30,7 +30,7 @@ public class Model
 			
 			for (int j = 0; j < mapData.height; j++) {
 				mapTiles[i][j] = new MapTile(i,j);
-				mapTiles[i][j].Penalty = mapData.penaltys[i][j];
+				mapTiles[i][j].Penalty = mapData.penalties[i][j];
 			}
 		}
 

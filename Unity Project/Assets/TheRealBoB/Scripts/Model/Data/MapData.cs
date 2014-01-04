@@ -6,7 +6,7 @@ public class MapData
 {
 	public int width;
 	public int height;
-	public byte[][] penaltys; // byte[width][height]; 0 means unpassable
+	public byte[][] penalties; // byte[width][height]; 0 means unpassable
 	public TeamUnit[][] teamUnits;
 
 	[System.Serializable]
