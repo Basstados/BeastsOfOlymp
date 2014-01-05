@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 [System.Serializable]
 public class Database {
@@ -43,9 +44,19 @@ public class Database {
 		}
 	}
 
+	public static void ClearAttacks()
+	{
+		Instance.atkCollection.attackDict.Clear();
+	}
+
 	public static Attack GetAttack(string name)
 	{
 		return Instance.atkCollection.Get(name);
+	}
+
+	public static Attack[] GetAttacks()
+	{
+		return Instance.atkCollection.attackDict.Values.ToArray();
 	}
 
 	public static void AddUnitData(UnitData data)

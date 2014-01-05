@@ -10,10 +10,7 @@ public class MapDataPanel : MonoBehaviour {
 	public UIInput aiTeamSizeInput;
 
 	// Use this for initialization
-	void Start () {
-		Database.LoadFromFile();
-
-		MapData mapData = Database.GetMapData();
+	public void Init(MapData mapData) {
 		mtDataInput.Init(mapData.penalties);
 		tmPlayerDataInput.Init(mapData.teamUnits[0]);
 		tmAIDataInput.Init(mapData.teamUnits[1]);
@@ -37,7 +34,5 @@ public class MapDataPanel : MonoBehaviour {
 
 		Database.SetMapData(map);
 		Debug.Log("MapData saved in Database");
-
-		Database.SaveAsFile();
 	}
 }
