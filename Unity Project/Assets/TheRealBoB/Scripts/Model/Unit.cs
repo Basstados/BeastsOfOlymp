@@ -21,7 +21,6 @@ public class Unit : IComparable
 	#region properties
 	public string	Name				{get{return this.data.name;}}
 	public int 		Initiative 			{get{return this.data.baseInitiative;}}
-	public int 		Movement 			{get{return this.data.baseMovement;}}
 	public int		Attack				{get{return this.data.baseAttack;}}
 	public int 		ActionPoints 		{get{return this.data.baseActionPoints - apUsed;}}
 	public int		MaxActionPoints 	{get{return this.data.baseActionPoints;}}
@@ -86,7 +85,7 @@ public class Unit : IComparable
 
 	public override string ToString ()
 	{
-		return string.Format ("[Unit: Initiative={0}, Movement={1}, ActionPoints={2}, AIControled={3}]", Initiative, Movement, ActionPoints, AIControled);
+		return string.Format ("[Unit: Initiative={0}, ActionPoints={2}, AIControled={3}]", Initiative, ActionPoints, AIControled);
 	}
 	
 }

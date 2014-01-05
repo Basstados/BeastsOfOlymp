@@ -7,7 +7,6 @@ public struct UnitData
 	public string name;
 	public int baseHealth;
 	public int baseAttack;
-	public int baseMovement;
 	public int baseInitiative;
 	public int baseActionPoints;
 	public string[] attackNames;

@@ -71,9 +71,19 @@ public class Database {
 		}
 	}
 
+	public static void ClearUnits ()
+	{
+		Instance.unitCollection.unitDict.Clear();
+	}
+
 	public static UnitData GetUnitData(string name)
 	{
 		return Instance.unitCollection.Get(name);
+	}
+
+	public static UnitData[] GetUnitsData()
+	{
+		return Instance.unitCollection.unitDict.Values.ToArray();
 	}
 
 	public static void SetMapData(MapData data)

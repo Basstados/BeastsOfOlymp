@@ -33,7 +33,6 @@ public class DatabaseToFile : MonoBehaviour {
 		units[0].name = "Minomon";
 		units[0].baseHealth = 30;
 		units[0].baseAttack = 3;
-		units[0].baseMovement = 5;
 		units[0].baseInitiative = 8;
 		units[0].baseActionPoints = 5;
 		units[0].attackNames = new string[1]{"Tackle"};
@@ -41,7 +40,6 @@ public class DatabaseToFile : MonoBehaviour {
 		units[1].name = "Speimon";
 		units[1].baseHealth = 14;
 		units[1].baseAttack = 6;
-		units[1].baseMovement = 4;
 		units[1].baseInitiative = 7;
 		units[1].baseActionPoints = 4;
 		units[1].attackNames = new string[1]{"Stachelschuss"};
