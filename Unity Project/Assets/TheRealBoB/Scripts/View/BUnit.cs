@@ -4,8 +4,9 @@ using System.Collections;
 public class BUnit : MonoBehaviour {
 
 	public GameObject renderObject;
+	public GameObject meshContainer;
 	public Animator animator;
-	public UILabel label;
+	public BUnitUI unitUI;
 	public float movementSpeed = 4;
 
 	BView context;
@@ -41,6 +42,7 @@ public class BUnit : MonoBehaviour {
 		defaultColor = renderObject.renderer.material.color;
 		flashColor = Color.red;
 
+		unitUI.Init(this);
 	}
 
 	public void PopupCombatMenu() 
@@ -98,7 +100,7 @@ public class BUnit : MonoBehaviour {
 
 	public void PlayAttack(BUnit target, Attack attack, bool hit)
 	{
-		transform.LookAt(target.transform.position);
+		meshContainer.transform.LookAt(target.transform.position);
 		StartCoroutine(AttackRoutine());
 		bCombatMenu.ActionCompleted();
 	}
@@ -122,7 +124,7 @@ public class BUnit : MonoBehaviour {
 	public void Died()
 	{
 		renderObject.renderer.enabled = false;
-		label.enabled = false; 
+		unitUI.gameObject.SetActive(false);
 	}
 
 	private IEnumerator DamageFlashRoutine() 
@@ -133,6 +135,11 @@ public class BUnit : MonoBehaviour {
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
+	/// <summary>
+	/// This routine does the movement animation.
+	/// </summary>
+	/// <returns>Nothing; IEnumerator is just for coroutines</returns>
+	/// <param name="path">The pathe we want to move along</param>
 	private IEnumerator MoveRoutine(BMapTile[] path)
 	{
 		for (int i = 1; i < path.Length; i++) {
@@ -156,7 +163,7 @@ public class BUnit : MonoBehaviour {
 				Vector3 nextWp = path[i].transform.position;
 				Vector3 lookPoint = nextWp;
 				lookPoint.y = 0;
-				transform.LookAt(lookPoint);
+				meshContainer.transform.LookAt(lookPoint);
 				do {
 //					Debug.Log("Pos: " + transform.position + " WP: " + nextWp);
 					Vector3 translation = nextWp - transform.position;
@@ -175,9 +182,5 @@ public class BUnit : MonoBehaviour {
 		}
 		animator.SetBool("walking", false);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
-	}
-
-	void Update() {
-		label.text = unit.Name + " HP: " + unit.HealthPoints + "/" + unit.MaxHealthPoints + " AP: " + unit.ActionPoints + "/" + unit.MaxActionPoints;
 	}
 }
