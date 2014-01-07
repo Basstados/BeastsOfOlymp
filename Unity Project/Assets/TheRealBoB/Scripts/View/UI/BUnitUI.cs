@@ -28,8 +28,7 @@ public class BUnitUI : MonoBehaviour {
 		initalized = true;
 	}
 
-	// Update is called once per frame
-	void Update () 
+	public void UpdateLivebar() 
 	{
 		if(!initalized) return;
 

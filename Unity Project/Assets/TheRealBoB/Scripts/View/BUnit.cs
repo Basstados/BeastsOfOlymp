@@ -101,20 +101,23 @@ public class BUnit : MonoBehaviour {
 	public void PlayAttack(BUnit target, Attack attack, bool hit)
 	{
 		meshContainer.transform.LookAt(target.transform.position);
-		StartCoroutine(AttackRoutine());
+		StartCoroutine(AttackRoutine(target,attack, hit));
+
+	}
+
+	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit)
+	{
+		animator.SetBool("attack",true);
+		yield return new WaitForSeconds(0.3f); //TODO make this controlable
+		animator.SetBool("attack",false);
+		target.PlayHitAnimation(hit);
 		bCombatMenu.ActionCompleted();
 	}
 
-	IEnumerator AttackRoutine()
-	{
-		animator.SetBool("attack",true);
-		yield return new WaitForSeconds(0.1f);
-		animator.SetBool("attack",false);
-	}
-
-	public void PlayHitAnimation (bool hit)
+	public void PlayHitAnimation(bool hit)
 	{
 		if(hit) {
+			unitUI.UpdateLivebar();
 			StartCoroutine(DamageFlashRoutine());
 		} else {
 			EventProxyManager.FireEvent(this, new EventDoneEvent());
