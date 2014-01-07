@@ -23,6 +23,7 @@ public class BUnit : MonoBehaviour {
 	public BCombatMenu bCombatMenu;
 
 	Attack defaultAttack;
+	Attack selectedAttack;
 	Color flashColor;
 	Color defaultColor;
 
@@ -56,11 +57,17 @@ public class BUnit : MonoBehaviour {
 		context.DisplayRange(this, unit.ActionPoints);
 	}
 
-	public void DisplayAttackRange()
+	public void DisplayAttackRange(Attack attack)
 	{
+		if (attack == null) {
+			selectedAttack = defaultAttack;
+		} else {
+			selectedAttack = attack;
+		}
+
 		action = Action.ATTACK;
-		Debug.Log(defaultAttack.name + " " + defaultAttack.range);
-		context.DisplayRange(this, defaultAttack.range);
+		Debug.Log(selectedAttack.name + " " + selectedAttack.range);
+		context.DisplayRange(this, selectedAttack.range);
 	}
 
 	public void ClearDisplayRange ()
@@ -79,7 +86,7 @@ public class BUnit : MonoBehaviour {
 		case Action.ATTACK:
 			// use target for attack
 			if(bMapTile.mapTile.unit != null) {
-				context.controller.AttackUnit(this.unit, bMapTile.mapTile.unit, defaultAttack);
+				context.controller.AttackUnit(this.unit, bMapTile.mapTile.unit, selectedAttack);
 			}
 			break;
 		}

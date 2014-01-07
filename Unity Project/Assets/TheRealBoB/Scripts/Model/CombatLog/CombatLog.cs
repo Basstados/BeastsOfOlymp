@@ -25,7 +25,10 @@ public class CombatLog
 
 	public string GetLast()
 	{
-		return log[log.Count-1].ToString();
+		if (log.Count > 0)
+			return log [log.Count - 1].ToString ();
+		else
+			return null;
 	}
 
 	public override string ToString ()
