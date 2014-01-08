@@ -139,6 +139,8 @@ public class BUnit : MonoBehaviour {
 
 	private IEnumerator DamageFlashRoutine() 
 	{
+		BParticleManager.PlayEffect("HitEffect", transform.position);
+
 		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
 		renderObject.renderer.material.color = defaultColor;

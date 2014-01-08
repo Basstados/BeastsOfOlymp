@@ -245,6 +245,9 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Camera\BCameraMover.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\BParticleManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\ShurikenAutodeactivate.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BAttackButton.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeList.cs" />
