@@ -8,9 +8,10 @@ public class GameDataEditControl : MonoBehaviour {
 	public UnitPanel unitPanel;
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		Database.LoadFromFile();
+		Debug.Log ("Datas loaded from file!");
 
 		mapPanel.Init(Database.GetMapData());
 		attacksPanel.Init(Database.GetAttacks());
