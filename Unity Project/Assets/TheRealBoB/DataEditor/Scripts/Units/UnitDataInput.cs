@@ -73,7 +73,7 @@ public class UnitDataInput : MonoBehaviour {
 		health = unitData.baseHealth;
 		attack = unitData.baseAttack;
 		initative = unitData.baseInitiative;
-		ap = unitData.baseInitiative;
+		ap = unitData.baseActionPoints;
 
 		attacks = new List<UnitAttackInput>();
 		if(unitData.attackNames != null)
