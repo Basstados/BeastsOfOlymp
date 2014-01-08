@@ -5,6 +5,7 @@ public class BUnit : MonoBehaviour {
 
 	public GameObject renderObject;
 	public GameObject meshContainer;
+	public GameObject effectAnchor;
 	public Animator animator;
 	public BUnitUI unitUI;
 	public float movementSpeed = 4;
@@ -139,7 +140,7 @@ public class BUnit : MonoBehaviour {
 
 	private IEnumerator DamageFlashRoutine() 
 	{
-		BParticleManager.PlayEffect("HitEffect", transform.position);
+		BParticleManager.PlayEffect("HitEffect", effectAnchor.transform.position);
 
 		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
