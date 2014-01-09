@@ -2,14 +2,17 @@
 using System.Collections;
 
 public class BUnitUI : MonoBehaviour {
-	
+
 	public UISlider lifebar;
 	public Color playerColor;
 	public Color aiColor;
 	public UILabel nameLabel;
+	public BapBar apbar;
 	BUnit parent;
 
 	bool initalized = false;
+
+	UISprite[] apMarker;
 
 	public void Init(BUnit parent) 
 	{
@@ -25,6 +28,8 @@ public class BUnitUI : MonoBehaviour {
 		// set name label
 		nameLabel.text = parent.unit.Name;
 
+		apbar.Init(parent.unit.MaxActionPoints);
+
 		initalized = true;
 	}
 
@@ -33,5 +38,10 @@ public class BUnitUI : MonoBehaviour {
 		if(!initalized) return;
 
 		lifebar.value = parent.unit.HealthPoints / (float) parent.unit.MaxHealthPoints;
+	}
+
+	public void UpdateAPBar()
+	{
+		apbar.EmptyAP(parent.unit.ActionPoints);
 	}
 }

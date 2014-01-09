@@ -50,6 +50,9 @@ public class BUnit : MonoBehaviour {
 	public void PopupCombatMenu() 
 	{
 		bCombatMenu.OpenForBUnit(this);
+
+		//TODO!!!!! tmp position
+		unitUI.UpdateAPBar();
 	}
 
 	public void DisplayMovementRange()
@@ -103,14 +106,15 @@ public class BUnit : MonoBehaviour {
 	public void MoveAlongPath(BMapTile[] path)
 	{
 		bCombatMenu.ActionCompleted();
+		unitUI.UpdateAPBar();
 		StartCoroutine(MoveRoutine(path));
 	}
 
 	public void PlayAttack(BUnit target, Attack attack, bool hit)
 	{
 		meshContainer.transform.LookAt(target.transform.position);
+		unitUI.UpdateAPBar();
 		StartCoroutine(AttackRoutine(target,attack, hit));
-
 	}
 
 	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit)
