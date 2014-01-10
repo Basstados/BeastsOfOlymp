@@ -1,28 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameDataEditControl : MonoBehaviour {
+namespace GameDataUI {
+	public class GameDataEditControl : MonoBehaviour {
 
-	public MapDataPanel mapPanel;
-	public AttacksPanel attacksPanel;
-	public UnitPanel unitPanel;
+		public MapDataPanel mapPanel;
+		public AttacksPanel attacksPanel;
+		public UnitPanel unitPanel;
 
-	// Use this for initialization
-	void Awake () 
-	{
-		Database.LoadFromFile();
-		Debug.Log ("Datas loaded from file!");
+		// Use this for initialization
+		void Awake () 
+		{
+			Database.LoadFromFile();
+			Debug.Log ("Datas loaded from file!");
 
-		mapPanel.Init(Database.GetMapData());
-		attacksPanel.Init(Database.GetAttacks());
-		unitPanel.Init(Database.GetUnitsData());
-	}
+			mapPanel.Init(Database.GetMapData());
+			attacksPanel.Init(Database.GetAttacks());
+			unitPanel.Init(Database.GetUnitsData());
+		}
 
-	public void Save() 
-	{
-		mapPanel.Save();
-		attacksPanel.Save();
-		unitPanel.Save();
-		Database.SaveAsFile();
+		public void Save() 
+		{
+			mapPanel.Save();
+			attacksPanel.Save();
+			unitPanel.Save();
+			Database.SaveAsFile();
+		}
 	}
 }
