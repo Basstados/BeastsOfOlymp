@@ -157,19 +157,35 @@ public class Database {
 		// unload asset to prefent caching in Unity Editor (we don't need it any longer anyway)
 
 		TextAsset attkCollJSON = (TextAsset) Resources.Load(attackCollectionPath, typeof(TextAsset));
-		Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(attkCollJSON.text);
+		if(attkCollJSON != null) {
+			Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(attkCollJSON.text);
+		} else {
+			Instance.atkCollection = new AttackCollection();
+		}
 		Resources.UnloadAsset(attkCollJSON);
 
 		TextAsset unitCollJSON = (TextAsset) Resources.Load(unitCollectionPath, typeof(TextAsset));
-		Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
+		if(unitCollJSON != null) {
+			Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
+		} else {
+			Instance.unitCollection = new UnitCollection();
+		}
 		Resources.UnloadAsset(unitCollJSON);
 
 		TextAsset mapDataJSON = (TextAsset) Resources.Load(mapDataPath, typeof(TextAsset));
-		Instance.mapData = LitJson.JsonMapper.ToObject<MapData>(mapDataJSON.text);
+		if(mapDataJSON != null) {
+			Instance.mapData = LitJson.JsonMapper.ToObject<MapData> (mapDataJSON.text);
+		} else {
+			Instance.mapData = new MapData();
+		}
 		Resources.UnloadAsset(mapDataJSON);
 
 		TextAsset typeDataJSON = (TextAsset) Resources.Load(typeDataPath, typeof(TextAsset));
-		Instance.typeCollection = LitJson.JsonMapper.ToObject<TypeCollection>(typeDataJSON.text);
+		if(typeDataJSON != null) {
+			Instance.typeCollection = LitJson.JsonMapper.ToObject<TypeCollection> (typeDataJSON.text);
+		} else {
+			Instance.typeCollection = new TypeCollection();
+		}
 		Resources.UnloadAsset(typeDataJSON);
 	}
 	#endregion

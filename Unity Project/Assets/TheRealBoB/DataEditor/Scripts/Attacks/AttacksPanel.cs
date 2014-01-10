@@ -55,6 +55,13 @@ public class AttacksPanel : MonoBehaviour {
 		UpdatePositions();
 	}
 
+	public void Refresh()
+	{
+		foreach(AttackInput input in attackInputs) {
+			input.Refresh();
+		}
+	}
+
 	public void Save()
 	{
 		Attack[] atks = new Attack[attackInputs.Count];

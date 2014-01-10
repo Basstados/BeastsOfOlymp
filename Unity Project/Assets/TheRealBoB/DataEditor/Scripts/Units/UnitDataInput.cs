@@ -10,6 +10,7 @@ namespace GameDataUI {
 		public UIInput attackInput;
 		public UIInput initativeInput;
 		public UIInput apInput;
+		public UIPopupList typeInput;
 		public GameObject addAttackButton;
 		public GameObject attackLocator;
 		public GameObject attackInputPrefab;
@@ -81,6 +82,9 @@ namespace GameDataUI {
 				foreach(string atk in unitData.attackNames) {
 					AddAttack(atk);
 				}
+
+			if(unitData.type.name != null) typeInput.value = unitData.type.name;
+			Refresh();
 		}
 		
 		void UpdatePositions() 
@@ -99,18 +103,26 @@ namespace GameDataUI {
 
 		public void AddAttack(string name) 
 		{
-			string[] options = new string[Database.GetAttacks().Length];
-			for(int i = 0; i < options.Length; i++) {
-				options[i] = Database.GetAttacks()[i].name;
-			}
-
 			GameObject handle = (GameObject) Instantiate(attackInputPrefab);
 			handle.transform.parent = attackLocator.transform;
 			PopupListElementInput atkInput = handle.GetComponent<PopupListElementInput>();
-			atkInput.Init(name, options, this);
+			atkInput.Init(name, GetAttackOptions(), this);
 			attacks.Add(atkInput);
 
 			UpdatePositions();
+		}
+
+		public void Refresh()
+		{
+			// update attack options
+			string[] options = GetAttackOptions();
+			foreach(PopupListElementInput input in attacks) {
+				input.UpdateOptions(options);
+			}
+
+			// update type options
+			options = GetTypeOptions();
+			if(options.Length > 0) typeInput.items = new List<string>(options);
 		}
 
 		public void RemoveListElement(IInputListElement input)
@@ -123,6 +135,24 @@ namespace GameDataUI {
 		{
 			parent.Remove(this);
 			Destroy(this.gameObject);
+		}
+
+		string[] GetAttackOptions()
+		{
+			string[] options = new string[Database.GetAttacks().Length];
+			for(int i = 0; i < options.Length; i++) {
+				options[i] = Database.GetAttacks()[i].name;
+			}
+			return options;
+		}
+
+		string[] GetTypeOptions()
+		{
+			string[] options = new string[Database.GetTypes().Length];
+			for(int i = 0; i < options.Length; i++) {
+				options[i] = Database.GetTypes()[i].name;
+			}
+			return options;
 		}
 
 		public UnitData GetUnitData()

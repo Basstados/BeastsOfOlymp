@@ -4,5 +4,5 @@ public struct Type {
 
 	public string name;
 	public Type[] weaknesses;
-	public Type[] strength;
+	public Type[] strengths;
 }

@@ -50,7 +50,14 @@ namespace GameDataUI {
 			
 			UpdatePositions();
 		}
-		
+
+		public void Refresh() 
+		{
+			foreach(UnitDataInput input in unitInputs) {
+				input.Refresh();
+			}
+		}
+
 		public void Remove(UnitDataInput unitInput) 
 		{
 			unitInputs.Remove(unitInput);

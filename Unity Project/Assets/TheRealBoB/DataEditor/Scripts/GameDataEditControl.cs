@@ -7,6 +7,7 @@ namespace GameDataUI {
 		public MapDataPanel mapPanel;
 		public AttacksPanel attacksPanel;
 		public UnitPanel unitPanel;
+		public TypePanel typePanel;
 
 		// Use this for initialization
 		void Awake () 
@@ -17,13 +18,24 @@ namespace GameDataUI {
 			mapPanel.Init(Database.GetMapData());
 			attacksPanel.Init(Database.GetAttacks());
 			unitPanel.Init(Database.GetUnitsData());
+			typePanel.Init(Database.GetTypes ());
 		}
 
-		public void Save() 
+		public void UpdateDatabase()
 		{
 			mapPanel.Save();
 			attacksPanel.Save();
 			unitPanel.Save();
+			typePanel.Save();
+
+			attacksPanel.Refresh();
+			unitPanel.Refresh();
+			typePanel.Refresh();
+		}
+
+		public void Save() 
+		{
+			UpdateDatabase();
 			Database.SaveAsFile();
 		}
 	}

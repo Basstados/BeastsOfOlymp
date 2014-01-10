@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class AttackInput : MonoBehaviour {
 
@@ -8,7 +8,8 @@ public class AttackInput : MonoBehaviour {
 	public UIInput damageInput;
 	public UIInput hitInput;
 	public UIInput rangeInput;
-	
+	public UIPopupList typeInput;
+
 	char[] trimChar = new char[]{'|'};
 	AttacksPanel parent;
 
@@ -68,6 +69,9 @@ public class AttackInput : MonoBehaviour {
 		damage = attack.damage;
 		hitChance = attack.hitChance;
 		range = attack.range;
+
+		if(attack.type.name != null) typeInput.value = attack.type.name;
+		Refresh();
 	}
 
 	public Attack GetAttack() 
@@ -80,6 +84,21 @@ public class AttackInput : MonoBehaviour {
 		atk.range = range;
 
 		return atk;
+	}
+
+	public void Refresh() 
+	{
+		string[] options = GetTypeOptions();
+		if(options.Length > 0) typeInput.items = new List<string>(options);
+	}
+
+	string[] GetTypeOptions()
+	{
+		string[] options = new string[Database.GetTypes().Length];
+		for(int i = 0; i < options.Length; i++) {
+			options[i] = Database.GetTypes()[i].name;
+		}
+		return options;
 	}
 
 	public void Delete() 
