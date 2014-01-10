@@ -5,6 +5,7 @@ using System.Collections;
 public struct UnitData 
 {
 	public string name;
+	public Type type;
 	public int baseHealth;
 	public int baseAttack;
 	public int baseInitiative;

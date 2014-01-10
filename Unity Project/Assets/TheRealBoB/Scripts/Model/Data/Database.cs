@@ -11,9 +11,11 @@ public class Database {
 	static string attackCollectionPath = "AttackCollection";
 	static string unitCollectionPath = "UnitCollection";
 	static string mapDataPath = "MapData";
+	static string typeDataPath = "TypeData";
 
 	AttackCollection atkCollection = new AttackCollection();
 	UnitCollection unitCollection = new UnitCollection();
+	TypeCollection typeCollection = new TypeCollection();
 	MapData mapData = new MapData();
 
 	#region singelton
@@ -32,6 +34,7 @@ public class Database {
 	#endregion
 
 	#region public
+	#region attack
 	public static void AddAttack(Attack attack)
 	{
 		Instance.atkCollection.Add(attack);
@@ -58,7 +61,9 @@ public class Database {
 	{
 		return Instance.atkCollection.attackDict.Values.ToArray();
 	}
+	#endregion
 
+	#region unitData
 	public static void AddUnitData(UnitData data)
 	{
 		Instance.unitCollection.Add(data);
@@ -85,7 +90,9 @@ public class Database {
 	{
 		return Instance.unitCollection.unitDict.Values.ToArray();
 	}
+	#endregion
 
+	#region mapData
 	public static void SetMapData(MapData data)
 	{
 		Instance.mapData = data;
@@ -95,6 +102,36 @@ public class Database {
 	{
 		return Instance.mapData;
 	}
+	#endregion
+
+	#region type
+	public static void AddType(Type type)
+	{
+		Instance.typeCollection.Add(type);
+	}
+
+	public static void AddTypeArray(Type[] types)
+	{
+		foreach (Type type in types) {
+			Instance.typeCollection.Add(type);
+		}
+	}
+
+	public static Type GetType(string name)
+	{
+		return Instance.typeCollection.Get(name);
+	}
+
+	public static Type[] GetTypes()
+	{
+		return Instance.typeCollection.typeDict.Values.ToArray();
+	}
+
+	public static void ClearTypes()
+	{
+		Instance.typeCollection.typeDict.Clear();
+	}
+	#endregion
 
 	public static void SaveAsFile()
 	{
@@ -108,21 +145,32 @@ public class Database {
 		// save map data to file
 		json = LitJson.JsonMapper.ToJson(Instance.mapData);
 		File.WriteAllText(basePath + mapDataPath + ".json" ,json);
+		// save types to file
+		json = LitJson.JsonMapper.ToJson(Instance.typeCollection);
+		File.WriteAllText(basePath + typeDataPath + ".json" ,json);
 	}
 
 	public static void LoadFromFile()
 	{
+		// get json as TextAsset with Resources class
+		// then convert TextAsset to collection object
+		// unload asset to prefent caching in Unity Editor (we don't need it any longer anyway)
+
 		TextAsset attkCollJSON = (TextAsset) Resources.Load(attackCollectionPath, typeof(TextAsset));
 		Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(attkCollJSON.text);
-		Resources.UnloadAsset (attkCollJSON);
+		Resources.UnloadAsset(attkCollJSON);
 
 		TextAsset unitCollJSON = (TextAsset) Resources.Load(unitCollectionPath, typeof(TextAsset));
 		Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
-		Resources.UnloadAsset (unitCollJSON);
+		Resources.UnloadAsset(unitCollJSON);
 
 		TextAsset mapDataJSON = (TextAsset) Resources.Load(mapDataPath, typeof(TextAsset));
 		Instance.mapData = LitJson.JsonMapper.ToObject<MapData>(mapDataJSON.text);
-		Resources.UnloadAsset (mapDataJSON);
+		Resources.UnloadAsset(mapDataJSON);
+
+		TextAsset typeDataJSON = (TextAsset) Resources.Load(typeDataPath, typeof(TextAsset));
+		Instance.typeCollection = LitJson.JsonMapper.ToObject<TypeCollection>(typeDataJSON.text);
+		Resources.UnloadAsset(typeDataJSON);
 	}
 	#endregion
 }
