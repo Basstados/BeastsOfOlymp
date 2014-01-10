@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -113,11 +112,6 @@ public class Database {
 
 	public static void LoadFromFile()
 	{
-		if (Application.isEditor) {
-			AssetDatabase.Refresh();
-			Debug.Log("Refresh Assetdatabse");
-		}
-
 		TextAsset attkCollJSON = (TextAsset) Resources.Load(attackCollectionPath, typeof(TextAsset));
 		Instance.atkCollection = LitJson.JsonMapper.ToObject<AttackCollection>(attkCollJSON.text);
 		Resources.UnloadAsset (attkCollJSON);
