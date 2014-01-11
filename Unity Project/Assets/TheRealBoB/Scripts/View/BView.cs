@@ -8,6 +8,7 @@ public class BView : MonoBehaviour
 	public GameObject bMapTilePrefab;
 	public GameObject bUnitPrefab;
 	public GameObject bCombatMenuPrefab;
+	public GameObject bActiveMarkerPrefab;
 
 	public BIniativeList bInitativeList;
 	public BCombatLog bCombatLog;
@@ -19,6 +20,8 @@ public class BView : MonoBehaviour
 	BCombatMenu bCombatMenu;
 	BInputManager bInputManager;
 	BCameraMover bCameraMover;
+
+	GameObject unitMarker;
 
 	Queue<EventProxyArgs> eventQueue = new Queue<EventProxyArgs>();
 	bool performingEvent = false;
@@ -113,6 +116,7 @@ public class BView : MonoBehaviour
 	void HandleInitialized(object sender, EventArgs args)
 	{
 		InstatiateMap((args as MapInitializedEvent).mapTiles);
+		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -142,6 +146,10 @@ public class BView : MonoBehaviour
 		UnitActivatedEvent e = args as UnitActivatedEvent;
 
 		activeBUnit = GetBUnit(e.unit);
+		// place marker for active unit
+		unitMarker.transform.parent = activeBUnit.transform;
+		unitMarker.transform.localPosition = new Vector3(0,0.01f,0);
+
 		bInitativeList.ActivateIcon(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject);
 		activeBUnit.PopupCombatMenu();
