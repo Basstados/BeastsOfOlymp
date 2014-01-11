@@ -76,6 +76,7 @@ namespace GameDataUI {
 			attack = unitData.baseAttack;
 			initative = unitData.baseInitiative;
 			ap = unitData.baseActionPoints;
+			typeInput.value = unitData.type.name;
 
 			attacks = new List<PopupListElementInput>();
 			if(unitData.attackNames != null)
@@ -163,6 +164,7 @@ namespace GameDataUI {
 			unitData.baseAttack = attack;
 			unitData.baseInitiative = initative;
 			unitData.baseActionPoints = ap;
+			unitData.type = Database.GetType(typeInput.value);
 			string[] atkNames = new string[attacks.Count];
 			for (int i = 0; i < attacks.Count; i++) {
 				atkNames[i] = attacks[i].value;

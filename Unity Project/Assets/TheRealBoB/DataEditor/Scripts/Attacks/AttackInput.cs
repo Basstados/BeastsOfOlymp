@@ -69,6 +69,7 @@ public class AttackInput : MonoBehaviour {
 		damage = attack.damage;
 		hitChance = attack.hitChance;
 		range = attack.range;
+		typeInput.value = attack.type.name;
 
 		if(attack.type.name != null) typeInput.value = attack.type.name;
 		Refresh();
@@ -82,6 +83,7 @@ public class AttackInput : MonoBehaviour {
 		atk.damage = damage;
 		atk.hitChance = hitChance;
 		atk.range = range;
+		atk.type = Database.GetType(typeInput.value);
 
 		return atk;
 	}

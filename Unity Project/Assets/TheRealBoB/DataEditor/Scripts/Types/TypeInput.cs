@@ -20,6 +20,9 @@ namespace GameDataUI {
 		{
 			this.parent = parent;
 
+			if(type.name != null)
+				nameInput.value = type.name;
+
 			if(type.weaknesses != null)
 				foreach(Type weakness in type.weaknesses) {
 					AddWeakness(weakness);
