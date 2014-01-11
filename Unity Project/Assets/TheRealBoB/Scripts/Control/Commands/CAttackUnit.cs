@@ -27,8 +27,23 @@ public class CAttackUnit : ICommand
 
 		// check hit chance
 		if(attack.hitChance >= hit) {
+			// calculate type modifier
+			float typeModifier = 1f;
+			if(attack.type.strengths.Length > 0)
+				if(Array.Exists(attack.type.strengths, delegate(Type t) { return t.name == target.data.type.name; })) {
+					typeModifier *= 2f;
+				}
+			if(attack.type.weaknesses.Length > 0)
+				if(Array.Exists(attack.type.weaknesses, delegate(Type t) { return t.name == target.data.type.name; })) {
+					typeModifier *= 1/2f;
+				}
+			EventProxyManager.FireEvent(this, new DebugLogEvent("typeModifier: " + typeModifier));
+
+			// the actual damage formular
+			int damage = (int) Math.Round((source.Attack + attack.damage) * typeModifier);
+
 			// attack is succesfull
-			target.LoseHealth(source.Attack + attack.damage);
+			target.LoseHealth(damage);
 			success = true;
 		}
 
