@@ -1,6 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\Model\Data\TypeCollection.cs">
+    <Files>
+      <File FileName="Assets\TheRealBoB\DataEditor\Scripts\Map\TeamMemberInputRow.cs" Line="27" Column="4" />
+      <File FileName="Assets\TheRealBoB\DataEditor\Scripts\Map\TeamMemberInput.cs" Line="67" Column="36" />
+      <File FileName="Assets\TheRealBoB\DataEditor\Scripts\Map\MapDataPanel.cs" Line="21" Column="28" />
+      <File FileName="Assets\TheRealBoB\DataEditor\Scripts\GameDataEditControl.cs" Line="31" Column="23" />
+      <File FileName="Assets\TheRealBoB\Scripts\Model\Data\TypeCollection.cs" Line="16" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

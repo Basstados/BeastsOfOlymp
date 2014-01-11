@@ -2,63 +2,85 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TeamMemberInput : MonoBehaviour {
+namespace GameDataUI {
+	public class TeamMemberInput : MonoBehaviour, IInputListParent {
 
-	int teamSize;
-	public UIInput teamSizeInput;
+		public GameObject addTeamMemberButton;
 
-	public GameObject tmInputPrefab;
-	public float tmInputSize = 25f;
+		public GameObject tmInputPrefab;
+		public float tmInputSize = 25f;
 
-	MapData.TeamUnit[] units;
-	TeamMemberInputRow[] unitFields;
+		MapData.TeamUnit[] units;
+		List<TeamMemberInputRow> unitFields = new List<TeamMemberInputRow>();
 
-	public void Init(MapData.TeamUnit[] units) {
-		this.units = units;
+		public void Init(MapData.TeamUnit[] units) {
+			this.units = units;
 
-		teamSizeInput.value = units.Length.ToString();
-		GenerateTeamMemberInputs();
-
-		for (int i = 0; i < units.Length; i++) {
-			unitFields[i].name = units[i].name;
-			unitFields[i].x = units[i].position.x;
-			unitFields[i].y = units[i].position.y;
+			for (int i = 0; i < units.Length; i++) {
+				AddTeamMember(units[i]);
+			}
+			UpdatePositions();
 		}
-	}
 
-	public void GenerateTeamMemberInputs() 
-	{
-		if(tmInputPrefab == null)
-			return;
+		public void AddTeamMember() 
+		{
+			AddTeamMember(new MapData.TeamUnit());
+		}
 
-		// clear children
-		List<GameObject> children = new List<GameObject>();
-		foreach(Transform child in transform) children.Add(child.gameObject);
-		foreach(GameObject child in children) Destroy(child);
-
-		char[] trimChar = new char[]{'|'};
-		teamSize = int.Parse(teamSizeInput.value.TrimEnd(trimChar));
-
-		unitFields = new TeamMemberInputRow[teamSize];
-
-		for (int i = 0; i < teamSize; i++) {
+		public void AddTeamMember(MapData.TeamUnit unit) 
+		{
+			string[] options = GetUnitOptions();
 			GameObject handle = (GameObject) Instantiate(tmInputPrefab);
-			handle.name = "Teammember " + i;
+			handle.name = "Teammember";
 			handle.transform.parent = this.transform;
-			handle.transform.localPosition = new Vector3(0, - tmInputSize * i, 0);
-			handle.transform.localScale = Vector3.one;
 
-			unitFields[i] = handle.GetComponent<TeamMemberInputRow>();
-		}
-	}
+			TeamMemberInputRow tmInput = handle.GetComponent<TeamMemberInputRow>();
+			unitFields.Add(tmInput);
+			tmInput.Init(unit.name, unit.position.x, unit.position.y, options, this);
 
-	public MapData.TeamUnit[] GetTeamUnits ()
-	{
-		MapData.TeamUnit[] team = new MapData.TeamUnit[unitFields.Length];
-		for (int i = 0; i < unitFields.Length; i++) {
-			team[i] = new MapData.TeamUnit(unitFields[i].name, new Point(unitFields[i].x,unitFields[i].y));
+			UpdatePositions();
 		}
 
-		return team;
+		public void UpdatePositions()
+		{
+			for (int i = 0; i < unitFields.Count; i++) {
+				unitFields[i].gameObject.transform.localPosition = new Vector3(0, - tmInputSize * i, 0);
+				unitFields[i].gameObject.transform.localScale = Vector3.one;
+			}
+			addTeamMemberButton.transform.localPosition = new Vector3(0,-tmInputSize * unitFields.Count,0);
+		}
+
+		public MapData.TeamUnit[] GetTeamUnits ()
+		{
+			MapData.TeamUnit[] team = new MapData.TeamUnit[unitFields.Count];
+			for (int i = 0; i < unitFields.Count; i++) {
+				team[i] = new MapData.TeamUnit(unitFields[i].name, new Point(unitFields[i].x,unitFields[i].y));
+			}
+
+			return team;
+		}
+
+		public void Refresh()
+		{
+			string[] options = GetUnitOptions();
+			foreach(TeamMemberInputRow tmInput in unitFields) {
+				tmInput.UpdateOptions(options);
+			}
+		}
+
+		string[] GetUnitOptions()
+		{
+			string[] options = new string[Database.GetUnitsData().Length];
+			for (int i = 0; i < options.Length; i++) {
+				options[i] = Database.GetUnitsData()[i].name;
+			}
+			return options;
+		}
+
+		public void RemoveListElement (IInputListElement child)
+		{
+			unitFields.Remove((TeamMemberInputRow) child);
+			UpdatePositions();
+		}
 	}
 }

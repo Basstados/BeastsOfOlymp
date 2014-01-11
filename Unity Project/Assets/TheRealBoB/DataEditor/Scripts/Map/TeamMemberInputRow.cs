@@ -1,38 +1,60 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class TeamMemberInputRow : MonoBehaviour {
+namespace GameDataUI {
+	public class TeamMemberInputRow : MonoBehaviour, IInputListElement {
 
-	public UIInput nameInput;
-	public UIInput xInput;
-	public UIInput yInput;
+		public UIPopupList popupInput;
+		public UIInput xInput;
+		public UIInput yInput;
 
-	char[] trimChar = new char[]{'|'};
-
-	public string name {
-		get {
-			return nameInput.value;
+		public string name {
+			get {
+				return popupInput.value;
+			}
+			set {
+				popupInput.value = value;
+			}
 		}
-		set {
-			nameInput.value = value;
-		}
-	}
 
-	public int x {
-		get {
-			return int.Parse(xInput.value.TrimEnd(trimChar));
+		public int x {
+			get {
+				return int.Parse(xInput.value);
+			}
+			set {
+				xInput.value = value.ToString();
+			}
 		}
-		set {
-			xInput.value = value.ToString();
-		}
-	}
 
-	public int y {
-		get {
-			return int.Parse(yInput.value.TrimEnd(trimChar));
+		public int y {
+			get {
+				return int.Parse(yInput.value);
+			}
+			set {
+				yInput.value = value.ToString();
+			}
 		}
-		set {
-			yInput.value = value.ToString();
+
+		IInputListParent parent;
+		
+		public void Init(string name, int x, int y, string[] options, IInputListParent parent) 
+		{
+			UpdateOptions(options);
+			this.name = name;
+			this.x = x;
+			this.y = y;
+			this.parent = parent;
+		}
+		
+		public void UpdateOptions(string[] options)
+		{
+			popupInput.items = new List<string>(options);
+		}
+		
+		public void Delete()
+		{
+			parent.RemoveListElement(this);
+			Destroy(this.gameObject);
 		}
 	}
 }

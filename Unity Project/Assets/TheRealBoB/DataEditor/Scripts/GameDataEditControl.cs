@@ -28,6 +28,7 @@ namespace GameDataUI {
 			unitPanel.Save();
 			typePanel.Save();
 
+			mapPanel.Refresh();
 			attacksPanel.Refresh();
 			unitPanel.Refresh();
 			typePanel.Refresh();
