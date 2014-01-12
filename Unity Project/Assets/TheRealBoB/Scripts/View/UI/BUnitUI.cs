@@ -33,6 +33,11 @@ public class BUnitUI : MonoBehaviour {
 		initalized = true;
 	}
 
+	public void MarkAP(int count)
+	{
+		apbar.ActivateAP(count);
+	}
+
 	public void UpdateLivebar() 
 	{
 		if(!initalized) return;

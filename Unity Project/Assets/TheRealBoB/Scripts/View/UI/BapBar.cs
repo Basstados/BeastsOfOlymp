@@ -35,8 +35,13 @@ public class BapBar : MonoBehaviour {
 
 	public void ActivateAP(int count)
 	{
-		for(int i = 0; i < count; i++) {
-			apSprites[currentAP-i].color = apActive;	
+		Debug.Log("current ap: " + currentAP + " apSprites: " + apSprites.Length);
+		for(int i = 0; i < currentAP; i++) {
+			if(i >= currentAP - count) {
+				apSprites[i].color = apActive;
+			} else {
+				apSprites[i].color = apFull;
+			}
 		}
 	}
 

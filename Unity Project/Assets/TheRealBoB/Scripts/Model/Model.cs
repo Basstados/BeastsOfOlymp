@@ -14,8 +14,11 @@ public class Model
 
 	public bool matchRunning = true;
 
-	public Model() 
+	Controller controller;
+
+	public Model(Controller controller) 
 	{
+		this.controller = controller;
 	}
 
 	public void InitMap(MapData mapData)
@@ -102,29 +105,6 @@ public class Model
 		return teamList;
 	}
 
-	public MapTile[] ConvertPathToMapTiles (List<PathFinderNode> path)
-	{
-		MapTile[] mapTilePath = new MapTile[path.Count];
-		
-		for (int i = 0; i < path.Count; i++) {
-			mapTilePath[i] = mapTiles[path[i].X][path[i].Y];	
-		}
-
-		return mapTilePath;
-	}
-
-	public int GetPathCost (MapTile[] path)
-	{
-		int cost = 0;
-		foreach(MapTile mapTile in path) {
-			cost += mapTile.Penalty;
-		}
-		// don't include the first MapTile; Unit already sits on this MapTile
-		cost -= path[0].Penalty;
-
-		return cost;
-	}
-
 	public void SpawnUnit(MapTile mapTile, Unit.Team team, string name)
 	{
 		// IMPORTANT! Keep refence synced
@@ -135,7 +115,7 @@ public class Model
 		unit.Init(Database.GetUnitData(name));
 		unit.team = team;
 		if(Unit.Team.AI == team)
-			unit.ai = new ArtificalIntelligence(this, unit);
+			unit.ai = new ArtificalIntelligence(this, controller, unit);
 
 		// add unit to list
 		units.Add(unit);

@@ -22,7 +22,7 @@ public class Controller
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
 		
-		model = new Model();
+		model = new Model(this);
 		model.InitMap(mapData);
 		model.InitUnits(mapData);
 		model.InitCombat();
@@ -94,14 +94,14 @@ public class Controller
 		return pathFinder.GetDistanceMatrix(position, actionPoints);
 	}
 
-	public MapTile[] GetPath(MapTile start, MapTile goal)
+	public Path GetPath(MapTile start, MapTile goal)
 	{
 		byte[,] grid = model.GetMoveGrid();
 		
 		// check if target mapTile is passable
 		if(grid[goal.x,goal.y] == 0) {
 			Debug.LogError("Tried to get path to a taken mapTile: " + start.ToString() + " --> " + goal.ToString());
-			return null;
+			return new Path();
 		}
 
 		PathFinder pathFinder = new PathFinder(grid);
@@ -112,12 +112,35 @@ public class Controller
 		Point endPoint = new Point(goal.x, goal.y);
 		
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
-		MapTile[] path = model.ConvertPathToMapTiles(result);
+		Path path = GeneratePathObject(result);
 
-		if(path == null) {
+		if(path.Empty) {
 			Debug.LogError("Caluclated path is empty; i.e. there is no path for the given parameters! \n" + start.ToString() + " --> " + goal.ToString() + "\n" + grid);
 		}
 		return path;
+	}
+
+	public Path GeneratePathObject(List<PathFinderNode> path)
+	{
+		MapTile[] mapTilePath = new MapTile[path.Count];
+		
+		for (int i = 0; i < path.Count; i++) {
+			mapTilePath[i] = model.mapTiles[path[i].X][path[i].Y];	
+		}
+
+		return new Path(mapTilePath, GetPathCost(mapTilePath));
+	}
+
+	public int GetPathCost (MapTile[] path)
+	{
+		int cost = 0;
+		foreach(MapTile mapTile in path) {
+			cost += mapTile.Penalty;
+		}
+		// don't include the first MapTile; Unit already sits on this MapTile
+		cost -= path[0].Penalty;
+		
+		return cost;
 	}
 }
 

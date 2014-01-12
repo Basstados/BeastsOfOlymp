@@ -70,8 +70,11 @@ public class BUnit : MonoBehaviour {
 		ClearDisplayRange();
 		DisplayMovementRange();
 		// display calculated path
-		context.HighlightMovementPath(this, bMapTile);
+		Path path = context.HighlightMovementPath(this, bMapTile);
 		context.SetMovementMarker(bMapTile);
+
+		unitUI.MarkAP(path.Cost);
+
 		// save selected target
 		target = bMapTile;
 		action = Action.CONFIRMMOVE;
@@ -93,6 +96,9 @@ public class BUnit : MonoBehaviour {
 	public void ClearDisplayRange ()
 	{
 		action = Action.IDLE;
+		// reset ap marker
+		unitUI.MarkAP(0);
+		// reset map marker
 		context.CleanMap();
 	}
 

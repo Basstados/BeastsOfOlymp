@@ -307,13 +307,14 @@ public class BView : MonoBehaviour
 	/// </summary>
 	/// <param name="bUnit">BUnit where the path starts</param>
 	/// <param name="bMapTile">BMapTile the goal of the path</param>
-	public void HighlightMovementPath(BUnit bUnit, BMapTile bMapTile)
+	public Path HighlightMovementPath(BUnit bUnit, BMapTile bMapTile)
 	{
 		// get path from unit to maptile with pathfinding algorithm
-		MapTile[] path = controller.GetPath(bUnit.unit.mapTile, bMapTile.mapTile);
-		foreach(MapTile mapTile in path) {
-			GetBMapTile(mapTile).ChangeColorState(BMapTile.ColorState.PATH);
+		Path path = controller.GetPath(bUnit.unit.mapTile, bMapTile.mapTile);
+		for (int i = 0; i < path.Length; i++) {
+			GetBMapTile(path[i]).ChangeColorState(BMapTile.ColorState.PATH);
 		}
+		return path;
 	}
 
 	/// <summary>

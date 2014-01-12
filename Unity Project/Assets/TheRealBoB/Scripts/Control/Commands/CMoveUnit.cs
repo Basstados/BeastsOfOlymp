@@ -20,20 +20,18 @@ public class CMoveUnit : ICommand
 
 	public void Execute()
 	{
-		MapTile[] path = new MapTile[1];
-		path[0] = unit.mapTile;
+		Path path = new Path(new MapTile[]{unit.mapTile}, 0);
 		if(unit.mapTile != target) {
 			// get path from pathfinder
 			path = controller.GetPath(unit.mapTile, target);
-			int cost = model.GetPathCost(path);
 			// stop if target is to for unit move
-			if(cost > unit.ActionPoints)
+			if(path.Cost > unit.ActionPoints)
 				return;
 
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
 			model.MoveUnit(unit, target);
-			unit.UseAP(cost);
+			unit.UseAP(path.Cost);
 		}
 		unit.CanMove = false;
 		
@@ -45,9 +43,9 @@ public class CMoveUnit : ICommand
 public class UnitMovedEvent : EventProxyArgs
 {
 	public Unit unit;
-	public MapTile[] path;
+	public Path path;
 
-	public UnitMovedEvent (Unit unit, MapTile[] path)
+	public UnitMovedEvent (Unit unit, Path path)
 	{
 		this.name = EventName.UnitMoved;
 		this.unit = unit;

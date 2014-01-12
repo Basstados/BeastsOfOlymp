@@ -7,6 +7,7 @@ using Algorithms;
 public class ArtificalIntelligence {
 
 	Model model;
+	Controller controller;
 	Unit controlledUnit;
 
 	// result of the decisions of the current turn
@@ -17,9 +18,10 @@ public class ArtificalIntelligence {
 	Attack attackChoice;
 	public Attack AttackChoice {get{return attackChoice;}}
 
-	public ArtificalIntelligence (Model model, Unit controlledUnit)
+	public ArtificalIntelligence (Model model, Controller controller, Unit controlledUnit)
 	{
 		this.model = model;
+		this.controller = controller;
 		this.controlledUnit = controlledUnit;
 	}
 	
@@ -81,17 +83,14 @@ public class ArtificalIntelligence {
 		// drop last since its the maptile the attack target is sitting on
 		result.RemoveAt(result.Count-1);
 
-		MapTile[] path = model.ConvertPathToMapTiles(result);
-		int cost = model.GetPathCost(path);
-		while(cost > controlledUnit.ActionPoints) {
+		Path path = controller.GeneratePathObject(result);
+		while(path.Cost > controlledUnit.ActionPoints) {
 			// remove last maptile from path until the cost are lower than action points
-			List<MapTile> tmp = path.ToList();
-			tmp.RemoveAt(tmp.Count-1);
-			path = tmp.ToArray();
-			cost = model.GetPathCost(path);
+			result.RemoveAt(result.Count-1);
+			path = controller.GeneratePathObject(result);
 		}
 
-		moveDestionation = path.Last();
+		moveDestionation = path[path.Length-1];
 	}
 
 	void ChooseAttack()
