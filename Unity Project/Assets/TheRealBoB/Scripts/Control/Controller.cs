@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Algorithms;
 
 public class Controller
@@ -91,6 +92,27 @@ public class Controller
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;
 		return pathFinder.GetDistanceMatrix(position, actionPoints);
+	}
+
+	public MapTile[] GetPath(MapTile start, MapTile goal)
+	{
+		byte[,] grid = model.GetMoveGrid();
+		
+		// check if target mapTile is passable
+		if(grid[goal.x,goal.y] == 0)
+			return null;
+
+		PathFinder pathFinder = new PathFinder(grid);
+		pathFinder.Diagonals = false;
+		pathFinder.PunishChangeDirection = false;
+		
+		Point startPoint = new Point(start.x,start.y);
+		Point endPoint = new Point(goal.x, goal.y);
+		
+		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
+		MapTile[] path = model.ConvertPathToMapTiles(result);
+
+		return path;
 	}
 }
 

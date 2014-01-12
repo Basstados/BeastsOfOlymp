@@ -19,22 +19,9 @@ public class CMoveUnit : ICommand
 
 
 	public void Execute()
-	{
-		byte[,] grid = model.GetMoveGrid();
-
-		// check if target mapTile is passable
-		if(grid[target.x,target.y] == 0)
-			return;
-
-		PathFinder pathFinder = new PathFinder(grid);
-		pathFinder.Diagonals = false;
-		pathFinder.PunishChangeDirection = false;
-
-		Point start = new Point(unit.mapTile.x,unit.mapTile.y);
-		Point end = new Point(target.x, target.y);
-
-		List<PathFinderNode> result = pathFinder.FindPath(start, end);
-		MapTile[] path = model.ConvertPathToMapTiles(result);
+	{	
+		// get path from pathfinder
+		MapTile[] path = controller.GetPath(unit.mapTile, target);
 		int cost = model.GetPathCost(path);
 		// stop if target is to for unit move
 		if(cost > unit.ActionPoints)
