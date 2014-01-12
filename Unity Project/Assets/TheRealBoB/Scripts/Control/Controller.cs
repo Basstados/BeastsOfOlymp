@@ -99,8 +99,10 @@ public class Controller
 		byte[,] grid = model.GetMoveGrid();
 		
 		// check if target mapTile is passable
-		if(grid[goal.x,goal.y] == 0)
+		if(grid[goal.x,goal.y] == 0) {
+			Debug.LogError("Tried to get path to a taken mapTile: " + start.ToString() + " --> " + goal.ToString());
 			return null;
+		}
 
 		PathFinder pathFinder = new PathFinder(grid);
 		pathFinder.Diagonals = false;
@@ -112,6 +114,9 @@ public class Controller
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
 		MapTile[] path = model.ConvertPathToMapTiles(result);
 
+		if(path == null) {
+			Debug.LogError("Caluclated path is empty; i.e. there is no path for the given parameters! \n" + start.ToString() + " --> " + goal.ToString() + "\n" + grid);
+		}
 		return path;
 	}
 }

@@ -31,5 +31,9 @@ public class MapTile
 		this.y = y;
 		this.penalty = 1;
 	}
-}
 
+	public override string ToString ()
+	{
+		return string.Format("[MapTile: Penalty={0}, PenaltyIgnoreUnit={1}, (x,y)=({2},{3})]", Penalty, PenaltyIgnoreUnit, x, y);
+	}
+}

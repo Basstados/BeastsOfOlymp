@@ -19,18 +19,22 @@ public class CMoveUnit : ICommand
 
 
 	public void Execute()
-	{	
-		// get path from pathfinder
-		MapTile[] path = controller.GetPath(unit.mapTile, target);
-		int cost = model.GetPathCost(path);
-		// stop if target is to for unit move
-		if(cost > unit.ActionPoints)
-			return;
+	{
+		MapTile[] path = new MapTile[1];
+		path[0] = unit.mapTile;
+		if(unit.mapTile != target) {
+			// get path from pathfinder
+			path = controller.GetPath(unit.mapTile, target);
+			int cost = model.GetPathCost(path);
+			// stop if target is to for unit move
+			if(cost > unit.ActionPoints)
+				return;
 
-		// we are now sure, that unit is allowed to move and target is in range
-		// now performce actual move
-		model.MoveUnit(unit, target);
-		unit.UseAP(cost);
+			// we are now sure, that unit is allowed to move and target is in range
+			// now performce actual move
+			model.MoveUnit(unit, target);
+			unit.UseAP(cost);
+		}
 		unit.CanMove = false;
 		
 		// after movement fire event
