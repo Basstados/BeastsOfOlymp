@@ -27,10 +27,6 @@ public class BInputManager : MonoBehaviour {
 	{
 		// we clicked with mouse or tapped on the touchscreen
 		
-		// first we check if we hit some ui
-		// if( RaycastCheckUI() )
-		//	return;	
-		
 		// cast an ray from the screen point
 		Ray cursorRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -41,8 +37,7 @@ public class BInputManager : MonoBehaviour {
 		
 		if(Physics.Raycast(cursorRay, out hit, Mathf.Infinity, mask)) {
 			// let's see what we hit with the raycast
-			// TODO better name for UI Layer
-			if( hit.collider.gameObject.layer == LayerMask.NameToLayer("UI 3D") ) {
+			if( hit.collider.gameObject.layer == LayerMask.NameToLayer("User Interface") ) {
 				// we hit an ui element first
 				// stop looking for map and stuff and just return
 				return;

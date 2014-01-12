@@ -16,7 +16,9 @@ public class BUnit : MonoBehaviour {
 
 	public enum Action{
 		MOVE,
+		CONFIRMMOVE,
 		ATTACK,
+		CONFIRMATTACK,
 		IDLE
 	}
 
@@ -27,6 +29,8 @@ public class BUnit : MonoBehaviour {
 	Attack selectedAttack;
 	Color flashColor;
 	Color defaultColor;
+
+	BMapTile target;
 
 	public void Init(BView context, Unit unit, BCombatMenu bCombatMenu) {
 		this.context = context;
@@ -61,6 +65,18 @@ public class BUnit : MonoBehaviour {
 		context.DisplayRange(this, unit.ActionPoints);
 	}
 
+	public void SelectMovementTarget(BMapTile bMapTile)
+	{
+		ClearDisplayRange();
+		DisplayMovementRange();
+		// display calculated path
+		context.HighlightMovementPath(this, bMapTile);
+		context.SetMovementMarker(bMapTile);
+		// save selected target
+		target = bMapTile;
+		action = Action.CONFIRMMOVE;
+	}
+
 	public void DisplayAttackRange(Attack attack)
 	{
 		if (attack == null) {
@@ -84,18 +100,26 @@ public class BUnit : MonoBehaviour {
 	{
 		switch(action) {
 		case Action.MOVE:
-			// use target for move
-			context.controller.MoveUnit(unit, bMapTile.mapTile);
+			SelectMovementTarget(bMapTile);
+			break;
+		case Action.CONFIRMMOVE:
+			if(bMapTile == target) {
+				// use target for move
+				context.controller.MoveUnit(unit, bMapTile.mapTile);
+				action = Action.IDLE;
+			} else {
+				SelectMovementTarget(bMapTile);
+			}
 			break;
 		case Action.ATTACK:
 			// use target for attack
 			if(bMapTile.mapTile.unit != null) {
 				context.controller.AttackUnit(this.unit, bMapTile.mapTile.unit, selectedAttack);
 			}
+			action = Action.IDLE;
 			break;
 		}
 
-		action = Action.IDLE;
 	}
 
 	public void EndTurn()

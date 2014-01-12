@@ -6,11 +6,18 @@ public class BMapTile : MonoBehaviour {
 	public MapTile mapTile;
 	public ColorState colorState;
 
+	public bool InRange {
+		get {
+			return (colorState == ColorState.INRANGE || colorState == ColorState.PATH);
+		}
+	}
+
 	Color defaultColor;
 
 	public enum ColorState {
 		INRANGE,
-		DEFAULT
+		DEFAULT,
+		PATH
 	}
 
 	void Awake() 
@@ -30,6 +37,8 @@ public class BMapTile : MonoBehaviour {
 		switch(colorState) {
 		case ColorState.INRANGE:
 			return Color.green;
+		case ColorState.PATH:
+			return Color.yellow;
 		case ColorState.DEFAULT:
 		default:
 			return defaultColor;

@@ -9,6 +9,7 @@ public class BView : MonoBehaviour
 	public GameObject bUnitPrefab;
 	public GameObject bCombatMenuPrefab;
 	public GameObject bActiveMarkerPrefab;
+	public GameObject bMoveMarkerPrefab;
 
 	public BIniativeList bInitativeList;
 	public BCombatLog bCombatLog;
@@ -22,6 +23,7 @@ public class BView : MonoBehaviour
 	BCameraMover bCameraMover;
 
 	GameObject unitMarker;
+	GameObject moveMarker;
 
 	Queue<EventProxyArgs> eventQueue = new Queue<EventProxyArgs>();
 	bool performingEvent = false;
@@ -51,6 +53,11 @@ public class BView : MonoBehaviour
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
 		bCameraMover = GameObject.FindObjectOfType<BCameraMover>();
+
+		// instatiate marker
+		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
+		moveMarker = (GameObject) Instantiate(bMoveMarkerPrefab);
+
 		// start the game
 		controller = new Controller(this);
 	}
@@ -116,7 +123,6 @@ public class BView : MonoBehaviour
 	void HandleInitialized(object sender, EventArgs args)
 	{
 		InstatiateMap((args as MapInitializedEvent).mapTiles);
-		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -164,10 +170,10 @@ public class BView : MonoBehaviour
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
-	void HandleBMapTileTapped (object sender, EventArgs args)
+	void HandleBMapTileTapped(object sender, EventArgs args)
 	{
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
-		if(e.bMapTile.colorState == BMapTile.ColorState.INRANGE)
+		if(e.bMapTile.InRange)
 			activeBUnit.SetTarget(e.bMapTile);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -296,13 +302,42 @@ public class BView : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Visually highlight the path from a given unit to the target.
+	/// Is using the pathfinder algorithims of the Controller class.
+	/// </summary>
+	/// <param name="bUnit">BUnit where the path starts</param>
+	/// <param name="bMapTile">BMapTile the goal of the path</param>
+	public void HighlightMovementPath(BUnit bUnit, BMapTile bMapTile)
+	{
+		// get path from unit to maptile with pathfinding algorithm
+		MapTile[] path = controller.GetPath(bUnit.unit.mapTile, bMapTile.mapTile);
+		foreach(MapTile mapTile in path) {
+			GetBMapTile(mapTile).ChangeColorState(BMapTile.ColorState.PATH);
+		}
+	}
+
+	/// <summary>
+	/// Place a marker on the given BMapTile
+	/// </summary>
+	/// <param name="bMapTile">BMapTile.</param>
+	public void SetMovementMarker (BMapTile bMapTile)
+	{
+		moveMarker.SetActive(true);
+		moveMarker.transform.position = bMapTile.transform.position;
+	}
+
+	/// <summary>
 	/// Change color of all MapTile to default.
 	/// </summary>
 	public void CleanMap ()
 	{
+		// reset color state of all maptiles
 		foreach(BMapTile[] column in bMapTiles)
 			foreach(BMapTile tile in column)
 				tile.ChangeColorState(BMapTile.ColorState.DEFAULT);
+
+		// hide moveMarker
+		moveMarker.SetActive(false);
 	}
 
 	/// <summary>
