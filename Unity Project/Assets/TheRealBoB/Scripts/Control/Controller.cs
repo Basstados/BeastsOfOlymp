@@ -7,6 +7,7 @@ public class Controller
 {
 	Model model;
 	BView bView;
+	PathFinder pathFinder;
 
 	public Controller (BView bView)
 	{
@@ -25,6 +26,12 @@ public class Controller
 		model = new Model(this);
 		model.InitMap(mapData);
 		model.InitUnits(mapData);
+
+		// init pathFinder object
+		pathFinder = new PathFinder(model.grid);
+		pathFinder.Diagonals = false;
+		pathFinder.PunishChangeDirection = false;
+
 		model.InitCombat();
 	}
 
@@ -84,40 +91,39 @@ public class Controller
 	{
 		byte[,] grid;
 		if(ignoreUnits) {
-			grid = model.GetAttackGrid();
+			model.UseAttackGrid();
 		} else {
-			grid = model.GetMoveGrid();
+			model.UseMoveGrid();
 		}
-		PathFinder pathFinder = new PathFinder(grid);
-		pathFinder.Diagonals = false;
-		pathFinder.PunishChangeDirection = false;
 		return pathFinder.GetDistanceMatrix(position, actionPoints);
 	}
 
-	public Path GetPath(MapTile start, MapTile goal)
-	{
-		byte[,] grid = model.GetMoveGrid();
-		
+	public Path GetPath(MapTile start, MapTile goal, byte[,] grid) {
+		if(grid != null) {
+			model.grid = grid;
+		}
+
 		// check if target mapTile is passable
-		if(grid[goal.x,goal.y] == 0) {
+		if(model.grid[goal.x,goal.y] == 0) {
 			Debug.LogError("Tried to get path to a taken mapTile: " + start.ToString() + " --> " + goal.ToString());
 			return new Path();
 		}
-
-		PathFinder pathFinder = new PathFinder(grid);
-		pathFinder.Diagonals = false;
-		pathFinder.PunishChangeDirection = false;
-		
 		Point startPoint = new Point(start.x,start.y);
 		Point endPoint = new Point(goal.x, goal.y);
 		
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
 		Path path = GeneratePathObject(result);
-
+		
 		if(path.Empty) {
-			Debug.LogError("Caluclated path is empty; i.e. there is no path for the given parameters! \n" + start.ToString() + " --> " + goal.ToString() + "\n" + grid);
+			Debug.LogError("Caluclated path is empty; i.e. there is no path for the given parameters! \n" + start.ToString() + " --> " + goal.ToString() + "\n" + model.grid);
 		}
 		return path;
+	}
+
+	public Path GetPath(MapTile start, MapTile goal)
+	{
+		model.UseMoveGrid();
+		return GetPath(start, goal, null);
 	}
 
 	public Path GeneratePathObject(List<PathFinderNode> path)
@@ -128,7 +134,7 @@ public class Controller
 			mapTilePath[i] = model.mapTiles[path[i].X][path[i].Y];	
 		}
 
-		return new Path(mapTilePath, GetPathCost(mapTilePath));
+		return new Path(mapTilePath);
 	}
 
 	public int GetPathCost (MapTile[] path)

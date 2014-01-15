@@ -20,7 +20,7 @@ public class CMoveUnit : ICommand
 
 	public void Execute()
 	{
-		Path path = new Path(new MapTile[]{unit.mapTile}, 0);
+		Path path = new Path(new MapTile[]{unit.mapTile});
 		if(unit.mapTile != target) {
 			// get path from pathfinder
 			path = controller.GetPath(unit.mapTile, target);

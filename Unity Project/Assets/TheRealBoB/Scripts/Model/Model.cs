@@ -6,6 +6,7 @@ public class Model
 {
 	// representation of the map
 	public MapTile[][] mapTiles;
+	public byte[,] grid;
 	// all units in the game
 	public List<Unit> units = new List<Unit>();
     public Unit activeUnit = new Unit();
@@ -37,6 +38,9 @@ public class Model
 			}
 		}
 
+		grid = new byte[mapTiles.Length,mapTiles[0].Length];
+		UseMoveGrid();
+
 		// map is now initiliazed
 		EventProxyManager.FireEvent(this, new MapInitializedEvent (mapTiles));
 	}
@@ -57,42 +61,32 @@ public class Model
     {
         combat = new Combat();
         combat.SetupRound(units);
-
-
     }
 
 	/// <summary>
 	/// Get the penalty values of each MapTile combines as matrix.
 	/// </summary>
 	/// <returns>The grid (penalty matrix)</returns>
-	public byte[,] GetMoveGrid() 
+	public void UseMoveGrid() 
 	{
-		byte[,] grid = new byte[mapTiles.Length,mapTiles[0].Length];
-
 		for (int i = 0; i < mapTiles.Length; i++) {
 			for (int j = 0; j < mapTiles[i].Length; j++) {
 				grid[i,j] = mapTiles[i][j].Penalty;
 			}
 		}
-
-		return grid;
 	}
 
 	/// <summary>
 	/// Get the penalty values of each MapTile combines as matrix.
 	/// </summary>
 	/// <returns>The grid (penalty matrix)</returns>
-	public byte[,] GetAttackGrid() 
+	public void UseAttackGrid() 
 	{
-		byte[,] grid = new byte[mapTiles.Length,mapTiles[0].Length];
-		
 		for (int i = 0; i < mapTiles.Length; i++) {
 			for (int j = 0; j < mapTiles[i].Length; j++) {
 				grid[i,j] = mapTiles[i][j].PenaltyIgnoreUnit;
 			}
 		}
-		
-		return grid;
 	}
 
 	public List<Unit> GetUnitsFromTeam(Unit.Team team) 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 public struct Path  {
 
@@ -19,11 +20,29 @@ public struct Path  {
 
 	public int Cost 
 	{
-		get { return cost; }
+		get { return cost;}
 	}
 
-	public Path(MapTile[] steps, int cost)  {
+	public Path(MapTile[] steps)
+	{
 		this.steps = steps;
-		this.cost = cost;
+		this.cost = 0;
+		CalculateCost();
+	}
+
+	public void DropLast()
+	{
+		List<MapTile> tmp = steps.ToList();
+		tmp.RemoveAt(tmp.Count - 1);
+		steps = tmp.ToArray();
+		CalculateCost();
+	}
+
+	void CalculateCost() 
+	{
+		cost = 0;
+		foreach(MapTile mapTile in steps) {
+			cost += mapTile.Penalty;
+		}
 	}
 }

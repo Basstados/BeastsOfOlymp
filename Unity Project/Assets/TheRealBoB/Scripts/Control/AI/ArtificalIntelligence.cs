@@ -68,26 +68,16 @@ public class ArtificalIntelligence {
 	void FindMoveDestination() 
 	{
 		// use the pathfinder to get closed path to enemies and cut depending on remaining Action Points
-		byte[,] grid = model.GetMoveGrid();
+		model.UseMoveGrid();
+		byte[,] grid = model.grid;
 		// ignore target unit on grid so a* can get a result
 		grid[AttackTarget.mapTile.x, AttackTarget.mapTile.y] = AttackTarget.mapTile.PenaltyIgnoreUnit;
 
-		PathFinder pathFinder = new PathFinder(grid);
-		pathFinder.Diagonals = false;
-		pathFinder.PunishChangeDirection = false;
-		
-		Point start = new Point(controlledUnit.mapTile.x,controlledUnit.mapTile.y);
-		Point end = new Point(AttackTarget.mapTile.x, AttackTarget.mapTile.y);
-		
-		List<PathFinderNode> result = pathFinder.FindPath(start, end);
-		// drop last since its the maptile the attack target is sitting on
-		result.RemoveAt(result.Count-1);
-
-		Path path = controller.GeneratePathObject(result);
+		Path path = controller.GetPath(controlledUnit.mapTile,AttackTarget.mapTile,grid);
+		path.DropLast();
 		while(path.Cost > controlledUnit.ActionPoints) {
 			// remove last maptile from path until the cost are lower than action points
-			result.RemoveAt(result.Count-1);
-			path = controller.GeneratePathObject(result);
+			path.DropLast();
 		}
 
 		moveDestionation = path[path.Length-1];
