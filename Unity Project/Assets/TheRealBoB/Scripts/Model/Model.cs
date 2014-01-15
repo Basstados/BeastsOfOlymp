@@ -109,7 +109,7 @@ public class Model
 		unit.Init(Database.GetUnitData(name));
 		unit.team = team;
 		if(Unit.Team.AI == team)
-			unit.ai = new ArtificalIntelligence(this, controller, unit);
+			unit.ai = new AIHunter(this, controller, unit);
 
 		// add unit to list
 		units.Add(unit);

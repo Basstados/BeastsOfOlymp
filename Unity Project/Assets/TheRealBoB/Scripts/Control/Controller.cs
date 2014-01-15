@@ -59,10 +59,10 @@ public class Controller
 
 		TurnStartedEvent e = args as TurnStartedEvent;
 		if(e.unit.AIControled) {
-			e.unit.ai.PlanTurn();
+			TurnPlan plan = e.unit.ai.DoPlanning();
 
-			MoveUnit(e.unit, e.unit.ai.MoveDestionation);
-			AttackUnit(e.unit, e.unit.ai.AttackTarget, e.unit.ai.AttackChoice);
+			MoveUnit(e.unit, plan.movementTarget);
+			AttackUnit(e.unit, plan.attackTarget, plan.attack);
 		}
 	}
 	#endregion

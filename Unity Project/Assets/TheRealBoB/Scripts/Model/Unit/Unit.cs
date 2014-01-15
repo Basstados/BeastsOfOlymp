@@ -9,7 +9,7 @@ public class Unit : IComparable
 	public MapTile mapTile { get; set; }
 	public Team team;
 	public Dictionary<string,Attack> attacks = new Dictionary<string, Attack>();
-	public ArtificalIntelligence ai;
+	public IArtificalIntelligence ai;
 
 
 	bool canMove;
