@@ -1,1 +1,1 @@
-{"typeDict":{"Normal":{"name":"Normal","weaknesses":[],"strengths":[]},"Kampf":{"name":"Kampf","weaknesses":[],"strengths":[{"name":"Normal","weaknesses":[],"strengths":[]}]}}}
+{"typeDict":{"Feuer":{"name":"Feuer","weaknesses":["Wasser"],"strengths":["Grass"]},"Wasser":{"name":"Wasser","weaknesses":["Grass"],"strengths":["Feuer"]},"Grass":{"name":"Grass","weaknesses":["Feuer"],"strengths":["Wasser"]}}}
