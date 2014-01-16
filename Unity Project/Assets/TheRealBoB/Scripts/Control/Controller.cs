@@ -31,6 +31,9 @@ public class Controller
 		pathFinder = new PathFinder(model.grid);
 		pathFinder.Diagonals = false;
 		pathFinder.PunishChangeDirection = false;
+		pathFinder.SearchLimit = 9000;
+		pathFinder.DebugFoundPath = true;
+		pathFinder.DebugProgress = true;
 
 		model.InitCombat();
 	}

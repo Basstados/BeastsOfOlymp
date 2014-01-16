@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BUnitUI : MonoBehaviour {
 
+	public UISprite typeSprite;
 	public UISlider lifebar;
 	public Color playerColor;
 	public Color aiColor;
@@ -27,6 +28,7 @@ public class BUnitUI : MonoBehaviour {
 
 		// set name label
 		nameLabel.text = parent.unit.Name;
+		typeSprite.spriteName = parent.unit.data.type.name;
 
 		apbar.Init(parent.unit.MaxActionPoints);
 
