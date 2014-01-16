@@ -24,13 +24,13 @@ namespace GameDataUI {
 				nameInput.value = type.name;
 
 			if(type.weaknesses != null)
-				foreach(Type weakness in type.weaknesses) {
-					AddWeakness(weakness);
+				foreach(string weakness in type.weaknesses) {
+					AddWeakness(Database.GetType(weakness));
 				}
 
 			if(type.strengths != null)
-				foreach(Type strength in type.strengths) {
-					AddStrength(strength);
+				foreach(string strength in type.strengths) {
+					AddStrength(Database.GetType(strength));
 				}
 		}
 
@@ -122,13 +122,13 @@ namespace GameDataUI {
 		{
 			Type result = new Type();
 			result.name = nameInput.value;
-			result.weaknesses = new Type[weaknesses.Count];
+			result.weaknesses = new string[weaknesses.Count];
 			for (int i = 0; i < weaknesses.Count; i++) {
-				result.weaknesses[i] = Database.GetType(weaknesses[i].value);
+				result.weaknesses[i] = weaknesses[i].value;
 			}
-			result.strengths = new Type[strengths.Count];
+			result.strengths = new string[strengths.Count];
 			for (int i = 0; i < strengths.Count; i++) {
-				result.strengths[i] = Database.GetType(strengths[i].value);
+				result.strengths[i] = strengths[i].value;
 			}
 
 			return result;

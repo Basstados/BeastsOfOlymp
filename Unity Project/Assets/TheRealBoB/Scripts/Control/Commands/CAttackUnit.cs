@@ -30,11 +30,11 @@ public class CAttackUnit : ICommand
 			// calculate type modifier
 			float typeModifier = 1f;
 			if(attack.type.strengths.Length > 0)
-				if(Array.Exists(attack.type.strengths, delegate(Type t) { return t.name == target.data.type.name; })) {
+				if(Array.Exists(attack.type.strengths, delegate(string t) { return t == target.data.type.name; })) {
 					typeModifier *= 2f;
 				}
 			if(attack.type.weaknesses.Length > 0)
-				if(Array.Exists(attack.type.weaknesses, delegate(Type t) { return t.name == target.data.type.name; })) {
+				if(Array.Exists(attack.type.weaknesses, delegate(string t) { return t == target.data.type.name; })) {
 					typeModifier *= 1/2f;
 				}
 			EventProxyManager.FireEvent(this, new DebugLogEvent("typeModifier: " + typeModifier));
