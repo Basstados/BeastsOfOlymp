@@ -102,9 +102,10 @@ public class AIHunter : IArtificalIntelligence {
 		// if we found a new destination stop here
 		if (moveDestionation != controlledUnit.mapTile)
 			return moveDestionation;
-
+		
 		// we couldn't find a mapTile in range where we can hit the target
 		// get as close as possible to the target
+		Debug.Log("Target out of range - get closer!");
 
 		// use the pathfinder to get closed path to enemies and cut depending on remaining Action Points
 		model.UseMoveGrid();

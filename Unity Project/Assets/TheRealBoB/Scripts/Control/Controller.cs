@@ -112,11 +112,22 @@ public class Controller
 		Point endPoint = new Point(goal.x, goal.y);
 		
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
-		Path path = GeneratePathObject(result);
-		
-		if(path.Empty) {
+
+		if(result == null) {
 			Debug.LogError("Caluclated path is empty; i.e. there is no path for the given parameters! \n" + start.ToString() + " --> " + goal.ToString() + "\n" + model.grid);
+			string str = "";
+			for (int i = 0; i < model.grid.GetLength(0); i++) {
+				for (int j = 0; j < model.grid.GetLength(1); j++) {
+					str += model.grid[i,j] + " ";
+				}
+				str += "\n";
+			}
+			Debug.LogError("Grid: \n " + str);
 		}
+
+		Path path = GeneratePathObject(result);
+
+
 		return path;
 	}
 
