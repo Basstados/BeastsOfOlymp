@@ -16,7 +16,7 @@ public class BapBar : MonoBehaviour {
 		currentAP = maxAP;
 		apSprites = new UISprite[maxAP];
 		float spriteWidth = apMarkerPrefab.GetComponent<UISprite>().localSize.x;
-		float offsetX = - spriteWidth * maxAP / 2.0f;
+		float offsetX = 0; //- spriteWidth * maxAP / 2.0f;
 
 		for (int i = 0; i < maxAP; i++) {
 			// save reference
