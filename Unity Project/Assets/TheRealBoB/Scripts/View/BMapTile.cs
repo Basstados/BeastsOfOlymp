@@ -3,6 +3,10 @@ using System.Collections;
 
 public class BMapTile : MonoBehaviour {
 
+	public Material defaultMaterial;
+	public Material rangeMaterial;
+	public Material pathMaterial;
+
 	public MapTile mapTile;
 	public ColorState colorState;
 
@@ -27,8 +31,31 @@ public class BMapTile : MonoBehaviour {
 
 	public void ChangeColorState(BMapTile.ColorState colorState)
 	{
+		StopCoroutine("TweenRoutine");
 		this.colorState = colorState;
-		renderer.material.color = GetStateColor();
+
+		switch(colorState) {
+		case ColorState.INRANGE:
+			renderer.sharedMaterial = rangeMaterial;
+			break;
+		case ColorState.PATH:
+			renderer.sharedMaterial = pathMaterial;
+			StartCoroutine(TweenRoutine(pathMaterial, Color.yellow, Color.gray));
+			break;
+		case ColorState.DEFAULT:
+		default:
+			renderer.sharedMaterial = defaultMaterial;
+			break;
+		}
+
+//		if(colorState == ColorState.DEFAULT) {
+//			renderer.sharedMaterial = defaultMaterial;
+//		} else {
+//			renderer.sharedMaterial = rangeMaterial;
+//
+//		}
+
+		// renderer.sharedMaterial.color = GetStateColor();
 	}
 
 
@@ -42,6 +69,26 @@ public class BMapTile : MonoBehaviour {
 		case ColorState.DEFAULT:
 		default:
 			return defaultColor;
+		}
+	}
+
+	IEnumerator TweenRoutine(Material mat, Color c1, Color c2)
+	{
+		float t = 0;
+		bool rising = true;
+
+		while(true) {
+			if(rising) {
+				t += Time.deltaTime;
+				if(t>1) rising = false;
+			} else {
+				t -= Time.deltaTime;
+				if(t<0) rising = true;
+			}
+
+			mat.color = Color.Lerp(c1,c2,t);
+			// wait 1 frame
+			yield return 0;
 		}
 	}
 }
