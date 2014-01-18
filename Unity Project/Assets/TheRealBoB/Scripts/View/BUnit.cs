@@ -87,7 +87,7 @@ public class BUnit : MonoBehaviour {
 		} else {
 			selectedAttack = attack;
 		}
-
+		unitUI.MarkAP(attack.apCost);
 		action = Action.ATTACK;
 		Debug.Log(selectedAttack.name + " " + selectedAttack.range);
 		context.DisplayRange(this, selectedAttack.range);
