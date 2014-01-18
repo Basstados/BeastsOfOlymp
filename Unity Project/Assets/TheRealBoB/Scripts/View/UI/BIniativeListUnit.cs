@@ -17,8 +17,8 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	Color defaultColor = Color.white;
 	Color activeColor = Color.green;
 	Color deadColor = Color.black;
-	Color aiColor = Color.grey;
-	Color playerColor = Color.blue;
+	Color aiColor = new Color(0.77255f, 0.21961f, 0.21961f);
+	Color playerColor = new Color(0.25490f, 0.85882f, 0.23529f);
 
 	public void Init(Unit unit, float height)
 	{
@@ -26,16 +26,22 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		this.height = height;
 		label.text = unit.Name;
 		typeSprite.spriteName = unit.data.type.name;
+
+		if(unit.team == Unit.Team.AI) {
+			teamSprite.color = aiColor;
+		} else {
+			teamSprite.color = playerColor;
+		}
 	}
 
-	public void SetActive() 
-	{
-		label.color = activeColor;
-	}
+//	public void SetActive() 
+//	{
+//		label.color = activeColor;
+//	}
 
 	public void SetDead()
 	{
-		label.color = deadColor;
+		teamSprite.color = deadColor;
 	}
 
 	public void Reset()

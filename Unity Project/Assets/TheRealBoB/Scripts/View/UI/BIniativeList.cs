@@ -29,16 +29,21 @@ public class BIniativeList : MonoBehaviour {
 	{
 		// remove old icons
 		// TODO: using destroy is unperformant; may improve this
-		foreach(BIniativeListUnit icon in unitIcons) {
-			Destroy(icon.gameObject);
-		}
-		unitIcons.Clear();
-
-		positions = new int[unitList.Count];
-		// add new icons
-		for (int i = 0; i < unitList.Count; i++) {
-			positions[i] = i;
-			AddUnit(unitList[i]);
+//		foreach(BIniativeListUnit icon in unitIcons) {
+//			Destroy(icon.gameObject);
+//		}
+//		unitIcons.Clear();
+		if(unitIcons.Count == 0) {
+			positions = new int[unitList.Count];
+			// add new icons
+			for (int i = 0; i < unitList.Count; i++) {
+				positions[i] = i;
+				AddUnit(unitList[i]);
+			}
+		} else {
+			foreach(BIniativeListUnit item in unitIcons) {
+				if(!item.unit.Alive) item.SetDead();
+			}
 		}
 	}
 
