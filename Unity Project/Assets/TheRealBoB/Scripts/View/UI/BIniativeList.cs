@@ -11,13 +11,16 @@ public class BIniativeList : MonoBehaviour {
 	public float widthOffset = 100f;
 
 	List<BIniativeListUnit> unitIcons = new List<BIniativeListUnit>();
+	int[] positions;
 	BIniativeListUnit currentIcon;
 
 	private void AddUnit(Unit unit)
 	{
 		GameObject handle = Instantiate(unitLabelPrefab) as GameObject;
 		handle.transform.parent = anchor.transform;
-		handle.GetComponent<BIniativeListUnit>().Init(unit);
+		handle.transform.localScale = Vector3.one;
+		handle.transform.localPosition = Vector3.zero;
+		handle.GetComponent<BIniativeListUnit>().Init(unit, height);
 		unitIcons.Add(handle.GetComponent<BIniativeListUnit>());
 		UpdatePositions();
 	}
@@ -31,31 +34,31 @@ public class BIniativeList : MonoBehaviour {
 		}
 		unitIcons.Clear();
 
+		positions = new int[unitList.Count];
 		// add new icons
-		foreach(Unit unit in unitList) {
-			AddUnit(unit);
-
-			EventProxyManager.FireEvent(this, new DebugLogEvent("InitList Unit: " + unit.Name + " " + unit.team));
+		for (int i = 0; i < unitList.Count; i++) {
+			positions[i] = i;
+			AddUnit(unitList[i]);
 		}
 	}
 
 	public void ActivateIcon(Unit unit)
 	{
-		foreach(BIniativeListUnit icon in unitIcons) {
-			if(icon.unit == unit) {
-				icon.Reset();
-				icon.SetActive();
-			} else {
-				icon.Reset();
-			}
+		int index = unitIcons.FindIndex(delegate(BIniativeListUnit obj) {
+			return obj.unit == unit;
+		});
+		// active unit gets the first position
+		for (int i = 0; i < unitIcons.Count; i++) {
+			positions[(index + i) % unitIcons.Count] = i;
 		}
+		UpdatePositions();
 	}
 
 	void UpdatePositions()
 	{
-		float offset = unitIcons.Count * height / 2;
+		//float offset = unitIcons.Count * height / 2;
 		for (int i = 0; i < unitIcons.Count; i++) {
-			unitIcons[i].transform.localPosition = new Vector3(widthOffset, offset - height * i, 0);
+			unitIcons[i].UpdatePosition(positions[i]);
 		}
 	}
 }

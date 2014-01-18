@@ -6,6 +6,7 @@ public class Combat
 	public int round = 0;
 	public int turn = 0;
 	Queue<Unit> unitQueue = new Queue<Unit>();
+	Queue<Unit> nextRoundQueue = new Queue<Unit>();
 
 	public CombatLog log;
 
@@ -18,6 +19,10 @@ public class Combat
 
     public void SetupRound(List<Unit> unitList)
     {
+		if(unitQueue.Count == 0) {
+			FillUnitQueue(ref unitList);
+		}
+
 		// count rounds
         round++;
 		turn = 0;
@@ -25,37 +30,31 @@ public class Combat
 		foreach (Unit unit in unitList) {
 			unit.ResetTurn();	
 		}
-
-		foreach(Unit unit in unitList) {
-			EventProxyManager.FireEvent(this, new DebugLogEvent("Unsorded Unit: " + unit.Name + " " + unit.team));
-		}
-
-		// since this include sorting the list we use a refrence type
-		// so we can use the sorted list after
-        FillUnitQueue(ref unitList);
-
-		foreach(Unit unit in unitList) {
-			EventProxyManager.FireEvent(this, new DebugLogEvent("Sorted Unit: " + unit.Name + " " + unit.team));
-		}
-
+		
         EventProxyManager.FireEvent(this, new RoundSetupEvent(unitList));
     }
 
+	/// <summary>
+	/// Move unit from first position in queue to last position in queue and return it
+	/// </summary>
+	/// <returns>The next unit.</returns>
     public Unit GetNextUnit()
     {
-		return unitQueue.Dequeue();
+		Unit unit = unitQueue.Dequeue();
+		unitQueue.Enqueue(unit);
+		return unit;
     }
 
 	public int TurnsLeft()
 	{
-		return unitQueue.Count;
+		return (unitQueue.Count - turn);
 	}
 
 	void FillUnitQueue(ref List<Unit> unitList) 
 	{
 		// sort unit list
 		unitList.Sort();
-		// clear queue and refill with sorted list
+		// first round, use list to fill queue
 		if(unitQueue != null)
 			unitQueue.Clear();
 		unitQueue = new Queue<Unit>();

@@ -6,9 +6,13 @@ using System.Collections.Generic;
 public class BIniativeListUnit : MonoBehaviour, IComparable {
 
 	public UILabel label;
-	public UISprite sprite;
-
+	public UISprite teamSprite;
+	public UISprite typeSprite;
 	public Unit unit;
+
+	float height;
+	int positionIndex;
+	Vector3 targetPostion;
 
 	Color defaultColor = Color.white;
 	Color activeColor = Color.green;
@@ -16,10 +20,12 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	Color aiColor = Color.grey;
 	Color playerColor = Color.blue;
 
-	public void Init(Unit unit)
+	public void Init(Unit unit, float height)
 	{
 		this.unit = unit;
+		this.height = height;
 		label.text = unit.Name;
+		typeSprite.spriteName = unit.data.type.name;
 	}
 
 	public void SetActive() 
@@ -41,10 +47,32 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		}
 
 		if(unit.team == Unit.Team.AI) {
-			sprite.color = aiColor;
+			teamSprite.color = aiColor;
 		} else {
-			sprite.color = playerColor;
+			teamSprite.color = playerColor;
 		}
+	}
+
+	public void UpdatePosition(int newPositionIndex)
+	{
+		positionIndex = newPositionIndex;
+		Vector3 posVec = transform.localPosition;
+		posVec.y = - positionIndex * height;
+		targetPostion = posVec;
+		StartCoroutine(MoveToPositionRoutine());
+	}
+
+	IEnumerator MoveToPositionRoutine()
+	{
+		Vector3 startPos = transform.localPosition;
+		float t = 0;
+		while(t < 1) {
+			t += Time.deltaTime;
+			transform.localPosition = Vector3.Lerp(startPos, targetPostion, t);
+			// wait 1 frame
+			yield return 0;
+		}
+		transform.localPosition = targetPostion;
 	}
 
 	/**
