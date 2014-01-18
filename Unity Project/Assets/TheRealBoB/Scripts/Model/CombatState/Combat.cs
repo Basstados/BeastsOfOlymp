@@ -6,7 +6,6 @@ public class Combat
 	public int round = 0;
 	public int turn = 0;
 	Queue<Unit> unitQueue = new Queue<Unit>();
-	Queue<Unit> nextRoundQueue = new Queue<Unit>();
 
 	public CombatLog log;
 
@@ -30,18 +29,22 @@ public class Combat
 		foreach (Unit unit in unitList) {
 			unit.ResetTurn();	
 		}
-		
+
         EventProxyManager.FireEvent(this, new RoundSetupEvent(unitList));
     }
 
 	/// <summary>
-	/// Move unit from first position in queue to last position in queue and return it
+	/// Find first Unit alive in queue; return it and enqueue this unit again
 	/// </summary>
 	/// <returns>The next unit.</returns>
     public Unit GetNextUnit()
     {
 		Unit unit = unitQueue.Dequeue();
+		while(!unit.Alive && unitQueue.Count > 0) {
+			unit = unitQueue.Dequeue();
+		}
 		unitQueue.Enqueue(unit);
+		if(unitQueue.Count == 0) return null;
 		return unit;
     }
 
