@@ -174,7 +174,7 @@ namespace Algorithms
 
             PathFinderNode parentNode;
             bool found  = false;
-            int  gridX  = mGrid.GetUpperBound(0);
+			int  gridX  = mGrid.GetUpperBound(0);
             int  gridY  = mGrid.GetUpperBound(1);
 
             mStop       = false;
@@ -235,7 +235,7 @@ namespace Algorithms
                     newNode.X = parentNode.X + direction[i,0];
                     newNode.Y = parentNode.Y + direction[i,1];
 
-                    if (newNode.X < 0 || newNode.Y < 0 || newNode.X >= gridX || newNode.Y >= gridY)
+                    if (newNode.X < 0 || newNode.Y < 0 || newNode.X > gridX || newNode.Y > gridY)
                         continue;
 
                     int newG;
