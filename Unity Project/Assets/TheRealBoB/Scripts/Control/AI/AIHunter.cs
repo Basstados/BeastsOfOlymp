@@ -79,19 +79,19 @@ public class AIHunter : IArtificalIntelligence {
 		if (maxRange > maxTargetDst) {
 			// we can propably hit the target this turn
 			// find the mapTile furthes away from target where we still can hit it
-			Point pos = new Point (controlledUnit.mapTile.x, controlledUnit.mapTile.y);
-			byte[][] dstMatrix = controller.GetDistanceMatrix (pos, moveRangWithAttack, false);
+			Point pos = new Point(controlledUnit.mapTile.x, controlledUnit.mapTile.y);
+			byte[][] dstMatrix = controller.GetDistanceMatrix(pos, moveRangWithAttack, false);
 			for (int i = 0; i < dstMatrix.Length; i++) {
 				for (int j = 0; j < dstMatrix[i].Length; j++) {
-					if (dstMatrix [i] [j] > 0) {
+					if (dstMatrix[i][j] > 0) {
 						// this mapTile is reachable
-						int dstTarget = Distance (model.mapTiles [i] [j], attackTarget.mapTile);
+						int dstTarget = Distance(model.mapTiles[i][j], attackTarget.mapTile);
 						if (dstTarget <= attack.range) {
 							// this mapTile is close enough to the target to attack
 							if (dstTarget > maxTargetDst) {
 									// take the furthest mapTile (still in range)
 									maxTargetDst = dstTarget;
-									moveDestionation = model.mapTiles [i] [j];
+									moveDestionation = model.mapTiles[i][j];
 							}
 						}
 					}

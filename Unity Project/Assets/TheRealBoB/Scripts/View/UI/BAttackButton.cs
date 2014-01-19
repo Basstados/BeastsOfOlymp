@@ -3,7 +3,10 @@ using System.Collections;
 
 public class BAttackButton : MonoBehaviour {
 
-	public UILabel label;
+	public UILabel nameLabel;
+	public UILabel damageLabel;
+	public UILabel apLabel;
+	public UISprite typeSprite;
 
 	BCombatMenu parent;
 	Attack attack;
@@ -12,7 +15,10 @@ public class BAttackButton : MonoBehaviour {
 	{
 		this.parent = parent;
 		this.attack = attack;
-		label.text = attack.name;
+		nameLabel.text = attack.name;
+		damageLabel.text = attack.damage.ToString();
+		apLabel.text = attack.apCost.ToString();
+		typeSprite.spriteName = attack.type.name;
 	}
 
 	public void OnClick() 

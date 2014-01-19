@@ -92,7 +92,6 @@ public class Controller
 
 	public byte[][] GetDistanceMatrix(Point position, int actionPoints, bool ignoreUnits)
 	{
-		byte[,] grid;
 		if(ignoreUnits) {
 			model.UseAttackGrid();
 		} else {
@@ -143,7 +142,7 @@ public class Controller
 	public Path GeneratePathObject(List<PathFinderNode> path)
 	{
 		MapTile[] mapTilePath = new MapTile[path.Count];
-		
+
 		for (int i = 0; i < path.Count; i++) {
 			mapTilePath[i] = model.mapTiles[path[i].X][path[i].Y];	
 		}

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(UIPanel))]
 public class BCombatMenu : MonoBehaviour {
 
+	public bool moveToTarget = false;
 	public GameObject attackButtonPrefab;
 
 	public GameObject gameoverPanel;
@@ -19,7 +20,7 @@ public class BCombatMenu : MonoBehaviour {
 
 	void Update() 
 	{
-		if(panel.activeSelf) {
+		if(panel.activeSelf && moveToTarget) {
 			Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
 			screenPosition.x -= Screen.width/2;
 			screenPosition.y -= Screen.height/2;
@@ -61,14 +62,22 @@ public class BCombatMenu : MonoBehaviour {
 
 	void RepositionAtkButtons(List<GameObject> atkButtons)
 	{
-		float radius = 80;
-		int n = atkButtons.Count;
+		if(moveToTarget) {
+			float radius = 80;
+			int n = atkButtons.Count;
 
-		for (int i = 0; i < n; i++) {
-			float angle = (i)/((float) n) * 2 * Mathf.PI;
+			for (int i = 0; i < n; i++) {
+				float angle = (i)/((float) n) * 2 * Mathf.PI;
 
-			atkButtons[i].transform.localPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-			atkButtons[i].transform.localScale = Vector3.one;
+				atkButtons[i].transform.localPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+				atkButtons[i].transform.localScale = Vector3.one;
+			}
+		} else {
+			float height = 70;
+			for (int i = 0; i < atkButtons.Count; i++) {
+				atkButtons[i].transform.localPosition = new Vector3(0, i*height);
+				atkButtons[i].transform.localScale = Vector3.one;
+			}
 		}
 	}
 
