@@ -44,9 +44,9 @@ public class BUnit : MonoBehaviour {
 		defaultAttack = unit.attacks[unit.defaultAttack];
 
 		if(unit.team == Unit.Team.PLAYER) {
-			renderObject.renderer.material.color = Color.blue;
+			renderObject.renderer.material.color = new Color(0.25490f, 0.85882f, 0.23529f);
 		} else {
-			renderObject.renderer.material.color = Color.gray;
+			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);;
 		}
 
 		defaultColor = renderObject.renderer.material.color;
@@ -162,9 +162,8 @@ public class BUnit : MonoBehaviour {
 		// sound effect
 		attackSound.Play();
 		// animation
-		animator.SetBool("attack",true);
-		yield return new WaitForSeconds(0.3f); //TODO make this controlable
-		animator.SetBool("attack",false);
+		animator.SetTrigger("AttackTrigger");
+		yield return new WaitForSeconds(0.6f);
 		target.PlayHitAnimation(hit);
 		bCombatMenu.ActionCompleted();
 	}
@@ -186,8 +185,10 @@ public class BUnit : MonoBehaviour {
 
 	private IEnumerator DeathRoutine()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(1f);
 		deathSound.Play();
+		animator.SetTrigger("DeathTrigger");
+		yield return new WaitForSeconds(2f);
 		renderObject.renderer.enabled = false;
 		unitUI.gameObject.SetActive(false);
 	}
@@ -195,10 +196,10 @@ public class BUnit : MonoBehaviour {
 	private IEnumerator DamageFlashRoutine() 
 	{
 		BParticleManager.PlayEffect("HitEffect", effectAnchor.transform.position);
-
-		renderObject.renderer.material.color = flashColor;
+		animator.SetTrigger("DamagedTrigger");
+//		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
-		renderObject.renderer.material.color = defaultColor;
+//		renderObject.renderer.material.color = defaultColor;
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -226,7 +227,6 @@ public class BUnit : MonoBehaviour {
 					yield return 0;
 				} while(transform.position != nextWp);
 			} else {
-				animator.SetBool("walking", true);
 				Vector3 nextWp = path[i].transform.position;
 				Vector3 lookPoint = nextWp;
 				lookPoint.y = 0;
@@ -247,7 +247,6 @@ public class BUnit : MonoBehaviour {
 				} while(transform.position != nextWp);
 			}
 		}
-		animator.SetBool("walking", false);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 }
