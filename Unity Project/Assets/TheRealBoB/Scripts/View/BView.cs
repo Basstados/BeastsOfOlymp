@@ -158,7 +158,7 @@ public class BView : MonoBehaviour
 
 		bInitativeList.ActivateIcon(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject);
-		activeBUnit.PopupCombatMenu();
+		activeBUnit.Activate();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 

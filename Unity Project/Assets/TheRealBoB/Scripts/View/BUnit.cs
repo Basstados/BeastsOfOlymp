@@ -10,6 +10,10 @@ public class BUnit : MonoBehaviour {
 	public BUnitUI unitUI;
 	public float movementSpeed = 4;
 
+	public AudioSource deathSound;
+	public AudioSource attackSound;
+	public AudioSource selectionSound;
+
 	BView context;
 	Action action;
 	public Action CurrentAction {get{return action;}}
@@ -49,6 +53,12 @@ public class BUnit : MonoBehaviour {
 		flashColor = Color.red;
 
 		unitUI.Init(this);
+	}
+
+	public void Activate()
+	{
+		selectionSound.Play();
+		PopupCombatMenu();
 	}
 
 	public void PopupCombatMenu() 
@@ -149,6 +159,9 @@ public class BUnit : MonoBehaviour {
 
 	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit)
 	{
+		// sound effect
+		attackSound.Play();
+		// animation
 		animator.SetBool("attack",true);
 		yield return new WaitForSeconds(0.3f); //TODO make this controlable
 		animator.SetBool("attack",false);
@@ -168,6 +181,13 @@ public class BUnit : MonoBehaviour {
 
 	public void Died()
 	{
+		StartCoroutine(DeathRoutine());
+	}
+
+	private IEnumerator DeathRoutine()
+	{
+		yield return new WaitForSeconds(0.5f);
+		deathSound.Play();
 		renderObject.renderer.enabled = false;
 		unitUI.gameObject.SetActive(false);
 	}
