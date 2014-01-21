@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_2;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -181,6 +181,7 @@
      <Compile Include="Assets\Prototype\LevelEditor\Scripts\LevelGeneration.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
      <Compile Include="Assets\Prototype\Movement\Scripts\GridMovement.cs" />
+     <Compile Include="Assets\Prototype\PathTesting.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\BackToMenuButton.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\FPSWithWarning.cs" />
      <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\QuadGenerator.cs" />
@@ -214,7 +215,9 @@
      <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\IInputListElement.cs" />
      <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\IInputListParent.cs" />
      <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\PopupListElementInput.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\ArtificalIntelligence.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\AIHunter.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\IArtificalIntelligence.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\TurnPlan.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Commands\CAttackUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Commands\CGameover.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\Commands\CMoveUnit.cs" />
@@ -255,6 +258,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\ShurikenAutodeactivate.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Input\BInputManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BAttackButton.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCloseApplication.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeList.cs" />
