@@ -9,6 +9,7 @@ public class BUnitUI : MonoBehaviour {
 	public Color aiColor;
 	public UILabel nameLabel;
 	public BapBar apbar;
+	public BDamageNumber damageNumber;
 	BUnit parent;
 
 	bool initalized = false;
@@ -50,5 +51,10 @@ public class BUnitUI : MonoBehaviour {
 	public void UpdateAPBar()
 	{
 		apbar.EmptyAP(parent.unit.ActionPoints);
+	}
+
+	public void ShowDamage(int damage)
+	{
+		damageNumber.Display(damage.ToString());
 	}
 }

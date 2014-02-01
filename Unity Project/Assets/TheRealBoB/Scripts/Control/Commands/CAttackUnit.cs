@@ -24,6 +24,7 @@ public class CAttackUnit : ICommand
 
 		float hit = (float) new Random().NextDouble();
 		bool  success = false;
+		int damage = 0;
 
 		// check hit chance
 		if(attack.hitChance >= hit) {
@@ -40,7 +41,7 @@ public class CAttackUnit : ICommand
 			EventProxyManager.FireEvent(this, new DebugLogEvent("typeModifier: " + typeModifier));
 
 			// the actual damage formular
-			int damage = (int) Math.Round((source.Attack + attack.damage) * typeModifier);
+			damage = (int) Math.Round((source.Attack + attack.damage) * typeModifier);
 
 			// attack is succesfull
 			target.LoseHealth(damage);
@@ -54,7 +55,7 @@ public class CAttackUnit : ICommand
 			// fire event
 			EventProxyManager.FireEvent(this, new UnitDiedEvent(target));
 		}
-		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,success));
+		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,success, damage));
 	}
 }
 
@@ -64,14 +65,16 @@ public class UnitAttackedEvent : EventProxyArgs
 	public Unit source;
 	public Unit target;
 	public bool hit;
+	public int damage;
 
-	public UnitAttackedEvent (Attack attack, Unit source, Unit target, bool hit)
+	public UnitAttackedEvent (Attack attack, Unit source, Unit target, bool hit, int damage)
 	{
 		this.name = EventName.UnitAttacked;
 		this.attack = attack;
 		this.source = source;
 		this.target = target;
 		this.hit = hit;
+		this.damage = damage;
 	}
 	
 }

@@ -150,14 +150,14 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(MoveRoutine(path));
 	}
 
-	public void PlayAttack(BUnit target, Attack attack, bool hit)
+	public void PlayAttack(BUnit target, Attack attack, bool hit, int damage)
 	{
 		meshContainer.transform.LookAt(target.transform.position);
 		unitUI.UpdateAPBar();
-		StartCoroutine(AttackRoutine(target,attack, hit));
+		StartCoroutine(AttackRoutine(target,attack, hit, damage));
 	}
 
-	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit)
+	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit, int damage)
 	{
 		// sound effect
 		attackSound.Play();
@@ -165,6 +165,7 @@ public class BUnit : MonoBehaviour {
 		animator.SetTrigger("AttackTrigger");
 		yield return new WaitForSeconds(0.6f);
 		target.PlayHitAnimation(hit);
+		target.unitUI.ShowDamage(damage);
 		bCombatMenu.ActionCompleted();
 	}
 
