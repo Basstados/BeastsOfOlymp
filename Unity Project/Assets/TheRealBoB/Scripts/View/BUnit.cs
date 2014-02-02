@@ -72,7 +72,7 @@ public class BUnit : MonoBehaviour {
 	public void DisplayMovementRange()
 	{
 		action = Action.MOVE;
-		context.DisplayRange(this, unit.ActionPoints);
+		context.DisplayRange(this, unit.ActionPoints, DisplayRangeMode.ALL_CLICKABLE);
 	}
 
 	public void SelectMovementTarget(BMapTile bMapTile)
@@ -99,8 +99,12 @@ public class BUnit : MonoBehaviour {
 		}
 		unitUI.MarkAP(attack.apCost);
 		action = Action.ATTACK;
-		Debug.Log(selectedAttack.name + " " + selectedAttack.range);
-		context.DisplayRange(this, selectedAttack.range);
+
+		// set display mode depending on unit team
+		// only units of the enemy team will be marked as clickable
+		int mode = (unit.team == Unit.Team.PLAYER) ? DisplayRangeMode.TEAM_0_CLICKABLE : DisplayRangeMode.TEAM_1_CLICKABLE;
+
+		context.DisplayRange(this, selectedAttack.range, mode);
 	}
 
 	public void ClearDisplayRange ()

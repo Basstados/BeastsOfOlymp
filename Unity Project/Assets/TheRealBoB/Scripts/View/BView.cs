@@ -173,7 +173,7 @@ public class BView : MonoBehaviour
 	void HandleBMapTileTapped(object sender, EventArgs args)
 	{
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
-		if(e.bMapTile.InRange)
+		if(e.bMapTile.Clickable)
 			activeBUnit.SetTarget(e.bMapTile);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -277,7 +277,7 @@ public class BView : MonoBehaviour
 	/// Get the distance matrix from the controller and use it to display a range.
 	/// </summary>
 	/// <param name="movementRange">Maximum range for the distance matrix.</param>
-	public void DisplayRange(BUnit bUnit, int range)
+	public void DisplayRange(BUnit bUnit, int range, int mode)
 	{
 		// update InputPhase
 		bInputManager.phase = BInputManager.InputPhase.PICKTARGET;
@@ -295,9 +295,40 @@ public class BView : MonoBehaviour
 		for (int i = 0; i < distMatrix.Length; i++) {
 			for (int j = 0; j < distMatrix[i].Length; j++) {
 				if(range >= distMatrix[i][j] && 0 < distMatrix[i][j]) {
-					bMapTiles[i][j].ChangeColorState(BMapTile.ColorState.INRANGE);
+					HighlightBMapTile(bMapTiles[i][j], mode);
 				}
 			}
+		}
+	}
+
+	void HighlightBMapTile(BMapTile bMapTile, int mode)
+	{
+		switch(mode) 
+		{
+		case DisplayRangeMode.TEAM_0_CLICKABLE:
+			// mark BMapTile as clickable if there is a unit of team 0 on top
+			// use inRange material else
+			if(bMapTile.mapTile.unit != null) {
+				if(bMapTile.mapTile.unit.team == Unit.Team.AI) 
+					bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
+			} else {
+				bMapTile.ChangeColorState(BMapTile.ColorState.INRANGE);
+			}
+			break;
+		case DisplayRangeMode.TEAM_1_CLICKABLE:
+			// mark BMapTile as clickable if there is a unit of team 1 on top
+			// use inRange material else
+			if(bMapTile.mapTile.unit != null) {
+				if(bMapTile.mapTile.unit.team == Unit.Team.PLAYER)
+					bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
+			} else {
+				bMapTile.ChangeColorState(BMapTile.ColorState.INRANGE);
+			}
+			break;
+		case DisplayRangeMode.ALL_CLICKABLE:
+			// mark the BMapTile alweays as clickable
+			bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
+			break;
 		}
 	}
 
@@ -376,4 +407,11 @@ public class EventDoneEvent : EventProxyArgs
 	{
 		this.name = EventName.EventDone;
 	}
+}
+
+public static class DisplayRangeMode
+{
+	public const int TEAM_0_CLICKABLE = 0;
+	public const int TEAM_1_CLICKABLE = 1;
+	public const int ALL_CLICKABLE = 2;
 }

@@ -6,13 +6,20 @@ public class BMapTile : MonoBehaviour {
 	public Material defaultMaterial;
 	public Material rangeMaterial;
 	public Material pathMaterial;
+	public Material clickableMaterial;
 
 	public MapTile mapTile;
 	public ColorState colorState;
 
 	public bool InRange {
 		get {
-			return (colorState == ColorState.INRANGE || colorState == ColorState.PATH);
+			return !(colorState == ColorState.DEFAULT);
+		}
+	}
+
+	public bool Clickable {
+		get {
+			return colorState == ColorState.CLICKABLE || colorState == ColorState.PATH;
 		}
 	}
 
@@ -21,7 +28,8 @@ public class BMapTile : MonoBehaviour {
 	public enum ColorState {
 		INRANGE,
 		DEFAULT,
-		PATH
+		PATH,
+		CLICKABLE
 	}
 
 	void Awake() 
@@ -42,33 +50,13 @@ public class BMapTile : MonoBehaviour {
 			renderer.sharedMaterial = pathMaterial;
 			StartCoroutine(TweenRoutine(pathMaterial, Color.yellow, Color.gray));
 			break;
+		case ColorState.CLICKABLE:
+			renderer.sharedMaterial = clickableMaterial;
+			break;
 		case ColorState.DEFAULT:
 		default:
 			renderer.sharedMaterial = defaultMaterial;
 			break;
-		}
-
-//		if(colorState == ColorState.DEFAULT) {
-//			renderer.sharedMaterial = defaultMaterial;
-//		} else {
-//			renderer.sharedMaterial = rangeMaterial;
-//
-//		}
-
-		// renderer.sharedMaterial.color = GetStateColor();
-	}
-
-
-	Color GetStateColor()
-	{
-		switch(colorState) {
-		case ColorState.INRANGE:
-			return Color.green;
-		case ColorState.PATH:
-			return Color.yellow;
-		case ColorState.DEFAULT:
-		default:
-			return defaultColor;
 		}
 	}
 
