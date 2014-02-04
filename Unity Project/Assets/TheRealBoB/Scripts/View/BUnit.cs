@@ -161,6 +161,14 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(AttackRoutine(target,attack, hit, damage));
 	}
 
+	/// <summary>
+	/// Routine to perfome a attack animation
+	/// </summary>
+	/// <returns>IEnumerator is needed for co-routines.<</returns>
+	/// <param name="target">The BUnit whom is the attack target.</param>
+	/// <param name="attack">The attack which will be performed.</param>
+	/// <param name="hit">If set to <c>true</c> the attack was succesfull.</param>
+	/// <param name="damage">The amount of damage dealt by this attack.</param>
 	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit, int damage)
 	{
 		// sound effect
@@ -173,6 +181,10 @@ public class BUnit : MonoBehaviour {
 		bCombatMenu.ActionCompleted();
 	}
 
+	/// <summary>
+	/// Plaies the hit animation.
+	/// </summary>
+	/// <param name="hit">If set to <c>true</c> the hit was succesfull.</param>
 	public void PlayHitAnimation(bool hit)
 	{
 		if(hit) {
@@ -184,16 +196,21 @@ public class BUnit : MonoBehaviour {
 		}
 	}
 
-	IEnumerator ShakeRoutine(float magnitude, float duration) {
+	/// <summary>
+	/// Routine to performe a camera shake effect.
+	/// </summary>
+	/// <returns>IEnumerator is needed for co-routines.</returns>
+	/// <param name="magnitude">The maginitude of the shake.</param>
+	/// <param name="duration">The duration of the shake.</param>
+	private IEnumerator ShakeRoutine(float magnitude, float duration) {
 		
 		float elapsed = 0.0f;
-		
 		Vector3 originalCamPos = Camera.main.transform.position;
 		
 		while (elapsed < duration) {
 			
 			elapsed += Time.deltaTime;          
-			
+			// damper is used to reduce shake over time lineary
 			float percentComplete = elapsed / duration;         
 			float damper = 1.0f - Mathf.Clamp(4.0f * percentComplete - 3.0f, 0.0f, 1.0f);
 			
@@ -202,7 +219,8 @@ public class BUnit : MonoBehaviour {
 			float y = Random.value * 2.0f - 1.0f;
 			x *= magnitude * damper;
 			y *= magnitude * damper;
-			
+
+			// perfomce the actual shake
 			Camera.main.transform.position = new Vector3(originalCamPos.x + x, originalCamPos.y + y, originalCamPos.z);
 			
 			yield return null;
