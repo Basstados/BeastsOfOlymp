@@ -25,6 +25,7 @@ public class CAttackUnit : ICommand
 		float hit = (float) new Random().NextDouble();
 		bool  success = false;
 		int damage = 0;
+		byte efficency = 1;
 
 		// check hit chance
 		if(attack.hitChance >= hit) {
@@ -33,10 +34,12 @@ public class CAttackUnit : ICommand
 			if(attack.type.strengths.Length > 0)
 				if(Array.Exists(attack.type.strengths, delegate(string t) { return t == target.data.type.name; })) {
 					typeModifier *= 2f;
+					efficency = 2;
 				}
 			if(attack.type.weaknesses.Length > 0)
 				if(Array.Exists(attack.type.weaknesses, delegate(string t) { return t == target.data.type.name; })) {
 					typeModifier *= 1/2f;
+				efficency = 0;
 				}
 			EventProxyManager.FireEvent(this, new DebugLogEvent("typeModifier: " + typeModifier));
 
@@ -55,7 +58,7 @@ public class CAttackUnit : ICommand
 			// fire event
 			EventProxyManager.FireEvent(this, new UnitDiedEvent(target));
 		}
-		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,success, damage));
+		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,efficency, damage));
 	}
 }
 
@@ -64,16 +67,16 @@ public class UnitAttackedEvent : EventProxyArgs
 	public Attack attack;
 	public Unit source;
 	public Unit target;
-	public bool hit;
+	public byte efficieny;
 	public int damage;
 
-	public UnitAttackedEvent (Attack attack, Unit source, Unit target, bool hit, int damage)
+	public UnitAttackedEvent (Attack attack, Unit source, Unit target, byte efficieny, int damage)
 	{
 		this.name = EventName.UnitAttacked;
 		this.attack = attack;
 		this.source = source;
 		this.target = target;
-		this.hit = hit;
+		this.efficieny = efficieny;
 		this.damage = damage;
 	}
 	

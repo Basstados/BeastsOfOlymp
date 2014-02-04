@@ -12,7 +12,7 @@ public class LogEntryAttack : ILogEntry
 		this.source = e.source;
 		this.target = e.target;
 		this.attack = e.attack;
-		this.hit = e.hit;
+		this.hit = (e.damage > 0);
 	}
 
 	public override string ToString ()

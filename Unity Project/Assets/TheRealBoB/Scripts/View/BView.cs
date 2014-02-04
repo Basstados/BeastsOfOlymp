@@ -195,8 +195,8 @@ public class BView : MonoBehaviour
 	void HandleUnitAttacked (object sender, EventArgs args)
 	{
 		UnitAttackedEvent e = args as UnitAttackedEvent;
-		Debug.Log("Hit: " + e.hit + " " + e.target.Name + " " + e.target.HealthPoints);
-		GetBUnit(e.source).PlayAttack(GetBUnit(e.target), e.attack, e.hit, e.damage);
+		Debug.Log("Hit: " + (e.damage > 0) + " " + e.target.Name + " " + e.target.HealthPoints);
+		GetBUnit(e.source).PlayAttack(GetBUnit(e.target), e.attack, e.efficieny, e.damage);
 		//GetBUnit(e.target).PlayHitAnimation(e.hit);
 		CleanMap();
 	}

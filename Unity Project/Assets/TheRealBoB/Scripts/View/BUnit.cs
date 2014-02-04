@@ -154,11 +154,11 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(MoveRoutine(path));
 	}
 
-	public void PlayAttack(BUnit target, Attack attack, bool hit, int damage)
+	public void PlayAttack(BUnit target, Attack attack, byte efficeny, int damage)
 	{
 		meshContainer.transform.LookAt(target.transform.position);
 		unitUI.UpdateAPBar();
-		StartCoroutine(AttackRoutine(target,attack, hit, damage));
+		StartCoroutine(AttackRoutine(target,attack, efficeny, damage));
 	}
 
 	/// <summary>
@@ -167,16 +167,16 @@ public class BUnit : MonoBehaviour {
 	/// <returns>IEnumerator is needed for co-routines.<</returns>
 	/// <param name="target">The BUnit whom is the attack target.</param>
 	/// <param name="attack">The attack which will be performed.</param>
-	/// <param name="hit">If set to <c>true</c> the attack was succesfull.</param>
+	/// <param name="efficeny">0 = not effectiv, 1 = normal efficeny, 2 = very effectiv</param>
 	/// <param name="damage">The amount of damage dealt by this attack.</param>
-	IEnumerator AttackRoutine(BUnit target, Attack attack, bool hit, int damage)
+	IEnumerator AttackRoutine(BUnit target, Attack attack, byte efficeny, int damage)
 	{
 		// sound effect
 		attackSound.Play();
 		// animation
 		animator.SetTrigger("AttackTrigger");
 		yield return new WaitForSeconds(0.6f);
-		target.PlayHitAnimation(hit);
+		target.PlayHitAnimation(efficeny, damage);
 		target.unitUI.ShowDamage(damage);
 		bCombatMenu.ActionCompleted();
 	}
@@ -184,13 +184,13 @@ public class BUnit : MonoBehaviour {
 	/// <summary>
 	/// Plaies the hit animation.
 	/// </summary>
-	/// <param name="hit">If set to <c>true</c> the hit was succesfull.</param>
-	public void PlayHitAnimation(bool hit)
+	/// <param name="efficeny">0 = not effectiv, 1 = normal efficeny, 2 = very effectiv</param>
+	public void PlayHitAnimation(byte efficeny, int damage)
 	{
-		if(hit) {
+		if(damage > 0) {
 			unitUI.UpdateLivebar();
 			StartCoroutine(DamageFlashRoutine());
-			StartCoroutine(ShakeRoutine(0.1f,0.1f));
+			StartCoroutine(ShakeRoutine(0.25f * efficeny,0.1f * efficeny));
 		} else {
 			EventProxyManager.FireEvent(this, new EventDoneEvent());
 		}
