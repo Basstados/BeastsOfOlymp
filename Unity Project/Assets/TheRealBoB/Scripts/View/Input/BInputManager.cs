@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BInputManager : MonoBehaviour {
-
+	
 	public InputPhase phase;
 
 	public enum InputPhase {
@@ -10,9 +10,14 @@ public class BInputManager : MonoBehaviour {
 		PICKTARGET
 	}
 
+	private const int UNIT_LAYER = 9;
+	private const int UI_LAYER = 8;
+	private const int GRID_LAYER = 10;
+
+	private BView bView;
+
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -34,21 +39,30 @@ public class BInputManager : MonoBehaviour {
 		// create layer mask to ignore layer "Ignore Raycast" and hit all others
 		int mask = 1 << LayerMask.NameToLayer("Ignore Raycast");
 		mask = ~mask;
-		
+
+		BMapTile bMapTile = null;
+
 		if(Physics.Raycast(cursorRay, out hit, Mathf.Infinity, mask)) {
 			// let's see what we hit with the raycast
-			if( hit.collider.gameObject.layer == LayerMask.NameToLayer("User Interface") ) {
+			switch( hit.collider.gameObject.layer ) {
+			case UI_LAYER:
 				// we hit an ui element first
 				// stop looking for map and stuff and just return
 				return;
-			}
-
-			if( hit.collider.CompareTag("GridQuad") ) {
-				// we hit an quad of the map
-	
+				break;
+			case UNIT_LAYER:
+				// find the quad the unit is standing on
+				BUnit bUnit = hit.collider.GetComponent<BUnit>();
+				bMapTile = BView.Instance.GetBMapTile(bUnit.unit.mapTile);
 				// fire event for the tapped mapTile
-				BMapTile bMapTile = hit.collider.GetComponent<BMapTile>();
 				EventProxyManager.FireEvent(this, new BMapTileTappedEvent(bMapTile));
+				break;
+			case GRID_LAYER:
+				// we hit an quad of the map
+				bMapTile = hit.collider.GetComponent<BMapTile>();
+				// fire event for the tapped mapTile
+				EventProxyManager.FireEvent(this, new BMapTileTappedEvent(bMapTile));
+				break;
 			}
 		}
 	}
