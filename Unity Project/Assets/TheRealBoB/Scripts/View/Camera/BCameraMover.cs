@@ -6,26 +6,41 @@ public class BCameraMover : MonoBehaviour {
 	public float movementDamping = 3.0f;
 	public float minSpeed = 0.3f;
 	public float threshold = 0.1f;
+	public float maxX = 15;
+	public float minX = -5;
+	public float maxZ = 15;
+	public float minZ = -5;
 
-	GameObject target;
+	Vector3 target;
+	public Vector3 Target {
+		get {
+			return target;
+		}
+		set {
+			target = value;
+			target.x = Mathf.Clamp(target.x, minX, maxX);
+			target.y = 0f;
+			target.z = Mathf.Clamp(target.z, minZ, maxZ);
+		}
+	}
 	bool routineIsRunning = false;
 
 	void Awake() 
 	{
-		target = this.gameObject;
+		target = this.gameObject.transform.position;
 	}
 
-	public void Focus(GameObject go) 
+	public void Focus(Vector3 pos) 
 	{
-		target = go;
+		Target = pos;
 	}
 
 	void Update() {
-		float distance = (target.transform.position - transform.position).magnitude;
+		float distance = (target - transform.position).magnitude;
 		if(distance < threshold) {
-			Vector3 translation = (target.transform.position - transform.position).normalized * Time.deltaTime * minSpeed;
+			Vector3 translation = (target - transform.position).normalized * Time.deltaTime * minSpeed;
 		} else {
-			transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * movementDamping);
+			transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * movementDamping);
 		}
 	}
 }

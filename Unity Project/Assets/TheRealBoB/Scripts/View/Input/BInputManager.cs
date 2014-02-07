@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class BInputManager : MonoBehaviour {
-	
+
+	public BCameraMover cameraMover;
+	public float tapLength = 0.3f;
 	public InputPhase phase;
+
 
 	public enum InputPhase {
 		DEFAULT,
@@ -13,8 +16,10 @@ public class BInputManager : MonoBehaviour {
 	private const int UNIT_LAYER = 9;
 	private const int UI_LAYER = 8;
 	private const int GRID_LAYER = 10;
-
-	private BView bView;
+	private const int PLANE_LAYER = 11;
+	
+	private float tapTime = 0f;
+	private Vector3 lastMousePosition = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -23,9 +28,52 @@ public class BInputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetButtonDown("Fire1") && phase == InputPhase.PICKTARGET) {
-			OnTap();
+		// reset tap time on tap start (button down)
+		if(Input.GetButtonDown("Fire1")) {
+			tapTime = 0f;
 		}
+
+		// track tap time while button is down
+		if(Input.GetButton("Fire1")){
+			tapTime += Time.deltaTime;
+			if(tapTime > tapLength) {
+				// now we assume it's a gesture not a tap
+				OnHold();
+			}
+			//if( (lastMousePosition - Input.mousePosition).magnitude > 100) {
+				lastMousePosition = Input.mousePosition;
+			//}
+		}
+
+		if(Input.GetButtonUp("Fire1") && tapTime < tapLength) {
+			Debug.Log("Taptime: " + tapTime);
+			if(phase == InputPhase.PICKTARGET) {
+				OnTap();
+			}
+		}
+	}
+
+	void OnHold()
+	{
+		Debug.Log(lastMousePosition + "__" + Input.mousePosition);
+		Vector3 lastMousePlanePos = ScreenToPlane(lastMousePosition);
+		Vector3 currentMousePos = ScreenToPlane(Input.mousePosition);
+		Debug.Log(lastMousePlanePos + "??" + currentMousePos);
+
+		Vector3 targetPos = cameraMover.Target + (currentMousePos - lastMousePlanePos);
+		cameraMover.Focus(targetPos);
+	}
+
+	Vector3 ScreenToPlane(Vector3 screenPoint)
+	{
+		// cast an ray from the screen point
+		Vector3 mousePos = new Vector3(Screen.width, Screen.height) - screenPoint;
+		Ray cursorRay = Camera.main.ScreenPointToRay(mousePos);
+		
+		RaycastHit hit = new RaycastHit();
+		int mask = 1 << PLANE_LAYER;
+		Physics.Raycast(cursorRay, out hit, Mathf.Infinity, mask);
+		return hit.point;
 	}
 
 	void OnTap() 

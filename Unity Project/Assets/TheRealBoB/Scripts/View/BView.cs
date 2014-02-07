@@ -167,7 +167,7 @@ public class BView : MonoBehaviour
 		unitMarker.transform.localPosition = new Vector3(0,0.01f,0);
 
 		bInitativeList.ActivateIcon(e.unit);
-		bCameraMover.Focus(activeBUnit.gameObject);
+		bCameraMover.Focus(activeBUnit.gameObject.transform.position);
 		activeBUnit.Activate();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -198,7 +198,7 @@ public class BView : MonoBehaviour
 		}
 		// send movement path to BUnit
 		GetBUnit(e.unit).MoveAlongPath(path);
-		bCameraMover.Focus(GetBUnit(e.unit).gameObject);
+		bCameraMover.Focus(GetBUnit(e.unit).gameObject.transform.position);
 		CleanMap();
 	}
 
