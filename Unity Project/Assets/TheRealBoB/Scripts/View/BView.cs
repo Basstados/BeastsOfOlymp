@@ -202,7 +202,7 @@ public class BView : MonoBehaviour
 		}
 		// send movement path to BUnit
 		GetBUnit(e.unit).MoveAlongPath(path);
-		bCameraMover.Focus(GetBUnit(e.unit).gameObject.transform.position);
+		bCameraMover.Focus(path.Last().transform.position);
 		CleanMap();
 	}
 
@@ -211,15 +211,16 @@ public class BView : MonoBehaviour
 		UnitAttackedEvent e = args as UnitAttackedEvent;
 		Debug.Log("Hit: " + (e.damage > 0) + " " + e.target.Name + " " + e.target.HealthPoints);
 		GetBUnit(e.source).PlayAttack(GetBUnit(e.target), e.attack, e.efficieny, e.damage);
-		//GetBUnit(e.target).PlayHitAnimation(e.hit);
 		CleanMap();
 	}
 
 	void HandleUnitDied (object sender, EventArgs args)
 	{
 		UnitDiedEvent e = args as UnitDiedEvent;
-		GetBUnit(e.unit).Died();
-		//EventProxyManager.FireEvent(this, new EventDoneEvent());
+		BUnit bUnit = GetBUnit(e.unit);
+		bCameraMover.Focus(bUnit.transform.position);
+		bUnit.Died();
+		
 	}
 
 
