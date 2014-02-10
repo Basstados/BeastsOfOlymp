@@ -234,6 +234,7 @@ public class BUnit : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		renderObject.SetActive(false);
 		unitUI.gameObject.SetActive(false);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	private IEnumerator DamageFlashRoutine() 
@@ -253,6 +254,7 @@ public class BUnit : MonoBehaviour {
 	/// <param name="path">The pathe we want to move along</param>
 	private IEnumerator MoveRoutine(BMapTile[] path)
 	{
+		bCombatMenu.Hide();
 		for (int i = 1; i < path.Length; i++) {
 			if(animator == null) {
 				// old moveanimation without animator
@@ -290,6 +292,7 @@ public class BUnit : MonoBehaviour {
 				} while(transform.position != nextWp);
 			}
 		}
+		bCombatMenu.OpenForBUnit(this);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 }

@@ -53,14 +53,15 @@ public class CAttackUnit : ICommand
 			success = true;
 		}
 
-		// when target died
+		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,efficency, damage));
+
+		// when target died fire event AFTER attack was performed
 		if(target.HealthPoints <= 0) {
 			// remove target from map
 			target.mapTile.unit = null;
 			// fire event
 			EventProxyManager.FireEvent(this, new UnitDiedEvent(target));
 		}
-		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,efficency, damage));
 	}
 
 	private int AttackDistance(MapTile from, MapTile to)

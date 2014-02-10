@@ -219,7 +219,7 @@ public class BView : MonoBehaviour
 	{
 		UnitDiedEvent e = args as UnitDiedEvent;
 		GetBUnit(e.unit).Died();
-		EventProxyManager.FireEvent(this, new EventDoneEvent());
+		//EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 
