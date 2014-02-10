@@ -46,7 +46,6 @@ public class BInputManager : MonoBehaviour {
 		}
 
 		if(Input.GetButtonUp("Fire1") && tapTime < tapLength) {
-			Debug.Log("Taptime: " + tapTime);
 			if(phase == InputPhase.PICKTARGET) {
 				OnTap();
 			}
@@ -55,10 +54,8 @@ public class BInputManager : MonoBehaviour {
 
 	void OnHold()
 	{
-		Debug.Log(lastMousePosition + "__" + Input.mousePosition);
 		Vector3 lastMousePlanePos = ScreenToPlane(lastMousePosition);
 		Vector3 currentMousePos = ScreenToPlane(Input.mousePosition);
-		Debug.Log(lastMousePlanePos + "??" + currentMousePos);
 
 		Vector3 targetPos = cameraMover.Target + (currentMousePos - lastMousePlanePos);
 		cameraMover.Focus(targetPos);

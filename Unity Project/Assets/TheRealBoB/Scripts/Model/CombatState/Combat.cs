@@ -40,9 +40,9 @@ public class Combat
     public Unit GetNextUnit()
     {
 		Unit unit = unitQueue.Dequeue();
-		while(!unit.Alive && unitQueue.Count > 0) {
+		/*while(!unit.Alive && unitQueue.Count > 0) {
 			unit = unitQueue.Dequeue();
-		}
+		}*/
 		unitQueue.Enqueue(unit);
 		if(unitQueue.Count == 0) return null;
 		return unit;

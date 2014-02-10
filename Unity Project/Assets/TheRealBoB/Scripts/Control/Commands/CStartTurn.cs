@@ -15,12 +15,14 @@ public class CStartTurn : ICommand
 	{
 		Unit unit = model.combat.GetNextUnit ();
 
+		// increase turn counter
+		model.combat.turn++;
+
 		if(!unit.Alive) {
 			controller.EndTurn();
 			return;
 		}
-		// increase turn counter
-		model.combat.turn++;
+
 		// activate next unit
 		model.ActivateUnit(unit);
 		EventProxyManager.FireEvent (this, new TurnStartedEvent (unit, model.combat.round, model.combat.turn));

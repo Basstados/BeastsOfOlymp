@@ -85,7 +85,7 @@ public class Controller
 	public void EndTurn()
 	{
 		if (model.combat.TurnsLeft() > 0)
-			new CStartTurn(model,this).Execute ();
+			new CStartTurn(model,this).Execute();
 		else
 			model.combat.SetupRound (model.units);
 	}
