@@ -59,6 +59,7 @@ public class BUnit : MonoBehaviour {
 	{
 		selectionSound.Play();
 		PopupCombatMenu();
+		DisplayMovementRange();
 	}
 
 	public void PopupCombatMenu() 

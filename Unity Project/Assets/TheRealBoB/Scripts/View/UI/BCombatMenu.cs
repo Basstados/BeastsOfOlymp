@@ -12,15 +12,14 @@ public class BCombatMenu : MonoBehaviour {
 	public UILabel gameoverLabel;
 	public GameObject panel;
 	public GameObject attackRing;
-	public UIButton attackButton;
-	public UIButton moveButton;
 	public UIButton backButton;
+	public UIButton endTurnButton;
 
 	BUnit bUnit;
 
 	void Update() 
 	{
-		if(panel.activeSelf && moveToTarget) {
+		if(attackRing.activeSelf && moveToTarget) {
 			Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
 			screenPosition.x -= Screen.width/2;
 			screenPosition.y -= Screen.height/2;
@@ -32,12 +31,11 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		this.bUnit = bUnit;
 		if(bUnit.unit.AIControled) {
-			panel.SetActive(false);
+			attackRing.SetActive(false);
 			backButton.gameObject.SetActive(false);
 		} else {
-			panel.SetActive(true);
-			attackButton.gameObject.SetActive(bUnit.unit.CanAttack);
-			moveButton.gameObject.SetActive(bUnit.unit.CanMove);
+			attackRing.SetActive(true);
+			endTurnButton.gameObject.SetActive(true);
 			backButton.gameObject.SetActive(false);
 
 			// clear attack ring ui
@@ -73,32 +71,34 @@ public class BCombatMenu : MonoBehaviour {
 				atkButtons[i].transform.localScale = Vector3.one;
 			}
 		} else {
-			float height = 70;
+			float height = 80;
 			for (int i = 0; i < atkButtons.Count; i++) {
-				atkButtons[i].transform.localPosition = new Vector3(0, i*height);
+				atkButtons[i].transform.localPosition = new Vector3(0, -i*height);
 				atkButtons[i].transform.localScale = Vector3.one;
 			}
+			endTurnButton.transform.localPosition = new Vector3(500, -atkButtons.Count*height);
+			endTurnButton.transform.localScale = Vector3.one;
 		}
 	}
 
 	public void ChooseAttack()
 	{
-		panel.SetActive (false);
-		backButton.gameObject.SetActive (true);
+		backButton.gameObject.SetActive(true);
+		endTurnButton.gameObject.SetActive(false);
 		attackRing.SetActive(true);
 	}
 	
 	public void ActionAttack(Attack attack) 
 	{
-		panel.SetActive(false);
 		attackRing.SetActive(false);
 		backButton.gameObject.SetActive(true);
+		endTurnButton.gameObject.SetActive(false);
+		bUnit.ClearDisplayRange();
 		bUnit.DisplayAttackRange(attack);
 	}
 	
 	public void ActionMove() 
 	{
-		panel.SetActive(false);
 		backButton.gameObject.SetActive(true);
 		bUnit.DisplayMovementRange();
 	}
@@ -111,10 +111,11 @@ public class BCombatMenu : MonoBehaviour {
 
 	public void Back()
 	{
-		panel.SetActive(true);
 		backButton.gameObject.SetActive(false);
-		attackRing.SetActive(false);
+		attackRing.SetActive(true);
+		endTurnButton.gameObject.SetActive(true);
 		bUnit.ClearDisplayRange();
+		bUnit.DisplayMovementRange();
 	}
 
 	public void ActionCompleted()
@@ -127,7 +128,8 @@ public class BCombatMenu : MonoBehaviour {
 	
 	public void Hide() 
 	{
-		panel.SetActive(false);
+		attackRing.SetActive(false);
+		endTurnButton.gameObject.SetActive(false);
 	}
 
 	public void DisplayGameover (string text)

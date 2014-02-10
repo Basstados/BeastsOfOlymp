@@ -45,6 +45,8 @@ public class BView : MonoBehaviour
 	}
 
 	void Init() {
+		performingEvent = true;
+
 		// register event
 		EventProxyManager.RegisterForEvent(EventName.Initialized, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitSpawned, HandleEvent);
@@ -70,6 +72,8 @@ public class BView : MonoBehaviour
 
 		// start the game
 		controller = new Controller(this);
+
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	#region event handler
