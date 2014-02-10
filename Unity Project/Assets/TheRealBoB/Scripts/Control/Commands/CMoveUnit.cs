@@ -24,16 +24,16 @@ public class CMoveUnit : ICommand
 		if(unit.mapTile != target) {
 			// get path from pathfinder
 			path = controller.GetPath(unit.mapTile, target);
-			// stop if target is to for unit move
-			if(path.Cost > unit.ActionPoints)
+			// stop if target is to far away for unit move
+			if(path.Cost > unit.MovePoints)
 				return;
 
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
 			model.MoveUnit(unit, target);
-			unit.UseAP(path.Cost);
+			// clear units move resource, since only one move per turn is permitted
+			unit.MovePoints = 0;
 		}
-		unit.CanMove = false;
 		
 		// after movement fire event
 		EventProxyManager.FireEvent(this,new UnitMovedEvent(unit, path));

@@ -9,6 +9,6 @@ public struct UnitData
 	public int baseHealth;
 	public int baseAttack;
 	public int baseInitiative;
-	public int baseActionPoints;
+	public int baseMoveRange;
 	public string[] attackNames;
 }

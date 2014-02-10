@@ -9,7 +9,7 @@ namespace GameDataUI {
 		public UIInput healthInput;
 		public UIInput attackInput;
 		public UIInput initativeInput;
-		public UIInput apInput;
+		public UIInput movePointsInput;
 		public UIPopupList typeInput;
 		public GameObject addAttackButton;
 		public GameObject attackLocator;
@@ -57,12 +57,12 @@ namespace GameDataUI {
 			}
 		}
 
-		public int ap {
+		public int movePoints {
 			get  {
-				return int.Parse(apInput.value.TrimEnd(trimChar));
+				return int.Parse(movePointsInput.value.TrimEnd(trimChar));
 			}
 			set {
-				apInput.value = value.ToString();
+				movePointsInput.value = value.ToString();
 			}
 		}
 		#endregion
@@ -75,7 +75,7 @@ namespace GameDataUI {
 			health = unitData.baseHealth;
 			attack = unitData.baseAttack;
 			initative = unitData.baseInitiative;
-			ap = unitData.baseActionPoints;
+			movePoints = unitData.baseMoveRange;
 			typeInput.value = unitData.type.name;
 
 			attacks = new List<PopupListElementInput>();
@@ -163,7 +163,7 @@ namespace GameDataUI {
 			unitData.baseHealth = health;
 			unitData.baseAttack = attack;
 			unitData.baseInitiative = initative;
-			unitData.baseActionPoints = ap;
+			unitData.baseMoveRange = movePoints;
 			unitData.type = Database.GetType(typeInput.value);
 			string[] atkNames = new string[attacks.Count];
 			for (int i = 0; i < attacks.Count; i++) {

@@ -11,29 +11,33 @@ public class Unit : IComparable
 	public Dictionary<string,Attack> attacks = new Dictionary<string, Attack>();
 	public IArtificalIntelligence ai;
 
-
-	bool canMove;
-	bool canAttack;
 	public string defaultAttack;
 	int apUsed = 0;
 	int currentHealth;
+	int maxAttackPoints = 1;
+	int currentAttackPoints;
+	int maxMovePoints = 1;
+	int currentMovePoints;
 
 	#region properties
 	public string	Name				{get{return this.data.name;}}
 	public int 		Initiative 			{get{return this.data.baseInitiative;}}
 	public int		Attack				{get{return this.data.baseAttack;}}
-	public int 		ActionPoints 		{get{return this.data.baseActionPoints - apUsed;}}
-	public int		MaxActionPoints 	{get{return this.data.baseActionPoints;}}
 	public int 		HealthPoints		{get{return this.currentHealth;}}
 	public int		MaxHealthPoints		{get{return this.data.baseHealth;}}
 	public bool 	AIControled			{get{return team == Team.AI;}}
 	public bool 	Alive				{get{return (currentHealth > 0);}}
-	public bool 	CanMove				{get{return (canMove && ActionPoints > 0);}
-											set{canMove = value;}}
-	public bool		CanAttack			{get{return (canAttack && ActionPoints > attacks[defaultAttack].apCost);}
-											set{canAttack = value;}}
+	public bool 	CanMove				{get{return (currentMovePoints > 0);}}
+	public bool		CanAttack			{get{return (currentAttackPoints > 0);}}
+	public int 		AttackPoints		{get{return this.currentAttackPoints;} set{currentAttackPoints = ClampInt(value,0,maxAttackPoints);}}
+	public int 		MovePoints			{get{return this.currentMovePoints;} set{currentMovePoints = ClampInt(value,0,maxMovePoints);}}
 	#endregion
 	
+	private int ClampInt(int value, int min, int max)
+	{
+		return (value < min) ? min : ((value > max) ? max : value);
+	}
+
 	public enum Team 
 	{
 		PLAYER = 0,
@@ -49,11 +53,7 @@ public class Unit : IComparable
 
 		defaultAttack = data.attackNames[0];
 		currentHealth = data.baseHealth;
-	}
-
-	public void UseAP(int ap)
-	{
-		apUsed += ap;
+		maxMovePoints = data.baseMoveRange;
 	}
 
 	public void LoseHealth (int damage)
@@ -64,8 +64,8 @@ public class Unit : IComparable
 	public void ResetTurn()
 	{
 		apUsed = 0;
-		canMove = true;
-		canAttack = true;
+		currentMovePoints = maxMovePoints;
+		currentAttackPoints = maxAttackPoints;
 	}
 
 	/**
@@ -85,9 +85,8 @@ public class Unit : IComparable
 
 	public override string ToString ()
 	{
-		return string.Format ("[Unit: Initiative={0}, ActionPoints={2}, AIControled={3}]", Initiative, ActionPoints, AIControled);
+		return string.Format ("[Unit: data={0}, team={1}, attacks={2}, ai={3}, Name={4}, Initiative={5}, Attack={6}, HealthPoints={7}, MaxHealthPoints={8}, AIControled={9}, Alive={10}, CanMove={11}, CanAttack={12}, AttackPoints={13}, MovePoints={14}]", data, team, attacks, ai, Name, Initiative, Attack, HealthPoints, MaxHealthPoints, AIControled, Alive, CanMove, CanAttack, AttackPoints, MovePoints);
 	}
-	
 }
 
 

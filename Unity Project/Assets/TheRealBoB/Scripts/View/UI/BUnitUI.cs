@@ -14,8 +14,6 @@ public class BUnitUI : MonoBehaviour {
 
 	bool initalized = false;
 
-	UISprite[] apMarker;
-
 	public void Init(BUnit parent) 
 	{
 		this.parent = parent;
@@ -31,14 +29,7 @@ public class BUnitUI : MonoBehaviour {
 		nameLabel.text = parent.unit.Name;
 		typeSprite.spriteName = parent.unit.data.type.name;
 
-		apbar.Init(parent.unit.MaxActionPoints);
-
 		initalized = true;
-	}
-
-	public void MarkAP(int count)
-	{
-		apbar.ActivateAP(count);
 	}
 
 	public void UpdateLivebar() 
@@ -46,11 +37,6 @@ public class BUnitUI : MonoBehaviour {
 		if(!initalized) return;
 
 		lifebar.value = parent.unit.HealthPoints / (float) parent.unit.MaxHealthPoints;
-	}
-
-	public void UpdateAPBar()
-	{
-		apbar.EmptyAP(parent.unit.ActionPoints);
 	}
 
 	public void ShowDamage(int damage)

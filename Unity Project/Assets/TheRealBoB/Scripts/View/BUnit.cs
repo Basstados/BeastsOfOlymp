@@ -64,15 +64,12 @@ public class BUnit : MonoBehaviour {
 	public void PopupCombatMenu() 
 	{
 		bCombatMenu.OpenForBUnit(this);
-
-		//TODO!!!!! tmp position
-		unitUI.UpdateAPBar();
 	}
 
 	public void DisplayMovementRange()
 	{
 		action = Action.MOVE;
-		context.DisplayRange(this, unit.ActionPoints, DisplayRangeMode.ALL_CLICKABLE);
+		context.DisplayRange(this, unit.MovePoints, DisplayRangeMode.ALL_CLICKABLE);
 	}
 
 	public void SelectMovementTarget(BMapTile bMapTile)
@@ -82,8 +79,6 @@ public class BUnit : MonoBehaviour {
 		// display calculated path
 		Path path = context.HighlightMovementPath(this, bMapTile);
 		context.SetMovementMarker(bMapTile);
-
-		unitUI.MarkAP(path.Cost);
 
 		// save selected target
 		target = bMapTile;
@@ -97,7 +92,6 @@ public class BUnit : MonoBehaviour {
 		} else {
 			selectedAttack = attack;
 		}
-		unitUI.MarkAP(attack.apCost);
 		action = Action.ATTACK;
 
 		// set display mode depending on unit team
@@ -110,8 +104,6 @@ public class BUnit : MonoBehaviour {
 	public void ClearDisplayRange ()
 	{
 		action = Action.IDLE;
-		// reset ap marker
-		unitUI.MarkAP(0);
 		// reset map marker
 		context.CleanMap();
 	}
@@ -150,14 +142,12 @@ public class BUnit : MonoBehaviour {
 	public void MoveAlongPath(BMapTile[] path)
 	{
 		bCombatMenu.ActionCompleted();
-		unitUI.UpdateAPBar();
 		StartCoroutine(MoveRoutine(path));
 	}
 
 	public void PlayAttack(BUnit target, Attack attack, byte efficeny, int damage)
 	{
 		meshContainer.transform.LookAt(target.transform.position);
-		unitUI.UpdateAPBar();
 		StartCoroutine(AttackRoutine(target,attack, efficeny, damage));
 	}
 
@@ -241,7 +231,7 @@ public class BUnit : MonoBehaviour {
 		deathSound.Play();
 		animator.SetTrigger("DeathTrigger");
 		yield return new WaitForSeconds(2f);
-		renderObject.renderer.enabled = false;
+		renderObject.SetActive(false);
 		unitUI.gameObject.SetActive(false);
 	}
 

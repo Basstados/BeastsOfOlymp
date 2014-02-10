@@ -72,7 +72,7 @@ public class AIHunter : IArtificalIntelligence {
 
 		// if all mapTiles have penalty 1 
 		// this is the highes range we can attack someone this turn
-		int moveRangWithAttack = controlledUnit.ActionPoints - attack.apCost;
+		int moveRangWithAttack = controlledUnit.MovePoints;
 		int maxRange = attack.range + moveRangWithAttack;
 		
 		int maxTargetDst = Distance(attackTarget.mapTile, controlledUnit.mapTile);
@@ -115,7 +115,7 @@ public class AIHunter : IArtificalIntelligence {
 
 		Path path = controller.GetPath(controlledUnit.mapTile,attackTarget.mapTile,grid);
 		path.DropLast();
-		while(path.Cost > controlledUnit.ActionPoints) {
+		while(path.Cost > controlledUnit.MovePoints) {
 			// remove last maptile from path until the cost are lower than action points
 			path.DropLast();
 		}

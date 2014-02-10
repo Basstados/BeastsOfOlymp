@@ -17,10 +17,12 @@ public class CAttackUnit : ICommand
 
 	public void Execute ()
 	{
-		if(source.ActionPoints < attack.apCost)
+		// quite early if source unit is not allowed to attack or target is out of range
+		if(!source.CanAttack || AttackDistance(source.mapTile, target.mapTile) > attack.range)
 			return;
-
-		source.UseAP(attack.apCost);
+		
+		// lower attack resource on source unit
+		source.AttackPoints = 0;
 
 		float hit = (float) new Random().NextDouble();
 		bool  success = false;
@@ -59,6 +61,11 @@ public class CAttackUnit : ICommand
 			EventProxyManager.FireEvent(this, new UnitDiedEvent(target));
 		}
 		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target,efficency, damage));
+	}
+
+	private int AttackDistance(MapTile from, MapTile to)
+	{
+		return Math.Abs (from.x - to.x) + Math.Abs (from.y - to.y);
 	}
 }
 
