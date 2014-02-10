@@ -162,6 +162,7 @@ public class BUnit : MonoBehaviour {
 	/// <param name="damage">The amount of damage dealt by this attack.</param>
 	IEnumerator AttackRoutine(BUnit target, Attack attack, byte efficeny, int damage)
 	{
+		bCombatMenu.Hide();
 		// sound effect
 		attackSound.Play();
 		// animation
@@ -169,7 +170,6 @@ public class BUnit : MonoBehaviour {
 		yield return new WaitForSeconds(0.6f);
 		target.PlayHitAnimation(efficeny, damage);
 		target.unitUI.ShowDamage(damage);
-		bCombatMenu.ActionCompleted();
 	}
 
 	/// <summary>

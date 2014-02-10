@@ -34,7 +34,9 @@ public class BCombatMenu : MonoBehaviour {
 			attackRing.SetActive(false);
 			backButton.gameObject.SetActive(false);
 		} else {
-			attackRing.SetActive(true);
+			if(bUnit.unit.CanAttack) {
+				attackRing.SetActive(true);
+			}
 			endTurnButton.gameObject.SetActive(true);
 			backButton.gameObject.SetActive(false);
 
@@ -129,6 +131,7 @@ public class BCombatMenu : MonoBehaviour {
 	public void Hide() 
 	{
 		attackRing.SetActive(false);
+		backButton.gameObject.SetActive(false);
 		endTurnButton.gameObject.SetActive(false);
 	}
 
