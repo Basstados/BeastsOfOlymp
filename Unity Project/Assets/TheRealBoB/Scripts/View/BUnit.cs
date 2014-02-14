@@ -45,8 +45,10 @@ public class BUnit : MonoBehaviour {
 
 		if(unit.team == Unit.Team.PLAYER) {
 			renderObject.renderer.material.color = new Color(0.25490f, 0.85882f, 0.23529f);
+			meshContainer.transform.rotation = Quaternion.AngleAxis(90f,Vector3.up);
 		} else {
-			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);;
+			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);
+			meshContainer.transform.rotation = Quaternion.AngleAxis(-90f,Vector3.up);
 		}
 
 		defaultColor = renderObject.renderer.material.color;
@@ -254,41 +256,22 @@ public class BUnit : MonoBehaviour {
 	{
 		bCombatMenu.Hide();
 		for (int i = 1; i < path.Length; i++) {
-			if(animator == null) {
-				// old moveanimation without animator
-				Vector3 nextWp = path[i].transform.position;
-				do{
-					Vector3 translation = nextWp - transform.position;
-					float distance = translation.magnitude;
-					translation = translation.normalized * Time.deltaTime * movementSpeed;
-					if(distance < translation.magnitude) {
-						transform.position = nextWp;
-						break;
-					} else {
-						transform.Translate(translation);
-					}
-					yield return 0;
-				} while(transform.position != nextWp);
-			} else {
-				Vector3 nextWp = path[i].transform.position;
-				Vector3 lookPoint = nextWp;
-				lookPoint.y = 0;
-				meshContainer.transform.LookAt(lookPoint);
-				do {
-//					Debug.Log("Pos: " + transform.position + " WP: " + nextWp);
-					Vector3 translation = nextWp - transform.position;
-					float distance = translation.magnitude;
-					translation = translation.normalized * Time.deltaTime * movementSpeed;
-//					Debug.Log("Distance: " + distance + " Translation: " + translation.magnitude);
-					if(distance < translation.magnitude) {
-						transform.position = nextWp;
-						break;
-					} else {
-						transform.Translate( transform.InverseTransformDirection(translation) );
-					}
-					yield return 0;
-				} while(transform.position != nextWp);
-			}
+			Vector3 nextWp = path[i].transform.position;
+			Vector3 lookPoint = nextWp;
+			lookPoint.y = 0;
+			meshContainer.transform.LookAt(lookPoint);
+			do {
+				Vector3 translation = nextWp - transform.position;
+				float distance = translation.magnitude;
+				translation = translation.normalized * Time.deltaTime * movementSpeed;
+				if(distance < translation.magnitude) {
+					transform.position = nextWp;
+					break;
+				} else {
+					transform.Translate( transform.InverseTransformDirection(translation) );
+				}
+				yield return 0;
+			} while(transform.position != nextWp);
 		}
 		bCombatMenu.OpenForBUnit(this);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
