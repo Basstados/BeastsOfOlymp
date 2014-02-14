@@ -68,6 +68,7 @@ public enum EventName {
 	UnitAttacked,
 	UnitDied,
 	BMapTileTapped,
+	BUnitTapped,
     RoundSetup,
 	TurnStarted,
 	Gameover,

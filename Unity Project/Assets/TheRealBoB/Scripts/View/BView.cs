@@ -54,6 +54,7 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.UnitActivated, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.BMapTileTapped, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.BUnitTapped, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleEvent);
@@ -98,34 +99,37 @@ public class BView : MonoBehaviour
 			// call handler for the next event in the queue
 			switch(eventArgs.name) {
 			case EventName.Initialized:
-				HandleInitialized(null , eventArgs);
+				HandleInitialized(sender , eventArgs);
 				break;
 			case EventName.UnitSpawned:
-				HandleUnitSpawned(null, eventArgs);
+				HandleUnitSpawned(sender, eventArgs);
 				break;
 			case EventName.RoundSetup:
-				HandleRoundSetup(null, eventArgs);
+				HandleRoundSetup(sender, eventArgs);
 				break;
 			case EventName.UnitActivated:
-				HandleUnitActivated(null, eventArgs);
+				HandleUnitActivated(sender, eventArgs);
 				break;
 			case EventName.TurnStarted:
-				HandleTurnStarted(null, eventArgs);
+				HandleTurnStarted(sender, eventArgs);
 				break;
 			case EventName.BMapTileTapped:
-				HandleBMapTileTapped(null, eventArgs);
+				HandleBMapTileTapped(sender, eventArgs);
+				break;
+			case EventName.BUnitTapped:
+				HandleBUnitTapped(sender, eventArgs);
 				break;
 			case EventName.UnitMoved:
-				HandleUnitMoved(null, eventArgs);
+				HandleUnitMoved(sender, eventArgs);
 				break;
 			case EventName.UnitAttacked:
-				HandleUnitAttacked(null, eventArgs);
+				HandleUnitAttacked(sender, eventArgs);
 				break;
 			case EventName.UnitDied:
-				HandleUnitDied(null, eventArgs);
+				HandleUnitDied(sender, eventArgs);
 				break;
 			case EventName.Gameover:
-				HandleGameover(null, eventArgs);
+				HandleGameover(sender, eventArgs);
 				break;
 			}
 		} else {
@@ -186,9 +190,20 @@ public class BView : MonoBehaviour
 
 	void HandleBMapTileTapped(object sender, EventArgs args)
 	{
+		// forward maptile to active unit 
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
 		if(e.bMapTile.Clickable)
-			activeBUnit.SetTarget(e.bMapTile);
+			activeBUnit.SetMoveTarget(e.bMapTile);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
+	}
+
+	void HandleBUnitTapped(object sender, EventArgs args)
+	{
+		// use tapped unit as attack target for active unit
+		// if active unit is not ready to attack, nothing will happen
+		BUnitTappedEvent e = args as BUnitTappedEvent;
+		if(GetBMapTile(e.bUnit.unit.mapTile).Clickable)
+			activeBUnit.SetAttackTarget(e.bUnit);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -200,7 +215,7 @@ public class BView : MonoBehaviour
 		for (int i = 0; i < e.path.Length; i++) {
 			path[i] = GetBMapTile(e.path[i]);
 		}
-		// send movement path to BUnit
+		// send movement path to BUnit for animation
 		GetBUnit(e.unit).MoveAlongPath(path);
 		bCameraMover.Focus(path.Last().transform.position);
 		CleanMap();

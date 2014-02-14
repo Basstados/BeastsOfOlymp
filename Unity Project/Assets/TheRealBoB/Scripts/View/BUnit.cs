@@ -109,30 +109,28 @@ public class BUnit : MonoBehaviour {
 		context.CleanMap();
 	}
 
-	public void SetTarget(BMapTile bMapTile)
+	public void SetMoveTarget(BMapTile bMapTile)
 	{
-		switch(action) {
+		switch (action) {
 		case Action.MOVE:
-			SelectMovementTarget(bMapTile);
+			SelectMovementTarget (bMapTile);
 			break;
 		case Action.CONFIRMMOVE:
-			if(bMapTile == target) {
+			if (bMapTile == target) {
 				// use target for move
-				context.controller.MoveUnit(unit, bMapTile.mapTile);
+				context.controller.MoveUnit (unit, bMapTile.mapTile);
 				action = Action.IDLE;
 			} else {
-				SelectMovementTarget(bMapTile);
+				SelectMovementTarget (bMapTile);
 			}
-			break;
-		case Action.ATTACK:
-			// use target for attack
-			if(bMapTile.mapTile.unit != null) {
-				context.controller.AttackUnit(this.unit, bMapTile.mapTile.unit, selectedAttack);
-			}
-			action = Action.IDLE;
 			break;
 		}
+	}
 
+	public void SetAttackTarget(BUnit bUnit)
+	{
+		context.controller.AttackUnit(this.unit, bUnit.unit, selectedAttack);
+		action = Action.IDLE;
 	}
 
 	public void EndTurn()

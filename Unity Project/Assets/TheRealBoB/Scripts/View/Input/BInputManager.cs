@@ -80,14 +80,16 @@ public class BInputManager : MonoBehaviour {
 		// cast an ray from the screen point
 		Ray cursorRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		RaycastHit hit = new RaycastHit();
 		// create layer mask to ignore layer "Ignore Raycast" and hit all others
 		int mask = 1 << LayerMask.NameToLayer("Ignore Raycast");
 		mask = ~mask;
 
 		BMapTile bMapTile = null;
 
-		if(Physics.Raycast(cursorRay, out hit, Mathf.Infinity, mask)) {
+		RaycastHit[] hits = Physics.RaycastAll(cursorRay, Mathf.Infinity, mask);
+
+		// check all objects hit on raycast
+		foreach(RaycastHit hit in hits)  {
 			// let's see what we hit with the raycast
 			switch( hit.collider.gameObject.layer ) {
 			case UI_LAYER:
@@ -98,9 +100,8 @@ public class BInputManager : MonoBehaviour {
 			case UNIT_LAYER:
 				// find the quad the unit is standing on
 				BUnit bUnit = hit.collider.GetComponent<BUnit>();
-				bMapTile = BView.Instance.GetBMapTile(bUnit.unit.mapTile);
-				// fire event for the tapped mapTile
-				EventProxyManager.FireEvent(this, new BMapTileTappedEvent(bMapTile));
+				// fire event for the tapped bUnit
+				EventProxyManager.FireEvent(this, new BUnitTappedEvent(bUnit));
 				break;
 			case GRID_LAYER:
 				// we hit an quad of the map
@@ -113,6 +114,15 @@ public class BInputManager : MonoBehaviour {
 	}
 }
 
+public class BUnitTappedEvent : EventProxyArgs {
+	public BUnit bUnit;
+
+	public BUnitTappedEvent (BUnit bUnit)
+	{
+		this.name = EventName.BUnitTapped;
+		this.bUnit = bUnit;
+	}
+}
 
 public class BMapTileTappedEvent : EventProxyArgs {
 	public BMapTile bMapTile;
