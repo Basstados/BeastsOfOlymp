@@ -319,7 +319,8 @@ public class BView : MonoBehaviour
 		foreach(Point pt in area) {
 			x = bMaptile.mapTile.x + pt.x;
 			y = bMaptile.mapTile.y + pt.y;
-			bMapTiles[x][y].ChangeColorState(BMapTile.ColorState.ATTACKAREA);
+			if(x >= 0 && x < bMapTiles.Length && y >= 0 && y < bMapTiles[0].Length)
+				bMapTiles[x][y].ChangeColorState(BMapTile.ColorState.ATTACKAREA);
 		}
 	}
 
