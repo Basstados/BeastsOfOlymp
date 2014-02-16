@@ -65,7 +65,7 @@ public class Controller
 			TurnPlan plan = e.unit.ai.DoPlanning();
 
 			MoveUnit(e.unit, plan.movementTarget);
-			AttackUnit(e.unit, plan.attackTarget, plan.attack);
+			AttackMapTile(e.unit, plan.attackTarget.mapTile, plan.attack);
 		}
 	}
 	#endregion
@@ -75,9 +75,9 @@ public class Controller
 		new CMoveUnit(model,unit,mapTile, this).Execute();
 	}
 
-	public void AttackUnit(Unit source, Unit target, Attack attack )
+	public void AttackMapTile(Unit source, MapTile target, Attack attack )
 	{
-		new CAttackUnit(source,target,attack, this).Execute();
+		new CAttackUnit(source,target,attack, model, this).Execute();
 
 		EndTurn();
 	}

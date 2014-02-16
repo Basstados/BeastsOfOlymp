@@ -192,8 +192,10 @@ public class BView : MonoBehaviour
 	{
 		// forward maptile to active unit 
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
-		if(e.bMapTile.Clickable)
+		if(e.bMapTile.Clickable) {
 			activeBUnit.SetMoveTarget(e.bMapTile);
+			activeBUnit.SetAttackTarget(e.bMapTile);
+		}
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -201,9 +203,9 @@ public class BView : MonoBehaviour
 	{
 		// use tapped unit as attack target for active unit
 		// if active unit is not ready to attack, nothing will happen
-		BUnitTappedEvent e = args as BUnitTappedEvent;
-		if(GetBMapTile(e.bUnit.unit.mapTile).Clickable)
-			activeBUnit.SetAttackTarget(e.bUnit);
+//		BUnitTappedEvent e = args as BUnitTappedEvent;
+//		if(GetBMapTile(e.bUnit.unit.mapTile).Clickable)
+//			activeBUnit.SetAttackTarget(e.bUnit);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -224,8 +226,12 @@ public class BView : MonoBehaviour
 	void HandleUnitAttacked (object sender, EventArgs args)
 	{
 		UnitAttackedEvent e = args as UnitAttackedEvent;
-		Debug.Log("Hit: " + (e.damage > 0) + " " + e.target.Name + " " + e.target.HealthPoints);
-		GetBUnit(e.source).PlayAttack(GetBUnit(e.target), e.attack, e.efficieny, e.damage);
+		BUnit[] bUnits = new BUnit[e.targets.Count];
+		for (int i = 0; i < e.targets.Count; i++) {
+			bUnits[i] = GetBUnit(e.targets[i]);
+		}
+
+		GetBUnit(e.source).PlayAttack(bUnits, e.attack, e.efficieny, e.damage);
 		CleanMap();
 	}
 
@@ -303,6 +309,18 @@ public class BView : MonoBehaviour
 		bUnit.Init(this, unit, bCombatMenu);
 		// add to list
 		bUnits.Add(bUnit);
+	}
+
+	public void DisplayArea(BMapTile bMaptile, Point[] area)
+	{
+		int x = 0;
+		int y = 0;
+
+		foreach(Point pt in area) {
+			x = bMaptile.mapTile.x + pt.x;
+			y = bMaptile.mapTile.y + pt.y;
+			bMapTiles[x][y].ChangeColorState(BMapTile.ColorState.ATTACKAREA);
+		}
 	}
 
 	/// <summary>

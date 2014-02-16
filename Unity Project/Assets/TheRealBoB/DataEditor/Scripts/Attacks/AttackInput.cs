@@ -9,6 +9,7 @@ public class AttackInput : MonoBehaviour {
 	public UIInput hitInput;
 	public UIInput rangeInput;
 	public UIPopupList typeInput;
+	public AreaInput areaInput;
 
 	char[] trimChar = new char[]{'|'};
 	AttacksPanel parent;
@@ -70,6 +71,7 @@ public class AttackInput : MonoBehaviour {
 		hitChance = attack.hitChance;
 		range = attack.range;
 		typeInput.value = attack.type.name;
+		areaInput.Refresh(attack.area);
 
 		if(attack.type.name != null) typeInput.value = attack.type.name;
 		Refresh();
@@ -84,7 +86,7 @@ public class AttackInput : MonoBehaviour {
 		atk.hitChance = hitChance;
 		atk.range = range;
 		atk.type = Database.GetType(typeInput.value);
-
+		atk.area = areaInput.GetArea();
 		return atk;
 	}
 

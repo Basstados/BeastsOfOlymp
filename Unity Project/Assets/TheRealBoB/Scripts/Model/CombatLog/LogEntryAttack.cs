@@ -1,33 +1,31 @@
 using System;
+using System.Collections.Generic;
 
 public class LogEntryAttack : ILogEntry
 {
 	Unit source;
-	Unit target;
+	List<Unit> targets;
 	Attack attack;
 	bool hit;
 
 	public LogEntryAttack(UnitAttackedEvent e)
 	{
 		this.source = e.source;
-		this.target = e.target;
+		this.targets = e.targets;
 		this.attack = e.attack;
 		this.hit = (e.damage > 0);
 	}
 
 	public override string ToString ()
 	{
-		int hpBefore;
-		int hpAfter = target.HealthPoints;
-		if(hit)
-			hpBefore = target.HealthPoints + attack.damage;
-		else
-			hpBefore = target.HealthPoints;
+		string str = "ATTACK: " + attack.name + "(" + attack.damage + ") " 
+			+ source.Name + "(" + source.team + ") --> ";
 
-		return "ATTACK: " + attack.name + "(" + attack.damage + ") " 
-			+ source.Name + "(" + source.team + ") --> "
-			+ target.Name + "(" + target.team + ") "
-			+ "HP: " + hpAfter + "/" + hpBefore;
+		foreach(Unit u in targets) {
+			str += u.Name + "(" + u.team + ") ";
+		}
+
+		return str;
 	}
 }
 

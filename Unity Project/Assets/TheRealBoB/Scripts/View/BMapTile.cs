@@ -6,6 +6,7 @@ public class BMapTile : MonoBehaviour {
 	public Material defaultMaterial;
 	public Material rangeMaterial;
 	public Material pathMaterial;
+	public Material attackAreaMaterial;
 	public Material clickableMaterial;
 
 	public MapTile mapTile;
@@ -19,7 +20,9 @@ public class BMapTile : MonoBehaviour {
 
 	public bool Clickable {
 		get {
-			return colorState == ColorState.CLICKABLE || colorState == ColorState.PATH;
+			return colorState == ColorState.CLICKABLE 
+					|| colorState == ColorState.PATH 
+					|| colorState == ColorState.ATTACKAREA;
 		}
 	}
 
@@ -29,7 +32,8 @@ public class BMapTile : MonoBehaviour {
 		INRANGE,
 		DEFAULT,
 		PATH,
-		CLICKABLE
+		CLICKABLE,
+		ATTACKAREA
 	}
 
 	void Awake() 
@@ -52,6 +56,9 @@ public class BMapTile : MonoBehaviour {
 			break;
 		case ColorState.CLICKABLE:
 			renderer.sharedMaterial = clickableMaterial;
+			break;
+		case ColorState.ATTACKAREA:
+			renderer.sharedMaterial = attackAreaMaterial;
 			break;
 		case ColorState.DEFAULT:
 		default:

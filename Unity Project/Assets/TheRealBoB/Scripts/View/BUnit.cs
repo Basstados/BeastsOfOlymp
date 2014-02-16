@@ -88,6 +88,18 @@ public class BUnit : MonoBehaviour {
 		action = Action.CONFIRMMOVE;
 	}
 
+	public void SelectAttackTarget(BMapTile bMapTile)
+	{
+		Debug.Log("selectAttackTarget");
+		ClearDisplayRange();
+		DisplayAttackRange(selectedAttack);
+		context.DisplayArea(bMapTile, selectedAttack.area);
+
+		// save selected target
+		target = bMapTile;
+		action = Action.CONFIRMATTACK;
+	}
+
 	public void DisplayAttackRange(Attack attack)
 	{
 		if (attack == null) {
@@ -101,7 +113,7 @@ public class BUnit : MonoBehaviour {
 		// only units of the enemy team will be marked as clickable
 		int mode = (unit.team == Unit.Team.PLAYER) ? DisplayRangeMode.TEAM_0_CLICKABLE : DisplayRangeMode.TEAM_1_CLICKABLE;
 
-		context.DisplayRange(this, selectedAttack.range, mode);
+		context.DisplayRange(this, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE);
 	}
 
 	public void ClearDisplayRange ()
@@ -113,9 +125,10 @@ public class BUnit : MonoBehaviour {
 
 	public void SetMoveTarget(BMapTile bMapTile)
 	{
+		Debug.Log("SetMoveTarget action="+action);
 		switch (action) {
 		case Action.MOVE:
-			SelectMovementTarget (bMapTile);
+			SelectMovementTarget(bMapTile);
 			break;
 		case Action.CONFIRMMOVE:
 			if (bMapTile == target) {
@@ -129,10 +142,22 @@ public class BUnit : MonoBehaviour {
 		}
 	}
 
-	public void SetAttackTarget(BUnit bUnit)
+	public void SetAttackTarget(BMapTile bMapTile)
 	{
-		context.controller.AttackUnit(this.unit, bUnit.unit, selectedAttack);
-		action = Action.IDLE;
+		Debug.Log("SetAttackTarget action="+action);
+		switch(action) {
+		case Action.ATTACK:
+			SelectAttackTarget(bMapTile);
+			break;
+		case Action.CONFIRMATTACK:
+			if (bMapTile == target) {
+				context.controller.AttackMapTile(this.unit, bMapTile.mapTile, selectedAttack);
+				action = Action.IDLE;
+			} else {
+				SelectAttackTarget(bMapTile);
+			}
+			break;
+		}
 	}
 
 	public void EndTurn()
@@ -146,10 +171,17 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(MoveRoutine(path));
 	}
 
-	public void PlayAttack(BUnit target, Attack attack, byte efficeny, int damage)
+	public void PlayAttack(BUnit[] targets, Attack attack, byte efficeny, int damage)
 	{
-		meshContainer.transform.LookAt(target.transform.position);
-		StartCoroutine(AttackRoutine(target,attack, efficeny, damage));
+		// calculate the center point of all targets
+		Vector3 lookAt = Vector3.zero;
+		foreach(BUnit bUnit in targets) {
+			lookAt += bUnit.transform.position;
+		}
+		lookAt /= targets.Length;
+
+		meshContainer.transform.LookAt(lookAt);
+		StartCoroutine(AttackRoutine(targets,attack, efficeny, damage));
 	}
 
 	/// <summary>
@@ -160,7 +192,7 @@ public class BUnit : MonoBehaviour {
 	/// <param name="attack">The attack which will be performed.</param>
 	/// <param name="efficeny">0 = not effectiv, 1 = normal efficeny, 2 = very effectiv</param>
 	/// <param name="damage">The amount of damage dealt by this attack.</param>
-	IEnumerator AttackRoutine(BUnit target, Attack attack, byte efficeny, int damage)
+	IEnumerator AttackRoutine(BUnit[] targets, Attack attack, byte efficeny, int damage)
 	{
 		bCombatMenu.Hide();
 		// sound effect
@@ -168,8 +200,10 @@ public class BUnit : MonoBehaviour {
 		// animation
 		animator.SetTrigger("AttackTrigger");
 		yield return new WaitForSeconds(0.6f);
-		target.PlayHitAnimation(efficeny, damage);
-		target.unitUI.ShowDamage(damage);
+		foreach(BUnit bUnit in targets) {
+			bUnit.PlayHitAnimation(efficeny, damage);
+			bUnit.unitUI.ShowDamage(damage);
+		}
 	}
 
 	/// <summary>

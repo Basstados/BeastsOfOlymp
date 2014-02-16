@@ -9,4 +9,5 @@ public class Attack
 	public int damage;
 	public int range;
 	public int apCost;
+	public Point[] area;
 }

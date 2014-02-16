@@ -133,6 +133,11 @@ public class Model
 		// remove unit from start MapTile
 		start.unit = null;
 	}
+
+	public bool IsPointOnGrid(Point pt) 
+	{
+		return (pt.x > 0 && pt.x < mapTiles.Length && pt.y > 0 && pt.y < mapTiles[0].Length);
+	}
 }
 
 public class MapInitializedEvent : EventProxyArgs
