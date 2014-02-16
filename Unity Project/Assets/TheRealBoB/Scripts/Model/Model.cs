@@ -136,7 +136,7 @@ public class Model
 
 	public bool IsPointOnGrid(Point pt) 
 	{
-		return (pt.x > 0 && pt.x < mapTiles.Length && pt.y > 0 && pt.y < mapTiles[0].Length);
+		return (pt.x >= 0 && pt.x < mapTiles.Length && pt.y >= 0 && pt.y < mapTiles[0].Length);
 	}
 }
 
