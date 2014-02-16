@@ -61,6 +61,7 @@ public class BUnit : MonoBehaviour {
 	{
 		selectionSound.Play();
 		PopupCombatMenu();
+		ClearDisplayRange();
 		DisplayMovementRange();
 	}
 
@@ -204,6 +205,8 @@ public class BUnit : MonoBehaviour {
 			bUnit.PlayHitAnimation(efficeny, damage);
 			bUnit.unitUI.ShowDamage(damage);
 		}
+		yield return new WaitForSeconds(0.6f);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	/// <summary>
@@ -278,7 +281,7 @@ public class BUnit : MonoBehaviour {
 //		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
 //		renderObject.renderer.material.color = defaultColor;
-		EventProxyManager.FireEvent(this, new EventDoneEvent());
+
 	}
 
 	/// <summary>
