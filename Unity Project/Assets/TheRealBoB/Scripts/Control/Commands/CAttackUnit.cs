@@ -20,6 +20,9 @@ public class CAttackUnit : ICommand
 
 	public void Execute ()
 	{
+		if (attack.range == 0) {
+			target = source.mapTile;
+		}
 		// quite early if source unit is not allowed to attack or target is out of range
 		if(!source.CanAttack || AttackDistance(source.mapTile, target) > attack.range)
 			return;
