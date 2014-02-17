@@ -1,11 +1,14 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Combat
 {
 	public int round = 0;
 	public int turn = 0;
-	Queue<Unit> unitQueue = new Queue<Unit>();
+	Queue<Unit> currentRound = new Queue<Unit>();
+	List<Unit> activeUnits = new List<Unit>();
 
 	public CombatLog log;
 
@@ -16,21 +19,25 @@ public class Combat
 		EventProxyManager.FireEvent(this, new CombatLogInitializedEvent(log));
 	}
 
-    public void SetupRound(List<Unit> unitList)
+	public void Init(List<Unit> unitList)
+	{
+		unitList.Sort();
+		activeUnits = new List<Unit>(unitList);
+	}
+
+    public void SetupRound()
     {
-		if(unitQueue.Count == 0) {
-			FillUnitQueue(ref unitList);
+		currentRound.Clear();
+		foreach(Unit unit in activeUnits) {
+			unit.ResetTurn();
+			currentRound.Enqueue(unit);
 		}
 
 		// count rounds
         round++;
 		turn = 0;
-		// reset units abilitys
-		foreach (Unit unit in unitList) {
-			unit.ResetTurn();	
-		}
 
-        EventProxyManager.FireEvent(this, new RoundSetupEvent(unitList));
+		EventProxyManager.FireEvent(this, new RoundSetupEvent(currentRound.ToList<Unit>()));
     }
 
 	/// <summary>
@@ -39,33 +46,19 @@ public class Combat
 	/// <returns>The next unit.</returns>
     public Unit GetNextUnit()
     {
-		Unit unit = unitQueue.Dequeue();
-		/*while(!unit.Alive && unitQueue.Count > 0) {
-			unit = unitQueue.Dequeue();
-		}*/
-		unitQueue.Enqueue(unit);
-		if(unitQueue.Count == 0) return null;
+		if(currentRound.Count == 0) return null;
+		Unit unit = currentRound.Dequeue();
+
+		if(!unit.Alive) {
+			activeUnits.Remove(unit);
+		}
+
 		return unit;
     }
 
 	public int TurnsLeft()
 	{
-		return (unitQueue.Count - turn);
-	}
-
-	void FillUnitQueue(ref List<Unit> unitList) 
-	{
-		// sort unit list
-		unitList.Sort();
-		// first round, use list to fill queue
-		if(unitQueue != null)
-			unitQueue.Clear();
-		unitQueue = new Queue<Unit>();
-
-		foreach(Unit unit in unitList)
-		{
-			unitQueue.Enqueue(unit);
-		}
+		return (currentRound.Count);
 	}
 }
 

@@ -87,7 +87,7 @@ public class Controller
 		if (model.combat.TurnsLeft() > 0)
 			new CStartTurn(model,this).Execute();
 		else
-			model.combat.SetupRound (model.units);
+			model.combat.SetupRound();
 	}
 
 	public byte[][] GetDistanceMatrix(Point position, int actionPoints, bool ignoreUnits)

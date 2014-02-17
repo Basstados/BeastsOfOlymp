@@ -60,7 +60,8 @@ public class Model
     public void InitCombat()
     {
         combat = new Combat();
-        combat.SetupRound(units);
+		combat.Init(units);
+        combat.SetupRound();
     }
 
 	/// <summary>
