@@ -10,7 +10,7 @@ public struct Path  {
 		get { return (steps == null);}
 	}
 	public int Length {
-		get { return steps.Length; }
+		get { return (steps != null) ? steps.Length : 0; }
 	}
 
 	public MapTile this[int i]

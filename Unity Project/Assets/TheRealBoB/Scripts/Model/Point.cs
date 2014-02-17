@@ -15,7 +15,7 @@ public struct Point {
 	/**
 	 * Calculate distance of two points with the manhatten metric
 	 */ 
-	public static int ManhattanDistance( Point start, Point end ) 
+	public static int ManhattanDistance(Point start, Point end) 
 	{
 		return Mathf.Abs(start.x - end.x) + Mathf.Abs( start.y - end.y);
 	}

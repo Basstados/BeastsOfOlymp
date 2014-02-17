@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BUnit : MonoBehaviour {
 
@@ -78,28 +79,41 @@ public class BUnit : MonoBehaviour {
 
 	public void SelectMovementTarget(BMapTile bMapTile)
 	{
+		// save selected target
+		target = bMapTile;
+		
 		ClearDisplayRange();
 		DisplayMovementRange();
 		// display calculated path
 		Path path = context.HighlightMovementPath(this, bMapTile);
 		context.SetMovementMarker(bMapTile);
-
-		// save selected target
-		target = bMapTile;
+		
 		action = Action.CONFIRMMOVE;
 	}
 
 	public void SelectAttackTarget(BMapTile bMapTile)
 	{
-		Debug.Log("selectAttackTarget");
-		ClearDisplayRange();
-		DisplayAttackRange(selectedAttack);
-		context.DisplayArea(bMapTile, selectedAttack.area);
-
 		// save selected target
 		target = bMapTile;
+		
+		ClearDisplayRange();
+		DisplayAttackRange(selectedAttack);
+		context.DisplayArea(bMapTile,RotateArea(selectedAttack.area));
+		
 		action = Action.CONFIRMATTACK;
 	}
+	
+	private Point[] RotateArea(Point[] area)
+	{
+		Point[] rotArea = new Point[area.Length];
+		int[,] rot = AttackRotationMatrix(target.mapTile, unit);
+		for (int i = 0; i < area.Length; i++) {
+			rotArea[i] = RotateAroundOrigin(area[i], rot);
+		}
+		return rotArea;
+	}
+	
+	
 
 	public void DisplayAttackRange(Attack attack)
 	{
@@ -312,5 +326,39 @@ public class BUnit : MonoBehaviour {
 		}
 		bCombatMenu.OpenForBUnit(this);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
+	}
+	
+	/// <summary>
+	/// Calculate rotation matrix you have to apply to the attack area 
+	/// depending on attacker orientation
+	/// </summary>
+	/// <returns>The rotation matrix.</returns>
+	/// <param name="target">MapTile this attack is targeting</param>
+	/// <param name="source">Unit who executes the attack</param>
+	private int[,] AttackRotationMatrix(MapTile target, Unit source)
+	{
+		// calculate a orientation of the unit using the max-value and its sign
+		// we want a signed unit vector
+		Point orientationVec = new Point(target.x - source.mapTile.x, target.y - source.mapTile.y);
+		if (Mathf.Abs(orientationVec.x) > Mathf.Abs(orientationVec.y)) {
+			orientationVec = new Point((int) Mathf.Sign(orientationVec.x),0);
+		} else {
+			orientationVec = new Point(0,(int) Mathf.Sign(orientationVec.y));
+		}
+		int[,] rot = new int[2,2];
+		rot[0,0] = orientationVec.y;	rot[0,1] = orientationVec.x;
+		rot[1,0] = - orientationVec.x;	rot[1,1] = orientationVec.y;
+		return rot;
+	}
+	
+	/// <summary>
+	/// Apply given rotation matrix to an point. This give you a rotation around the origin.
+	/// </summary>
+	/// <returns>Rotated point (vector)</returns>
+	/// <param name="pt">Point.</param>
+	/// <param name="rot">Rotation matrix (2x2)</param>
+	private Point RotateAroundOrigin(Point pt, int[,] rot)
+	{
+		return new Point(pt.x * rot[0,0] + pt.y * rot[0,1], pt.x * rot[1,0] + pt.y * rot[1,1]);
 	}
 }
