@@ -13,11 +13,11 @@ public class MapData
 	public class TeamUnit
 	{
 		public string name;
-		public Point position;
+		public Vector position;
 
 		public TeamUnit() {}
 
-		public TeamUnit (string name, Point position)
+		public TeamUnit (string name, Vector position)
 		{
 			this.name = name;
 			this.position = position;

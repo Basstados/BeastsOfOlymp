@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +79,7 @@ public class AIHunter : IArtificalIntelligence {
 		if (maxRange > maxTargetDst) {
 			// we can propably hit the target this turn
 			// find the mapTile furthes away from target where we still can hit it
-			Point pos = new Point(controlledUnit.mapTile.x, controlledUnit.mapTile.y);
+			Vector pos = new Vector(controlledUnit.mapTile.x, controlledUnit.mapTile.y);
 			byte[][] dstMatrix = controller.GetDistanceMatrix(pos, moveRangWithAttack, false);
 			for (int i = 0; i < dstMatrix.Length; i++) {
 				for (int j = 0; j < dstMatrix[i].Length; j++) {

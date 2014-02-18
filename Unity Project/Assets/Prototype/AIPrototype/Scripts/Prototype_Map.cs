@@ -298,8 +298,8 @@ public class Prototype_Map : MonoBehaviour {
 			return result;
 		}
 
-		Point myPos = new Point(start[0], start[1]);
-		Point targetPos = new Point(goal[0], goal[1]);
+		Vector myPos = new Vector(start[0], start[1]);
+		Vector targetPos = new Vector(goal[0], goal[1]);
 
 		byte[,] grid = new byte[quadMatrix.GetLength(0),quadMatrix.GetLength(1)];
 		for( int i=0; i< quadMatrix.GetLength(0); i++ ) {

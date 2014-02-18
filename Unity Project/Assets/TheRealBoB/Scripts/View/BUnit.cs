@@ -103,12 +103,22 @@ public class BUnit : MonoBehaviour {
 		action = Action.CONFIRMATTACK;
 	}
 	
-	private Point[] RotateArea(Point[] area)
+	private Vector[] RotateArea(Vector[] area)
 	{
-		Point[] rotArea = new Point[area.Length];
-		int[,] rot = AttackRotationMatrix(target.mapTile, unit);
+		Vector[] rotArea = new Vector[area.Length];
+		
+		Vector rotDir = new Vector(target.mapTile.x - unit.mapTile.x, target.mapTile.y - unit.mapTile.y);
+		if (rotDir == Vector.zero) {
+			for (int i = 0; i < area.Length; i++) {
+				rotArea[i] = area[i].Clone();
+			}
+			return rotArea;
+		}
+		rotDir.NormalizeTo4Direction();
+		int[,] rot = Vector.RotateToMatrix(rotDir);
 		for (int i = 0; i < area.Length; i++) {
-			rotArea[i] = RotateAroundOrigin(area[i], rot);
+			rotArea[i] = area[i].Clone();
+			rotArea[i].ApplyMatrix(rot);
 		}
 		return rotArea;
 	}
@@ -326,39 +336,5 @@ public class BUnit : MonoBehaviour {
 		}
 		bCombatMenu.OpenForBUnit(this);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
-	}
-	
-	/// <summary>
-	/// Calculate rotation matrix you have to apply to the attack area 
-	/// depending on attacker orientation
-	/// </summary>
-	/// <returns>The rotation matrix.</returns>
-	/// <param name="target">MapTile this attack is targeting</param>
-	/// <param name="source">Unit who executes the attack</param>
-	private int[,] AttackRotationMatrix(MapTile target, Unit source)
-	{
-		// calculate a orientation of the unit using the max-value and its sign
-		// we want a signed unit vector
-		Point orientationVec = new Point(target.x - source.mapTile.x, target.y - source.mapTile.y);
-		if (Mathf.Abs(orientationVec.x) > Mathf.Abs(orientationVec.y)) {
-			orientationVec = new Point((int) Mathf.Sign(orientationVec.x),0);
-		} else {
-			orientationVec = new Point(0,(int) Mathf.Sign(orientationVec.y));
-		}
-		int[,] rot = new int[2,2];
-		rot[0,0] = orientationVec.y;	rot[0,1] = orientationVec.x;
-		rot[1,0] = - orientationVec.x;	rot[1,1] = orientationVec.y;
-		return rot;
-	}
-	
-	/// <summary>
-	/// Apply given rotation matrix to an point. This give you a rotation around the origin.
-	/// </summary>
-	/// <returns>Rotated point (vector)</returns>
-	/// <param name="pt">Point.</param>
-	/// <param name="rot">Rotation matrix (2x2)</param>
-	private Point RotateAroundOrigin(Point pt, int[,] rot)
-	{
-		return new Point(pt.x * rot[0,0] + pt.y * rot[0,1], pt.x * rot[1,0] + pt.y * rot[1,1]);
 	}
 }

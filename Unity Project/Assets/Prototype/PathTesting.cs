@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using Algorithms;
 
@@ -27,8 +27,8 @@ public class PathTesting : MonoBehaviour {
 		pathFinder.DebugProgress = true;
 
 
-		Point startPoint = new Point(9,4);
-		Point endPoint = new Point(9,3);
+		Vector startPoint = new Vector(9,4);
+		Vector endPoint = new Vector(9,3);
 		Debug.Log(startPoint + " -> " + endPoint);
 
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);

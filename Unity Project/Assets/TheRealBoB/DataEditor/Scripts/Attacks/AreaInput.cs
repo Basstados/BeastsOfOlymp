@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class AreaInput : MonoBehaviour {
@@ -32,31 +32,31 @@ public class AreaInput : MonoBehaviour {
 				go.transform.parent = this.transform;
 				go.transform.localPosition = new Vector3(i*fieldToggleSize, -j*fieldToggleSize);
 				go.transform.localScale = Vector3.one;
-				fields[j,i] = go.GetComponent<UIToggle>();
+				fields[i,j] = go.GetComponent<UIToggle>();
 			}
 		}
 	}
 
-	public void Refresh(Point[] area) {
+	public void Refresh(Vector[] area) {
 		foreach(UIToggle field in fields) {
 			field.value = false;
 		}
 		if(area != null)
-			foreach(Point pt in area) {
+			foreach(Vector pt in area) {
 				int i = areaSize / 2 + pt.x;
 				int j = areaSize / 2 + pt.y;
 				fields[i,j].value = true;
 			}
 	}
 
-	public Point[] GetArea() {
-		List<Point> area = new List<Point>();
+	public Vector[] GetArea() {
+		List<Vector> area = new List<Vector>();
 		for (int j = 0; j < fields.GetLength(1); j++) {
 			for (int i = 0; i < fields.GetLength(0); i++) {
 				if(fields[i,j].value) {
 					int x = i - areaSize / 2;
 					int y = j - areaSize / 2;
-					area.Add(new Point(x,y));
+					area.Add(new Vector(x,y));
 				}
 			}
 		}

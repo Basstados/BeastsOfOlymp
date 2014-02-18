@@ -311,12 +311,12 @@ public class BView : MonoBehaviour
 		bUnits.Add(bUnit);
 	}
 
-	public void DisplayArea(BMapTile bMaptile, Point[] area)
+	public void DisplayArea(BMapTile bMaptile, Vector[] area)
 	{
 		int x = 0;
 		int y = 0;
 
-		foreach(Point pt in area) {
+		foreach(Vector pt in area) {
 			x = bMaptile.mapTile.x + pt.x;
 			y = bMaptile.mapTile.y + pt.y;
 			if(x >= 0 && x < bMapTiles.Length && y >= 0 && y < bMapTiles[0].Length)
@@ -340,7 +340,7 @@ public class BView : MonoBehaviour
 		Debug.Log(bInputManager.phase);
 		
 		// get distance matrix
-		Point position = new Point(bUnit.unit.mapTile.x, bUnit.unit.mapTile.y);
+		Vector position = new Vector(bUnit.unit.mapTile.x, bUnit.unit.mapTile.y);
 		byte[][] distMatrix = controller.GetDistanceMatrix(position, range, ignoreUnits);
 		// change color of all BMapTiles in range
 		for (int i = 0; i < distMatrix.Length; i++) {

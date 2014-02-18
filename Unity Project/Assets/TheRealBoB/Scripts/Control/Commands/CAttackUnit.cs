@@ -31,7 +31,6 @@ public class CAttackUnit : ICommand
 		source.AttackPoints = 0;
 
 		float hit = (float) new Random().NextDouble();
-		bool  success = false;
 		int damage = 0;
 		byte efficency = 1;
 		float typeModifier = 1;
@@ -40,16 +39,19 @@ public class CAttackUnit : ICommand
 		if(attack.hitChance >= hit) {
 			// attack is succesfull
 			// apply damage to all unit in attack area
-			success = true;
 			int x = 0;
 			int y = 0;
 			List<Unit> targets = new List<Unit>();
-			int[,] rot = AttackRotationMatrix(target, source);
-			foreach(Point pt in attack.area) {
-				Point rotPt = RotateAroundOrigin(pt, rot);
+			Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
+			rotDir.NormalizeTo4Direction();
+			int[,] rot = Vector.RotateToMatrix(rotDir);
+			foreach(Vector pt in attack.area) {
+				Vector rotPt = pt.Clone();
+				if(rotDir != Vector.zero)
+					rotPt.ApplyMatrix(rot);
 				x = target.x + rotPt.x;
 				y = target.y + rotPt.y;
-				if(model.IsPointOnGrid(new Point(x,y)))
+				if(model.IsPointOnGrid(new Vector(x,y)))
 					if(model.mapTiles[x][y].unit != null) {
 						Unit unit = model.mapTiles[x][y].unit;
 
@@ -74,43 +76,6 @@ public class CAttackUnit : ICommand
 				}
 			}
 		}
-	}
-
-	/// <summary>
-	/// Calculate rotation matrix you have to apply to the attack area 
-	/// depending on attacker orientation
-	/// </summary>
-	/// <returns>The rotation matrix.</returns>
-	/// <param name="target">MapTile this attack is targeting</param>
-	/// <param name="source">Unit who executes the attack</param>
-	private int[,] AttackRotationMatrix(MapTile target, Unit source)
-	{
-		// calculate a orientation of the unit using the max-value and its sign
-		// we want a signed unit vector
-		Point orientationVec = new Point(target.x - source.mapTile.x, target.y - source.mapTile.y);
-		if(orientationVec.x == 0 && orientationVec.y == 0)
-			orientationVec.x = 1;
-		
-		if (Math.Abs(orientationVec.x) > Math.Abs(orientationVec.y)) {
-			orientationVec = new Point((int) Math.Sign(orientationVec.x),0);
-		} else {
-			orientationVec = new Point(0,(int) Math.Sign(orientationVec.y));
-		}
-		int[,] rot = new int[2,2];
-		rot[0,0] = orientationVec.y;	rot[0,1] = orientationVec.x;
-		rot[1,0] = - orientationVec.x;	rot[1,1] = orientationVec.y;
-		return rot;
-	}
-	
-	/// <summary>
-	/// Apply given rotation matrix to an point. This give you a rotation around the origin.
-	/// </summary>
-	/// <returns>Rotated point (vector)</returns>
-	/// <param name="pt">Point.</param>
-	/// <param name="rot">Rotation matrix (2x2)</param>
-	private Point RotateAroundOrigin(Point pt, int[,] rot)
-	{
-		return new Point(pt.x * rot[0,0] + pt.y * rot[0,1], pt.x * rot[1,0] + pt.y * rot[1,1]);
 	}
 
 	private int AttackDistance(MapTile from, MapTile to)

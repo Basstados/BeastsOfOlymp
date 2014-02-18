@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 [System.Serializable]
 public class Attack 
@@ -9,5 +9,5 @@ public class Attack
 	public int damage;
 	public int range;
 	public int apCost;
-	public Point[] area;
+	public Vector[] area;
 }

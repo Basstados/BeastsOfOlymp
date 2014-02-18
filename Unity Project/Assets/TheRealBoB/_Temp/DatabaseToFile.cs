@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class DatabaseToFile : MonoBehaviour {
@@ -59,13 +59,13 @@ public class DatabaseToFile : MonoBehaviour {
 		}
 		map.teamUnits = new MapData.TeamUnit[2][];
 		map.teamUnits[0] = new MapData.TeamUnit[3];
-		map.teamUnits[0][0] = new MapData.TeamUnit("Speimon",new Point(0,4));
-		map.teamUnits[0][1] = new MapData.TeamUnit("Minomon",new Point(0,2));
-		map.teamUnits[0][2] = new MapData.TeamUnit("Minomon",new Point(0,6));
+		map.teamUnits[0][0] = new MapData.TeamUnit("Speimon",new Vector(0,4));
+		map.teamUnits[0][1] = new MapData.TeamUnit("Minomon",new Vector(0,2));
+		map.teamUnits[0][2] = new MapData.TeamUnit("Minomon",new Vector(0,6));
 		map.teamUnits[1] = new MapData.TeamUnit[3];
-		map.teamUnits[1][0] = new MapData.TeamUnit("Speimon",new Point(9,5));
-		map.teamUnits[1][1] = new MapData.TeamUnit("Minomon",new Point(9,3));
-		map.teamUnits[1][2] = new MapData.TeamUnit("Minomon",new Point(9,7));
+		map.teamUnits[1][0] = new MapData.TeamUnit("Speimon",new Vector(9,5));
+		map.teamUnits[1][1] = new MapData.TeamUnit("Minomon",new Vector(9,3));
+		map.teamUnits[1][2] = new MapData.TeamUnit("Minomon",new Vector(9,7));
 
 		Database.SetMapData(map);
 		#endregion

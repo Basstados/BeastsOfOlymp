@@ -168,7 +168,7 @@ namespace Algorithms
             mStop = true;
         }
 
-        public List<PathFinderNode> FindPath(Point start, Point end)
+        public List<PathFinderNode> FindPath(Vector start, Vector end)
         {
            // HighResolutionTime.Start();
 
@@ -386,7 +386,7 @@ namespace Algorithms
 		/// <returns>The distance matrix.</returns>
 		/// <param name="position">The position the distancematrix should be calulated</param>
 		/// <param name="range">The range limit</param>
-		public byte[][] GetDistanceMatrix(Point position, int range)
+		public byte[][] GetDistanceMatrix(Vector position, int range)
 		{
 			// init distance matrix
 			byte[][] distMatrix = new byte[mGrid.GetLength(0)][];
@@ -400,16 +400,16 @@ namespace Algorithms
 			// move to current position is always free
 			distMatrix[position.x][position.y] = 0;
 
-			Queue<Point> checkOpen = new Queue<Point>();
-			List<Point> neighbours = new List<Point>();
-			Point currentPoint;
+			Queue<Vector> checkOpen = new Queue<Vector>();
+			List<Vector> neighbours = new List<Vector>();
+			Vector currentPoint;
 
 			checkOpen.Enqueue(position);
 
 			while(checkOpen.Count > 0) {
 				currentPoint = checkOpen.Dequeue();
 				neighbours = GetNeighbours(currentPoint);
-				foreach(Point p in neighbours) {
+				foreach(Vector p in neighbours) {
 					// save cost for neighbour (= cost current point + penalty neighbour point)
 					byte cost = (byte) (distMatrix[currentPoint.x][currentPoint.y] + mGrid[p.x,p.y]);
 					// check if position is free; if not...
@@ -428,9 +428,9 @@ namespace Algorithms
 			return distMatrix;
 		}
 
-		private List<Point> GetNeighbours(Point position)
+		private List<Vector> GetNeighbours(Vector position)
 		{
-			List<Point> neighbours = new List<Point>();
+			List<Vector> neighbours = new List<Vector>();
 			sbyte[][] direction = new sbyte[4][]{ 
 				new sbyte[2]{0,-1},
 				new sbyte[2]{1,0}, 
@@ -442,7 +442,7 @@ namespace Algorithms
 				// check if neighbour coordinates are on the grid
 				if(position.x + dir[0] >= 0 && position.x + dir[0] < mGrid.GetLength(0)
 				   && position.y + dir[1] >= 0 && position.y + dir[1] < mGrid.GetLength(1)) {
-					neighbours.Add(new Point(position.x + dir[0], position.y + dir[1]));
+					neighbours.Add(new Vector(position.x + dir[0], position.y + dir[1]));
 				}
 			}
 

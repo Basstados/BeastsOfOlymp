@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -54,7 +54,7 @@ namespace GameDataUI {
 		{
 			MapData.TeamUnit[] team = new MapData.TeamUnit[unitFields.Count];
 			for (int i = 0; i < unitFields.Count; i++) {
-				team[i] = new MapData.TeamUnit(unitFields[i].name, new Point(unitFields[i].x,unitFields[i].y));
+				team[i] = new MapData.TeamUnit(unitFields[i].name, new Vector(unitFields[i].x,unitFields[i].y));
 			}
 
 			return team;

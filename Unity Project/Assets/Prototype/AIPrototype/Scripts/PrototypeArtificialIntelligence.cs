@@ -83,8 +83,8 @@ public class PrototypeArtificialIntelligence : MonoBehaviour {
 	public void ChooseMoveDestination() {
 		int range = puppet.movement_range;
 
-		Point myPos = new Point((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
-		Point targetPos = new Point((int) target.CurrentPos.x, (int) target.CurrentPos.y);
+		Vector myPos = new Vector((int) puppet.CurrentPos.x, (int) puppet.CurrentPos.y);
+		Vector targetPos = new Vector((int) target.CurrentPos.x, (int) target.CurrentPos.y);
 		
 		// find closed field to me, next to target
 		/*TestPoint targetField = targetPos;

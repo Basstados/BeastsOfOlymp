@@ -90,7 +90,7 @@ public class Controller
 			model.combat.SetupRound();
 	}
 
-	public byte[][] GetDistanceMatrix(Point position, int actionPoints, bool ignoreUnits)
+	public byte[][] GetDistanceMatrix(Vector position, int actionPoints, bool ignoreUnits)
 	{
 		if(ignoreUnits) {
 			model.UseAttackGrid();
@@ -110,8 +110,8 @@ public class Controller
 			Debug.LogError("Tried to get path to a taken mapTile: " + start.ToString() + " --> " + goal.ToString());
 			return new Path();
 		}
-		Point startPoint = new Point(start.x,start.y);
-		Point endPoint = new Point(goal.x, goal.y);
+		Vector startPoint = new Vector(start.x,start.y);
+		Vector endPoint = new Vector(goal.x, goal.y);
 		
 		List<PathFinderNode> result = pathFinder.FindPath(startPoint, endPoint);
 
