@@ -18,13 +18,7 @@ public class BMapTile : MonoBehaviour {
 		}
 	}
 
-	public bool Clickable {
-		get {
-			return colorState == ColorState.CLICKABLE 
-					|| colorState == ColorState.PATH 
-					|| colorState == ColorState.ATTACKAREA;
-		}
-	}
+	public bool Clickable { get; set; }
 
 	Color defaultColor;
 
@@ -56,6 +50,7 @@ public class BMapTile : MonoBehaviour {
 			break;
 		case ColorState.CLICKABLE:
 			renderer.sharedMaterial = clickableMaterial;
+			this.Clickable = true;
 			break;
 		case ColorState.ATTACKAREA:
 			renderer.sharedMaterial = attackAreaMaterial;
@@ -63,6 +58,7 @@ public class BMapTile : MonoBehaviour {
 		case ColorState.DEFAULT:
 		default:
 			renderer.sharedMaterial = defaultMaterial;
+			this.Clickable = false;
 			break;
 		}
 	}
