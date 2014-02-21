@@ -29,10 +29,12 @@ public class BParticleManager : MonoBehaviour {
 
 	public static void PlayEffect(string particleName, Vector3 pos)
 	{
-		GameObject go = instance.particleSystems[particleName].Dequeue();
-		// place and activate particle game object
-		go.transform.position = pos;
-		go.SetActive(true);
-		instance.particleSystems[particleName].Enqueue(go);
+		if(instance.particleSystems.ContainsKey(particleName)) {
+			GameObject go = instance.particleSystems[particleName].Dequeue();
+			// place and activate particle game object
+			go.transform.position = pos;
+			go.SetActive(true);
+			instance.particleSystems[particleName].Enqueue(go);
+		}
 	}
 }

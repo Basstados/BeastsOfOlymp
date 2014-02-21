@@ -78,7 +78,7 @@ public class BCombatMenu : MonoBehaviour {
 				atkButtons[i].transform.localPosition = new Vector3(0, -i*height);
 				atkButtons[i].transform.localScale = Vector3.one;
 			}
-			endTurnButton.transform.localPosition = new Vector3(500, -atkButtons.Count*height);
+			endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*height);
 			endTurnButton.transform.localScale = Vector3.one;
 		}
 	}
