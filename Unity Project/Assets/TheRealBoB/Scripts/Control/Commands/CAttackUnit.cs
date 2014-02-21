@@ -89,11 +89,13 @@ public class CAttackUnit : ICommand
 		float typeModifier = 1f;
 		if(attack.type.strengths.Length > 0)
 		if(Array.Exists(attack.type.strengths, delegate(string t) { return t == unit.data.type.name; })) {
+			// modifier when type is very effectiv
 			typeModifier *= 2f;
 		}
 		if(attack.type.weaknesses.Length > 0)
 		if(Array.Exists(attack.type.weaknesses, delegate(string t) { return t == unit.data.type.name; })) {
-			typeModifier *= 1/2f;
+			// modifier when type is not effectiv
+			typeModifier *= 0.5f;
 		}
 		return typeModifier;
 	}
