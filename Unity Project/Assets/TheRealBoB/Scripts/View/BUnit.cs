@@ -224,6 +224,10 @@ public class BUnit : MonoBehaviour {
 		attackSound.Play();
 		// animation
 		animator.SetTrigger("AttackTrigger");
+		// pretty ugly but works
+		if(this.unit.Name == "Krautschweif") {
+			BParticleManager.PlayEffect("Casting", this.transform.position);
+		}
 		yield return new WaitForSeconds(0.4f);
 		BParticleManager.PlayEffect(attack.name, this.transform.position);
 		yield return new WaitForSeconds(0.2f);
