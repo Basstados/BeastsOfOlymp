@@ -4,10 +4,11 @@ using System.Collections;
 public class BMainMenue : MonoBehaviour {
 
 	public GameObject mainMenueCreditsPanel;
+	public string gameSceneName;
 
 	public void OnStartGameClick() 
 	{
-		Application.LoadLevel ("testScene");
+		Application.LoadLevel(gameSceneName);
 	}
 
 	public void OnCreditsClick() 

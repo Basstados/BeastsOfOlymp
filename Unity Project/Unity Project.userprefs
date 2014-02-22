@@ -1,6 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TheRealBoB\Scripts\View\UI\BAttackButton.cs">
+    <Files>
+      <File FileName="Assets\TheRealBoB\Scripts\View\BUnit.cs" Line="58" Column="1" />
+      <File FileName="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" Line="309" Column="79" />
+      <File FileName="Assets\TheRealBoB\Scripts\View\UI\BAttackButton.cs" Line="22" Column="74" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
