@@ -5,15 +5,6 @@ using System.Linq;
 
 public class BView : MonoBehaviour
 {
-	#region singelton
-	public static BView Instance {
-		get {
-			return instance;
-		}
-	}
-	private static BView instance;
-	#endregion
-
 	public GameObject bMapTilePrefab;
 	public GameObject bUnitPrefab;
 	public GameObject bCombatMenuPrefab;
@@ -40,7 +31,6 @@ public class BView : MonoBehaviour
 	public Controller controller;
 
 	void Awake() {
-		instance = this;
 		Init();
 	}
 
@@ -449,6 +439,12 @@ public class BView : MonoBehaviour
 	public BUnit GetBUnit(Unit unit)
 	{
 		return bUnits.Where(t => t.unit == unit).FirstOrDefault();
+	}
+
+	public void OnDestroy()
+	{
+		// unregister from all Events
+		EventProxyManager.Clear();
 	}
 }
 
