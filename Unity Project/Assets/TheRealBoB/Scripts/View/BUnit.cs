@@ -224,8 +224,9 @@ public class BUnit : MonoBehaviour {
 		attackSound.Play();
 		// animation
 		animator.SetTrigger("AttackTrigger");
+		yield return new WaitForSeconds(0.4f);
 		BParticleManager.PlayEffect(attack.name, this.transform.position);
-		yield return new WaitForSeconds(0.6f);
+		yield return new WaitForSeconds(0.2f);
 		foreach(BUnit bUnit in targets) {
 			bUnit.PlayHitAnimation(efficeny, damage);
 			bUnit.unitUI.ShowDamage(damage);
