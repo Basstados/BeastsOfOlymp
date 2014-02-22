@@ -315,10 +315,10 @@ namespace Algorithms
                             newNode.H       = (int) (mHEstimate * (Math.Pow((newNode.X - end.x) , 2) + Math.Pow((newNode.Y - end.y), 2)));
                             break;
                         case HeuristicFormula.Custom1:
-                            TestPoint dxy       = new TestPoint(Math.Abs(end.x - newNode.X), Math.Abs(end.y - newNode.Y));
-                            int Orthogonal  = Math.Abs(dxy.X - dxy.Y);
-                            int Diagonal    = Math.Abs(((dxy.X + dxy.Y) - Orthogonal) / 2);
-                            newNode.H       = mHEstimate * (Diagonal + Orthogonal + dxy.X + dxy.Y);
+                            Vector dxy       = new Vector(Math.Abs(end.x - newNode.X), Math.Abs(end.y - newNode.Y));
+                            int Orthogonal  = Math.Abs(dxy.x - dxy.y);
+                            int Diagonal    = Math.Abs(((dxy.x + dxy.y) - Orthogonal) / 2);
+                            newNode.H       = mHEstimate * (Diagonal + Orthogonal + dxy.x + dxy.y);
                             break;
                     }
                     if (mTieBreaker)
