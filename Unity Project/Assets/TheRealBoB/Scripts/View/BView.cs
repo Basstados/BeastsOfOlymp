@@ -53,7 +53,6 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.EventDone, HandleEventDone);
 		EventProxyManager.RegisterForEvent(EventName.DebugLog, HandleDebugLog);
-		EventProxyManager.RegisterForEvent(EventName.CombatLogInitialized, HandleCombatLogInitialized);
 		// find scene references
 		bCombatMenu = GameObject.FindObjectOfType<BCombatMenu>();
 		bInputManager = GameObject.FindObjectOfType<BInputManager>();
@@ -142,11 +141,6 @@ public class BView : MonoBehaviour
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
-	void HandleCombatLogInitialized (object sender, EventProxyArgs args)
-	{
-		bCombatLog.Init((args as CombatLogInitializedEvent).combatLog);
-	}
-
 	void HandleUnitSpawned(object sender, EventArgs args)
 	{
 		UnitSpawnedEvent e = args as UnitSpawnedEvent;
@@ -175,7 +169,7 @@ public class BView : MonoBehaviour
 		bInitativeList.ActivateIcon(e.unit);
 		bCameraMover.Focus(activeBUnit.gameObject.transform.position);
 		activeBUnit.Activate();
-		EventProxyManager.FireEvent(this, new EventDoneEvent());
+		bCombatMenu.ShowTurnStart(activeBUnit);
 	}
 
 	void HandleTurnStarted(object sender, EventArgs args)

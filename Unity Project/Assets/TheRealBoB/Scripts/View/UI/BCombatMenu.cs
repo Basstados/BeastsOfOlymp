@@ -14,6 +14,7 @@ public class BCombatMenu : MonoBehaviour {
 	public GameObject attackRing;
 	public UIButton backButton;
 	public UIButton endTurnButton;
+	public BNotification bNotification;
 
 	BUnit bUnit;
 
@@ -138,5 +139,21 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		gameoverPanel.SetActive(true);
 		gameoverLabel.text = text;
+	}
+
+	public void ShowTurnStart(BUnit bUnit)
+	{
+		StartCoroutine(NotifyRoutine(bUnit));
+	}
+
+	IEnumerator NotifyRoutine(BUnit bUnit)
+	{
+		if(bUnit.unit.team == Unit.Team.PLAYER) {
+			bNotification.Display("Dein Zug");
+		} else {
+			bNotification.Display("Computer ist am Zug");
+		}
+		yield return new WaitForSeconds(2f);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 }

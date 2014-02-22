@@ -63,7 +63,8 @@ public class BUnit : MonoBehaviour {
 		selectionSound.Play();
 		PopupCombatMenu();
 		ClearDisplayRange();
-		DisplayMovementRange();
+		if(unit.team == Unit.Team.PLAYER)
+			DisplayMovementRange();
 	}
 
 	public void PopupCombatMenu() 
