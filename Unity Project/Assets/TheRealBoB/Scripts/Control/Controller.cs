@@ -15,7 +15,8 @@ public class Controller
 		Init();
 	}
 
-	void Init() {
+	void Init() 
+	{
 		Database.LoadFromFile();
 		MapData mapData = Database.GetMapData();
 
@@ -35,6 +36,11 @@ public class Controller
 		pathFinder.DebugFoundPath = true;
 		pathFinder.DebugProgress = true;
 
+
+	}
+
+	public void StartMatch()
+	{
 		model.InitCombat();
 	}
 

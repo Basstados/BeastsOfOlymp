@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 public class BView : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class BView : MonoBehaviour
 
 	void Awake() {
 		Init();
+		StartCoroutine(StartMatchRoutine());
 	}
 
 	void Init() {
@@ -65,6 +67,12 @@ public class BView : MonoBehaviour
 		controller = new Controller(this);
 
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
+	}
+
+	IEnumerator StartMatchRoutine()
+	{
+		yield return new WaitForSeconds(0.5f);
+		controller.StartMatch();
 	}
 
 	#region event handler
