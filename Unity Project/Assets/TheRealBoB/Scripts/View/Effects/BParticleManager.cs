@@ -5,23 +5,24 @@ using System.Collections.Generic;
 public class BParticleManager : MonoBehaviour {
 	
 	public GameObject[] particles;
-	public int maxParticleOfOneKinde;
+	public int[] particleCloneCounts;
+
 	Dictionary<string, Queue<GameObject>> particleSystems = new Dictionary<string, Queue<GameObject>>();
 
 	#region singelton
 	static BParticleManager instance;
 	void Awake() 
 	{
-		foreach (GameObject go in particles) {
+		for (int k = 0; k < particles.Length; k++) {
 			Queue<GameObject> particleQueue = new Queue<GameObject>();
-			particleQueue.Enqueue(go);
+			particleQueue.Enqueue(particles[k]);
 			// create copies of the particle game object and add them to an queue
-			for (int i = 0; i < maxParticleOfOneKinde-1; i++) {
-				GameObject handle = (GameObject) Instantiate(go);
+			for (int i = 0; i < particleCloneCounts[k]-1; i++) {
+				GameObject handle = (GameObject) Instantiate(particles[k]);
 				handle.transform.parent = this.transform;
 				particleQueue.Enqueue(handle);
 			}
-			particleSystems.Add(go.name, particleQueue);
+			particleSystems.Add(particles[k].name, particleQueue);
 		}
 		instance = this;
 	}
@@ -36,5 +37,13 @@ public class BParticleManager : MonoBehaviour {
 			go.SetActive(true);
 			instance.particleSystems[particleName].Enqueue(go);
 		}
+	}
+
+	public static void DisbaleEffect(string particleName)
+	{
+		if(instance.particleSystems.ContainsKey(particleName))
+			foreach(GameObject go in instance.particleSystems[particleName]) {
+				go.SetActive(false);
+			}
 	}
 }

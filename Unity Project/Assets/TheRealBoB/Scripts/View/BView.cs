@@ -395,10 +395,9 @@ public class BView : MonoBehaviour
 	/// Place a marker on the given BMapTile
 	/// </summary>
 	/// <param name="bMapTile">BMapTile.</param>
-	public void SetMovementMarker (BMapTile bMapTile)
+	public void SetFieldMarker(BMapTile bMapTile)
 	{
-		moveMarker.SetActive(true);
-		moveMarker.transform.position = bMapTile.transform.position;
+		BParticleManager.PlayEffect("FieldMarker",bMapTile.transform.position);
 	}
 
 	/// <summary>
@@ -413,6 +412,7 @@ public class BView : MonoBehaviour
 
 		// hide moveMarker
 		moveMarker.SetActive(false);
+		BParticleManager.DisbaleEffect("FieldMarker");
 	}
 
 	/// <summary>

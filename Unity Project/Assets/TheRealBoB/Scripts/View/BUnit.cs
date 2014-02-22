@@ -87,7 +87,7 @@ public class BUnit : MonoBehaviour {
 		DisplayMovementRange();
 		// display calculated path
 		Path path = context.HighlightMovementPath(this, bMapTile);
-		context.SetMovementMarker(bMapTile);
+		context.SetFieldMarker(bMapTile);
 		
 		action = Action.CONFIRMMOVE;
 	}
@@ -100,6 +100,7 @@ public class BUnit : MonoBehaviour {
 		ClearDisplayRange();
 		DisplayAttackRange(selectedAttack);
 		context.DisplayArea(bMapTile,RotateArea(selectedAttack.area));
+		context.SetFieldMarker(bMapTile);
 		
 		action = Action.CONFIRMATTACK;
 	}
