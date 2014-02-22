@@ -7,10 +7,10 @@ public class BCombatMenu : MonoBehaviour {
 
 	public bool moveToTarget = false;
 	public GameObject attackButtonPrefab;
+	public float attackButtonHeight;
 
 	public GameObject gameoverPanel;
 	public UILabel gameoverLabel;
-	public GameObject panel;
 	public GameObject attackRing;
 	public UIButton backButton;
 	public UIButton endTurnButton;
@@ -73,12 +73,11 @@ public class BCombatMenu : MonoBehaviour {
 				atkButtons[i].transform.localScale = Vector3.one;
 			}
 		} else {
-			float height = 80;
 			for (int i = 0; i < atkButtons.Count; i++) {
-				atkButtons[i].transform.localPosition = new Vector3(0, -i*height);
+				atkButtons[i].transform.localPosition = new Vector3(0, -i*attackButtonHeight);
 				atkButtons[i].transform.localScale = Vector3.one;
 			}
-			endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*height);
+			endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*attackButtonHeight);
 			endTurnButton.transform.localScale = Vector3.one;
 		}
 	}
