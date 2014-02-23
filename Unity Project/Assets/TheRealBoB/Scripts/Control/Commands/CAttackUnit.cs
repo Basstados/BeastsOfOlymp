@@ -112,7 +112,7 @@ public class UnitAttackedEvent : EventProxyArgs
 	public Unit source;
 	public MapTile target;
 	public List<Unit> victims;
-	public byte efficieny;
+	public byte efficiency;
 	public int damage;
 
 	public UnitAttackedEvent (Attack attack, Unit source, MapTile target, List<Unit> victims, byte efficieny, int damage)
@@ -122,7 +122,7 @@ public class UnitAttackedEvent : EventProxyArgs
 		this.source = source;
 		this.target = target;
 		this.victims = victims;
-		this.efficieny = efficieny;
+		this.efficiency = efficieny;
 		this.damage = damage;
 	}
 	

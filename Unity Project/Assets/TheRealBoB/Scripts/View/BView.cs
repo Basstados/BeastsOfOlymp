@@ -225,7 +225,7 @@ public class BView : MonoBehaviour
 
 		BMapTile bMapTile = GetBMapTile(e.target);
 
-		GetBUnit(e.source).PlayAttack(bUnits, bMapTile, e.attack, e.efficieny, e.damage);
+		GetBUnit(e.source).PlayAttack(e, bMapTile, bUnits);
 		CleanMap();
 	}
 
