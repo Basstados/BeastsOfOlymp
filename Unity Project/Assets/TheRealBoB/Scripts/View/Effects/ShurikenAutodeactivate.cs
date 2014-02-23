@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(ParticleSystem))]
 public class ShurikenAutodeactivate : MonoBehaviour {
+
+	public ParticleSystem listenParticleSystem;
 
 	void Update() 
 	{
-		if (!particleSystem.IsAlive())
+		if (!listenParticleSystem.IsAlive())
 			this.gameObject.SetActive (false);
 	}
 }
