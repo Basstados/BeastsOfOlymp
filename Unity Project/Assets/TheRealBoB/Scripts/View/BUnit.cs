@@ -198,17 +198,10 @@ public class BUnit : MonoBehaviour {
 		StartCoroutine(MoveRoutine(path));
 	}
 
-	public void PlayAttack(BUnit[] targets, Attack attack, byte efficeny, int damage)
+	public void PlayAttack(BUnit[] victims, BMapTile target, Attack attack, byte efficeny, int damage)
 	{
-		// calculate the center point of all targets
-		Vector3 lookAt = Vector3.zero;
-		foreach(BUnit bUnit in targets) {
-			lookAt += bUnit.transform.position;
-		}
-		lookAt /= targets.Length;
-
-		meshContainer.transform.LookAt(lookAt);
-		StartCoroutine(AttackRoutine(targets,attack, efficeny, damage));
+		meshContainer.transform.LookAt(target.transform.position);
+		StartCoroutine(AttackRoutine(victims, target, attack, efficeny, damage));
 	}
 
 	/// <summary>
@@ -219,7 +212,7 @@ public class BUnit : MonoBehaviour {
 	/// <param name="attack">The attack which will be performed.</param>
 	/// <param name="efficeny">0 = not effectiv, 1 = normal efficeny, 2 = very effectiv</param>
 	/// <param name="damage">The amount of damage dealt by this attack.</param>
-	IEnumerator AttackRoutine(BUnit[] targets, Attack attack, byte efficeny, int damage)
+	IEnumerator AttackRoutine(BUnit[] victims, BMapTile target, Attack attack, byte efficeny, int damage)
 	{
 		bCombatMenu.Hide();
 		// sound effect
@@ -231,9 +224,12 @@ public class BUnit : MonoBehaviour {
 			BParticleManager.PlayEffect("Casting", this.transform.position);
 		}
 		yield return new WaitForSeconds(0.4f);
-		BParticleManager.PlayEffect(attack.name, this.transform.position);
+		Vector direction = new Vector(Mathf.FloorToInt(target.transform.position.x - this.transform.position.x),
+		                              Mathf.FloorToInt(target.transform.position.y - this.transform.position.y));
+		direction.NormalizeTo4Direction();
+		BParticleManager.PlayEffect(attack.name, target.transform.position, new Vector3(direction.x, direction.y));
 		yield return new WaitForSeconds(0.2f);
-		foreach(BUnit bUnit in targets) {
+		foreach(BUnit bUnit in victims) {
 			bUnit.PlayHitAnimation(efficeny, damage);
 			bUnit.unitUI.ShowDamage(damage);
 		}

@@ -28,15 +28,21 @@ public class BParticleManager : MonoBehaviour {
 	}
 	#endregion
 
-	public static void PlayEffect(string particleName, Vector3 pos)
+	public static void PlayEffect(string particleName, Vector3 pos, Vector3 direction)
 	{
 		if(instance.particleSystems.ContainsKey(particleName)) {
 			GameObject go = instance.particleSystems[particleName].Dequeue();
 			// place and activate particle game object
 			go.transform.position = pos;
+			go.transform.rotation = Quaternion.FromToRotation(Vector3.forward, direction);
 			go.SetActive(true);
 			instance.particleSystems[particleName].Enqueue(go);
 		}
+	}
+
+	public static void PlayEffect(string particleName, Vector3 pos)
+	{
+		BParticleManager.PlayEffect(particleName, pos, new Vector3(1,0));
 	}
 
 	public static void DisbaleEffect(string particleName)

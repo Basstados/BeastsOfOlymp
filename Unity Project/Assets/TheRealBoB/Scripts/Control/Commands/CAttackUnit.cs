@@ -41,7 +41,7 @@ public class CAttackUnit : ICommand
 			// apply damage to all unit in attack area
 			int x = 0;
 			int y = 0;
-			List<Unit> targets = new List<Unit>();
+			List<Unit> victims = new List<Unit>();
 			Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
 			rotDir.NormalizeTo4Direction();
 			int[,] rot = Vector.RotateToMatrix(rotDir);
@@ -61,13 +61,13 @@ public class CAttackUnit : ICommand
 
 
 						unit.LoseHealth(damage);
-						targets.Add(unit);
+						victims.Add(unit);
 					}
 			}
-			EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,targets,efficency, damage));
+			EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target, victims,efficency, damage));
 
 			// when target died fire event AFTER attack was performed
-			foreach(Unit u in targets) {
+			foreach(Unit u in victims) {
 				if(u.HealthPoints <= 0) {
 					// remove target from map
 					u.mapTile.unit = null;
@@ -110,16 +110,18 @@ public class UnitAttackedEvent : EventProxyArgs
 {
 	public Attack attack;
 	public Unit source;
-	public List<Unit> targets;
+	public MapTile target;
+	public List<Unit> victims;
 	public byte efficieny;
 	public int damage;
 
-	public UnitAttackedEvent (Attack attack, Unit source, List<Unit> targets, byte efficieny, int damage)
+	public UnitAttackedEvent (Attack attack, Unit source, MapTile target, List<Unit> victims, byte efficieny, int damage)
 	{
 		this.name = EventName.UnitAttacked;
 		this.attack = attack;
 		this.source = source;
-		this.targets = targets;
+		this.target = target;
+		this.victims = victims;
 		this.efficieny = efficieny;
 		this.damage = damage;
 	}

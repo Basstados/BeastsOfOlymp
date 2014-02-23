@@ -11,7 +11,7 @@ public class LogEntryAttack : ILogEntry
 	public LogEntryAttack(UnitAttackedEvent e)
 	{
 		this.source = e.source;
-		this.targets = e.targets;
+		this.targets = e.victims;
 		this.attack = e.attack;
 		this.hit = (e.damage > 0);
 	}

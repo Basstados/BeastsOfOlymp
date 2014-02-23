@@ -218,12 +218,14 @@ public class BView : MonoBehaviour
 	void HandleUnitAttacked (object sender, EventArgs args)
 	{
 		UnitAttackedEvent e = args as UnitAttackedEvent;
-		BUnit[] bUnits = new BUnit[e.targets.Count];
-		for (int i = 0; i < e.targets.Count; i++) {
-			bUnits[i] = GetBUnit(e.targets[i]);
+		BUnit[] bUnits = new BUnit[e.victims.Count];
+		for (int i = 0; i < e.victims.Count; i++) {
+			bUnits[i] = GetBUnit(e.victims[i]);
 		}
 
-		GetBUnit(e.source).PlayAttack(bUnits, e.attack, e.efficieny, e.damage);
+		BMapTile bMapTile = GetBMapTile(e.target);
+
+		GetBUnit(e.source).PlayAttack(bUnits, bMapTile, e.attack, e.efficieny, e.damage);
 		CleanMap();
 	}
 
