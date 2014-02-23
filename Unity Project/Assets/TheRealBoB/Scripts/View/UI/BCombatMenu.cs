@@ -122,10 +122,7 @@ public class BCombatMenu : MonoBehaviour {
 
 	public void ActionCompleted()
 	{
-//		if(bUnit.unit.CanMove || bUnit.unit.CanAttack)
-			OpenForBUnit (bUnit);
-//		else
-//			backButton.gameObject.SetActive(false);
+		OpenForBUnit (bUnit);
 	}
 	
 	public void Hide() 
