@@ -340,7 +340,8 @@ public class BView : MonoBehaviour
 		for (int i = 0; i < distMatrix.Length; i++) {
 			for (int j = 0; j < distMatrix[i].Length; j++) {
 				if(range >= distMatrix[i][j]) {
-					HighlightBMapTile(bMapTiles[i][j], mode);
+					if(range == 0 || distMatrix[i][j] != 0)
+						HighlightBMapTile(bMapTiles[i][j], mode);
 				}
 			}
 		}
