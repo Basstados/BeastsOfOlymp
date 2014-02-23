@@ -8,7 +8,7 @@ namespace GameDataUI {
 		public UIInput xInput;
 		public UIInput yInput;
 
-		public string name {
+		public string rowName {
 			get {
 				return popupInput.value;
 			}
@@ -40,7 +40,7 @@ namespace GameDataUI {
 		public void Init(string name, int x, int y, string[] options, IInputListParent parent) 
 		{
 			UpdateOptions(options);
-			this.name = name;
+			this.rowName = name;
 			this.x = x;
 			this.y = y;
 			this.parent = parent;

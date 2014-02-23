@@ -21,6 +21,7 @@ public class CMoveUnit : ICommand
 	public void Execute()
 	{
 		Path path = new Path(new MapTile[]{unit.mapTile});
+		// check if start and destination are the same
 		if(unit.mapTile != target) {
 			// get path from pathfinder
 			path = controller.GetPath(unit.mapTile, target);

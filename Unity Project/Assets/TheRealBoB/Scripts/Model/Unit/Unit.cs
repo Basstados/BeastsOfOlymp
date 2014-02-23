@@ -12,7 +12,6 @@ public class Unit : IComparable
 	public IArtificalIntelligence ai;
 
 	public string defaultAttack;
-	int apUsed = 0;
 	int currentHealth;
 	int maxAttackPoints = 1;
 	int currentAttackPoints;
@@ -63,7 +62,6 @@ public class Unit : IComparable
 
 	public void ResetTurn()
 	{
-		apUsed = 0;
 		currentMovePoints = maxMovePoints;
 		currentAttackPoints = maxAttackPoints;
 	}

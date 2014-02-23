@@ -70,7 +70,7 @@ public class BUnit : MonoBehaviour {
 		ClearDisplayRange();
 		DisplayMovementRange();
 		// display calculated path
-		Path path = context.HighlightMovementPath(this, bMapTile);
+		context.HighlightMovementPath(this, bMapTile);
 		context.SetFieldMarker(bMapTile);
 		
 		action = Action.CONFIRMMOVE;
@@ -119,11 +119,7 @@ public class BUnit : MonoBehaviour {
 			selectedAttack = attack;
 		}
 		action = Action.ATTACK;
-
-		// set display mode depending on unit team
-		// only units of the enemy team will be marked as clickable
-		int mode = (unit.team == Unit.Team.PLAYER) ? DisplayRangeMode.TEAM_0_CLICKABLE : DisplayRangeMode.TEAM_1_CLICKABLE;
-
+		
 		context.DisplayRange(this, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE);
 	}
 

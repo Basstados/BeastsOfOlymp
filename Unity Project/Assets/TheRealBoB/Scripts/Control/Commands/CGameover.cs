@@ -12,27 +12,27 @@ public class CGameover : ICommand
 	public void Execute ()
 	{
 		// assume we have only 2 teams on the field
-		int a = 0;
-		int b = 0;
+		int aliveTeamA = 0;
+		int aliveTeamB = 0;
 		// count number of units alive on each team
 		foreach(Unit unit in model.units) {
 			switch (unit.team) {
 			case Unit.Team.PLAYER:
 				if(unit.Alive)
-					a++;
+					aliveTeamA++;
 				break;
 			case Unit.Team.AI:
 				if(unit.Alive)
-					b++;
+					aliveTeamB++;
 				break;
 			}
 		}
 		// if all units on one team are that the game is over
 		bool playerDefeated = false;
 		bool aiDefeated = false;
-		if(a == 0)
+		if(aliveTeamA == 0)
 			playerDefeated = true;
-		if(b == 0)
+		if(aliveTeamB == 0)
 			aiDefeated = true;
 
 		if(playerDefeated || aiDefeated) {

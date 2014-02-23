@@ -20,6 +20,8 @@ public class CAttackUnit : ICommand
 
 	public void Execute ()
 	{
+		// auto set attack target for range 0 attack
+		// helps AI to perfome rang 0 attacks
 		if (attack.range == 0) {
 			target = source.mapTile;
 		}
@@ -28,6 +30,7 @@ public class CAttackUnit : ICommand
 			return;
 		
 		// lower attack resource on source unit
+		// so it can't attack again this turn
 		source.AttackPoints = 0;
 
 		float hit = (float) new Random().NextDouble();
@@ -43,24 +46,30 @@ public class CAttackUnit : ICommand
 			int y = 0;
 			List<Unit> victims = new List<Unit>();
 			Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
+			// make sure the direction for the attack is one of the four standart direcitons
 			rotDir.NormalizeTo4Direction();
 			int[,] rot = Vector.RotateToMatrix(rotDir);
+			// perform attack for eacht field in the attack area
 			foreach(Vector pt in attack.area) {
+				// apply rotation to field
 				Vector rotPt = pt.Clone();
 				if(rotDir != Vector.zero)
 					rotPt.ApplyMatrix(rot);
 				x = target.x + rotPt.x;
 				y = target.y + rotPt.y;
+				// check if field is inside grid
 				if(model.IsPointOnGrid(new Vector(x,y)))
+					// check field for units
 					if(model.mapTiles[x][y].unit != null) {
 						Unit unit = model.mapTiles[x][y].unit;
-
-						typeModifier = CalcTypeModifier(unit);
+						
+						// calculate and apply damage to unit
+						typeModifier = CalcTypeModifier(attack, unit);
 						efficency = (byte) ((typeModifier > 1f) ? 2 : (typeModifier == 1f) ? 1 : 0);
 						damage = CalcDamage(source.Attack, attack.damage, typeModifier);
-
-
 						unit.LoseHealth(damage);
+						
+						// add to list of hit units
 						victims.Add(unit);
 					}
 			}
@@ -78,12 +87,24 @@ public class CAttackUnit : ICommand
 		}
 	}
 
+	/// <summary>
+	/// Calculate the distance between to maptile with manhatten norm, ignoring its weights
+	/// </summary>
+	/// <returns>The distance.</returns>
+	/// <param name="from">From.</param>
+	/// <param name="to">To.</param>
 	private int AttackDistance(MapTile from, MapTile to)
 	{
 		return Math.Abs (from.x - to.x) + Math.Abs (from.y - to.y);
 	}
 
-	private float CalcTypeModifier(Unit unit)
+	/// <summary>
+	/// Calculates the type modifier.
+	/// </summary>
+	/// <returns>The type modifier.</returns>
+	/// <param name="attack">Perfomed attack</param>
+	/// <param name="unit">Target unit</param>
+	private float CalcTypeModifier(Attack attack, Unit unit)
 	{
 		// calculate type modifier
 		float typeModifier = 1f;
@@ -100,6 +121,13 @@ public class CAttackUnit : ICommand
 		return typeModifier;
 	}
 
+	/// <summary>
+	/// The damage formular
+	/// </summary>
+	/// <returns>The damage.</returns>
+	/// <param name="sourceAtkValue">Attack value of source unit</param>
+	/// <param name="atkDmg">Damage of the performed attack</param>
+	/// <param name="typeModifier">The type modifier.</param>
 	private int CalcDamage(int sourceAtkValue, int atkDmg, float typeModifier) {
 		// the actual damage formular
 		return (int) Math.Round((sourceAtkValue + atkDmg) * typeModifier);

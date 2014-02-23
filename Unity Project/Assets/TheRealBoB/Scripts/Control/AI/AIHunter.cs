@@ -22,6 +22,10 @@ public class AIHunter : IArtificalIntelligence {
 		this.myPlan = new TurnPlan();
 	}
 
+	/// <summary>
+	/// Create a plan for the current turn
+	/// </summary>
+	/// <returns>The planning.</returns>
 	public TurnPlan DoPlanning ()
 	{
 		myPlan.attackTarget = FindTarget();
@@ -65,6 +69,12 @@ public class AIHunter : IArtificalIntelligence {
 		return attackTarget;
 	}
 
+	/// <summary>
+	/// Find the mapTile we want to move to. Respecting selected attack and target.
+	/// </summary>
+	/// <returns>The move destination.</returns>
+	/// <param name="attack">The selected attack</param>
+	/// <param name="attackTarget">The target we want to attack</param>
 	MapTile FindMoveDestination(Attack attack, Unit attackTarget) 
 	{
 		// by default we don't move (= move to the current mapTile)
@@ -123,6 +133,10 @@ public class AIHunter : IArtificalIntelligence {
 		return path[path.Length-1];
 	}
 
+	/// <summary>
+	/// As attack choice take the units default attack.
+	/// </summary>
+	/// <returns>The attack.</returns>
 	Attack ChooseAttack()
 	{
 		return controlledUnit.attacks[controlledUnit.defaultAttack];

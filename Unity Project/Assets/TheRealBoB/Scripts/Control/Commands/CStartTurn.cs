@@ -13,11 +13,13 @@ public class CStartTurn : ICommand
 
 	public void Execute()
 	{
+		// get next unit from queue
 		Unit unit = model.combat.GetNextUnit ();
 
 		// increase turn counter
 		model.combat.turn++;
 
+		// immedialty end turn if unit is already dead
 		if(!unit.Alive) {
 			controller.EndTurn();
 			return;

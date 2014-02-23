@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// This event proxy allows to registert and fire events without any inital reference
+/// </summary>
 public class EventProxyManager
 {
 	#region singelton
@@ -17,6 +20,7 @@ public class EventProxyManager
 
 	Dictionary<EventName, EventProxy> proxyDict = new Dictionary<EventName, EventProxy>();
 
+	// static methods to fire/register events without need of any reference
     #region external
 	public static void FireEvent(object sender, EventProxyArgs args)
     {
@@ -32,7 +36,6 @@ public class EventProxyManager
     {
         Instance._Clear();
     }
-
     #endregion
 
     #region internal
@@ -59,6 +62,9 @@ public class EventProxyManager
     #endregion
 }
 
+/// <summary>
+/// Enum of all valid event types
+/// </summary>
 public enum EventName {
 	DefaultEvent, // just a placehoder for EventProxyArgs
 	Initialized,

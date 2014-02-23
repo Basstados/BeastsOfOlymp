@@ -96,7 +96,6 @@ public class BInputManager : MonoBehaviour {
 				// we hit an ui element first
 				// stop looking for map and stuff and just return
 				return;
-				break;
 			case UNIT_LAYER:
 				// find the quad the unit is standing on
 				BUnit bUnit = hit.collider.GetComponent<BUnit>();

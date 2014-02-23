@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_2;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,6 +46,22 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DataEditor\Scripts\Attacks\AreaInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Attacks\AttackInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Attacks\AttacksPanel.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\GameDataEditControl.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Map\MapDataPanel.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Map\MapTileDataInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Map\TeamMemberInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Map\TeamMemberInputRow.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\PanelToggle.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Types\TypeInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Types\TypePanel.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Units\UnitDataInput.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Units\UnitPanel.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Universal\IInputListElement.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Universal\IInputListParent.cs" />
+     <Compile Include="Assets\DataEditor\Scripts\Universal\PopupListElementInput.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -164,57 +180,6 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\CombatMenu.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Monster.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\PrototypeArtificialIntelligence.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Prototype_InputTranslater.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Prototype_Map.cs" />
-     <Compile Include="Assets\Prototype\AIPrototype\Scripts\Quad.cs" />
-     <Compile Include="Assets\Prototype\Attack\Scripts\DemoAttacker.cs" />
-     <Compile Include="Assets\Prototype\Attack\Scripts\DemoEnemy.cs" />
-     <Compile Include="Assets\Prototype\Attack\Scripts\Prototype_Attack.cs" />
-     <Compile Include="Assets\Prototype\Attack\Scripts\Range.cs" />
-     <Compile Include="Assets\Prototype\Combat\Scripts\Prototype_Combat.cs" />
-     <Compile Include="Assets\Prototype\DevelopScripts\FPS.cs" />
-     <Compile Include="Assets\Prototype\LevelEditor\Scripts\BattlefieldQuad.cs" />
-     <Compile Include="Assets\Prototype\LevelEditor\Scripts\LevelBlockTranslation.cs" />
-     <Compile Include="Assets\Prototype\LevelEditor\Scripts\LevelGeneration.cs" />
-     <Compile Include="Assets\Prototype\Movement\Scripts\GridMoveAnimation.cs" />
-     <Compile Include="Assets\Prototype\Movement\Scripts\GridMovement.cs" />
-     <Compile Include="Assets\Prototype\PathTesting.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\BackToMenuButton.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\FPSWithWarning.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\CommonScripts\QuadGenerator.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\Menu\PerformanceTestMenu.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\PathfindingTest.cs" />
-     <Compile Include="Assets\Prototype\PerformanceTest\PathFinding\TestPoint.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Data\skrUnitData.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Data\skrUnitDatabase.cs" />
-     <Compile Include="Assets\Stephan\Scripts\TesLitJson.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Units\skrBUnit.cs" />
-     <Compile Include="Assets\Stephan\Scripts\Units\skrUnit.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrBMap.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrBMapTile.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrController.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrEventProxy.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrInputTranslater.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrMapTile.cs" />
-     <Compile Include="Assets\Stephan\Scripts\skrModel.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Attacks\AttackInput.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Attacks\AttacksPanel.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\GameDataEditControl.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Map\MapDataPanel.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Map\MapTileDataInput.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Map\TeamMemberInput.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Map\TeamMemberInputRow.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\PanelToggle.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Types\TypeInput.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Types\TypePanel.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Units\UnitDataInput.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Units\UnitPanel.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\IInputListElement.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\IInputListParent.cs" />
-     <Compile Include="Assets\TheRealBoB\DataEditor\Scripts\Universal\PopupListElementInput.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\AIHunter.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\IArtificalIntelligence.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\AI\TurnPlan.cs" />
@@ -249,11 +214,13 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Attack.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Type.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Unit.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\Point.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Vector.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BUnitAnimator.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BView.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Camera\BCameraMover.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\AnimatorAutodeactivate.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\BParticleManager.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Effects\ShurikenAutodeactivate.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\Input\BInputManager.cs" />
@@ -261,17 +228,22 @@
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCloseApplication.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatLog.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BCombatMenu.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BDamageNumber.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeList.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BIniativeListUnit.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BLoadScene.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BMainMenue.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BMainMenueCredits.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BNotification.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BUITooglePanel.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BUnitUI.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\UI\BapBar.cs" />
-     <Compile Include="Assets\TheRealBoB\_Temp\DatabaseToFile.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
+     <None Include="Assets\CustomizableSword_Free\readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
@@ -282,7 +254,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
-     <None Include="Assets\Prototype\Movement\Shader\Unlit Color Only.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
@@ -296,7 +267,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
-     <None Include="Assets\Prototype\Movement\Shader\Unlit Colored Texture.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />

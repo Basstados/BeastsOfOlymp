@@ -15,7 +15,7 @@ public class AttackInput : MonoBehaviour {
 	AttacksPanel parent;
 
 	#region properties
-	public string name {
+	public string atkName {
 		get {
 			return nameInput.value;
 		}
@@ -65,7 +65,7 @@ public class AttackInput : MonoBehaviour {
 	{
 		this.parent = parent;
 		if(attack.name != null)
-			name = attack.name;
+			atkName = attack.name;
 		apCost = attack.apCost;
 		damage = attack.damage;
 		hitChance = attack.hitChance;
@@ -80,7 +80,7 @@ public class AttackInput : MonoBehaviour {
 	public Attack GetAttack() 
 	{
 		Attack atk = new Attack();
-		atk.name = name;
+		atk.name = atkName;
 		atk.apCost = apCost;
 		atk.damage = damage;
 		atk.hitChance = hitChance;

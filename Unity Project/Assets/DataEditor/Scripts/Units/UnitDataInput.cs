@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,7 +21,7 @@ namespace GameDataUI {
 		char[] trimChar = new char[]{'|'};
 
 		#region properties
-		public string name {
+		public string unitName {
 			get {
 				return nameInput.value;
 			}
@@ -71,7 +71,7 @@ namespace GameDataUI {
 		{
 			this.parent = parent;
 			if(unitData.name != null)
-				name = unitData.name;
+				unitName = unitData.name;
 			health = unitData.baseHealth;
 			attack = unitData.baseAttack;
 			initative = unitData.baseInitiative;
@@ -159,7 +159,7 @@ namespace GameDataUI {
 		public UnitData GetUnitData()
 		{
 			UnitData unitData = new UnitData();
-			unitData.name = name;
+			unitData.name = unitName;
 			unitData.baseHealth = health;
 			unitData.baseAttack = attack;
 			unitData.baseInitiative = initative;

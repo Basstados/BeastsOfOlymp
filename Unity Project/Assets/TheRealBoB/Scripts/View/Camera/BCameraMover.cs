@@ -23,7 +23,6 @@ public class BCameraMover : MonoBehaviour {
 			target.z = Mathf.Clamp(target.z, minZ, maxZ);
 		}
 	}
-	bool routineIsRunning = false;
 
 	void Awake() 
 	{
@@ -37,9 +36,7 @@ public class BCameraMover : MonoBehaviour {
 
 	void Update() {
 		float distance = (target - transform.position).magnitude;
-		if(distance < threshold) {
-			Vector3 translation = (target - transform.position).normalized * Time.deltaTime * minSpeed;
-		} else {
+		if(distance >= threshold) {
 			transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * movementDamping);
 		}
 	}

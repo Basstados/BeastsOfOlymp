@@ -105,6 +105,11 @@ public class Vector : Object {
 		return (this.x == other.x && this.y == other.y);
 	}
 
+	public override int GetHashCode ()
+	{
+		return base.GetHashCode ();
+	}
+
 	public static bool operator ==(Vector v1, Vector v2)
 	{
 		return v1.Equals(v2);

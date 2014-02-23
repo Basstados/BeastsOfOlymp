@@ -8,8 +8,8 @@ public class BMainMenueCredits : MonoBehaviour {
 
 	public void OnBackButtonClick() 
 	{
-		mainMenuePanel.gameObject.active = true;
-		gameObject.active = false;
+		mainMenuePanel.gameObject.SetActive(true);
+		gameObject.SetActive(false);
 	}
 
 

@@ -13,8 +13,8 @@ public class PanelToggle : MonoBehaviour {
 	public UIPanel unitsPanel;
 	public UIPanel typePanel;
 
-	public Color active;
-	public Color inactive;
+	public Color activeColor;
+	public Color inactiveColor;
 
 	public void OpenMap() 
 	{
@@ -23,10 +23,10 @@ public class PanelToggle : MonoBehaviour {
 		unitsPanel.gameObject.SetActive(false);
 		typePanel.gameObject.SetActive(false);
 
-		mapButton.defaultColor = active;
-		attacksButton.defaultColor = inactive;
-		unitsButton.defaultColor = inactive;
-		typeButton.defaultColor = inactive;
+		mapButton.defaultColor = activeColor;
+		attacksButton.defaultColor = inactiveColor;
+		unitsButton.defaultColor = inactiveColor;
+		typeButton.defaultColor = inactiveColor;
 	}
 
 	public void OpenAttacks()
@@ -36,10 +36,10 @@ public class PanelToggle : MonoBehaviour {
 		unitsPanel.gameObject.SetActive(false);
 		typePanel.gameObject.SetActive(false);
 		
-		mapButton.defaultColor = inactive;
-		attacksButton.defaultColor = active;
-		unitsButton.defaultColor = inactive;
-		typeButton.defaultColor = inactive;
+		mapButton.defaultColor = inactiveColor;
+		attacksButton.defaultColor = activeColor;
+		unitsButton.defaultColor = inactiveColor;
+		typeButton.defaultColor = inactiveColor;
 	}
 
 	public void OpenUnits()
@@ -49,10 +49,10 @@ public class PanelToggle : MonoBehaviour {
 		unitsPanel.gameObject.SetActive(true);
 		typePanel.gameObject.SetActive(false);
 		
-		mapButton.defaultColor = inactive;
-		attacksButton.defaultColor = inactive;
-		unitsButton.defaultColor = active;
-		typeButton.defaultColor = inactive;
+		mapButton.defaultColor = inactiveColor;
+		attacksButton.defaultColor = inactiveColor;
+		unitsButton.defaultColor = activeColor;
+		typeButton.defaultColor = inactiveColor;
 	}
 
 	public void OpenTypes()
@@ -62,9 +62,9 @@ public class PanelToggle : MonoBehaviour {
 		unitsPanel.gameObject.SetActive(false);
 		typePanel.gameObject.SetActive(true);
 		
-		mapButton.defaultColor = inactive;
-		attacksButton.defaultColor = inactive;
-		unitsButton.defaultColor = inactive;
-		typeButton.defaultColor = active;
+		mapButton.defaultColor = inactiveColor;
+		attacksButton.defaultColor = inactiveColor;
+		unitsButton.defaultColor = inactiveColor;
+		typeButton.defaultColor = activeColor;
 	}
 }

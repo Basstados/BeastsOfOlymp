@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace GameDataUI {
@@ -67,7 +67,7 @@ namespace GameDataUI {
 		{
 			Type[] types = new Type[typeInputs.Count];
 			for (int i = 0; i < typeInputs.Count; i++) {
-				types[i] = typeInputs[i].GetType();
+				types[i] = typeInputs[i].GetTypeData();
 			}
 			
 			Database.ClearTypes();

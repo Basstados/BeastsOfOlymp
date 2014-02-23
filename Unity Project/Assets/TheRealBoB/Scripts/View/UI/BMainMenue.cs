@@ -13,8 +13,8 @@ public class BMainMenue : MonoBehaviour {
 
 	public void OnCreditsClick() 
 	{
-		gameObject.active = false;
-		mainMenueCreditsPanel.gameObject.active = true;
+		gameObject.SetActive(false);
+		mainMenueCreditsPanel.gameObject.SetActive(true);
 	}
 
 	public void OnExitGameClick() 

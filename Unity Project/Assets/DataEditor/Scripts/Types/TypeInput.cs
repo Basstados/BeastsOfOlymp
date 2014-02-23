@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace GameDataUI {
@@ -118,7 +118,7 @@ namespace GameDataUI {
 			Destroy(this.gameObject);
 		}
 
-		public Type GetType()
+		public Type GetTypeData()
 		{
 			Type result = new Type();
 			result.name = nameInput.value;
