@@ -11,6 +11,7 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	public Unit unit;
 
 	float height;
+	float firstYOffset;
 	int positionIndex;
 	Vector3 targetPostion;
 
@@ -20,10 +21,11 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 	Color aiColor = new Color(0.77255f, 0.21961f, 0.21961f);
 	Color playerColor = new Color(0.25490f, 0.85882f, 0.23529f);
 
-	public void Init(Unit unit, float height)
+	public void Init(Unit unit, float height, float firstYOffset)
 	{
 		this.unit = unit;
 		this.height = height;
+		this.firstYOffset = firstYOffset;
 		label.text = unit.Name;
 		typeSprite.spriteName = unit.data.type.name;
 
@@ -64,6 +66,13 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		positionIndex = newPositionIndex;
 		Vector3 posVec = transform.localPosition;
 		posVec.y = - positionIndex * height;
+		if(positionIndex == 0) {
+			this.transform.localScale = new Vector3(1.1f,1.1f,1.1f);
+		} else {
+			this.transform.localScale = Vector3.one;
+			posVec.y -= firstYOffset;
+		}
+
 		targetPostion = posVec;
 		StartCoroutine(MoveToPositionRoutine());
 	}

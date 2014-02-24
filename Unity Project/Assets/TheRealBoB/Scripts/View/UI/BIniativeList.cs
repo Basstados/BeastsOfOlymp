@@ -8,7 +8,7 @@ public class BIniativeList : MonoBehaviour {
 	public GameObject anchor;
 
 	public float height = 20f;
-	public float widthOffset = 100f;
+	public float firstYOffset = 10f;
 
 	List<BIniativeListUnit> unitIcons = new List<BIniativeListUnit>();
 	int[] positions;
@@ -20,7 +20,7 @@ public class BIniativeList : MonoBehaviour {
 		handle.transform.parent = anchor.transform;
 		handle.transform.localScale = Vector3.one;
 		handle.transform.localPosition = Vector3.zero;
-		handle.GetComponent<BIniativeListUnit>().Init(unit, height);
+		handle.GetComponent<BIniativeListUnit>().Init(unit, height, firstYOffset);
 		unitIcons.Add(handle.GetComponent<BIniativeListUnit>());
 		UpdatePositions();
 	}

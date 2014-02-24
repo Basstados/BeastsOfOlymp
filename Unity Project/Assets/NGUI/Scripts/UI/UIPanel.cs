@@ -383,7 +383,7 @@ public class UIPanel : MonoBehaviour
 			//HideFlags.DontSave | HideFlags.NotEditable);
 			HideFlags.HideAndDontSave);
 #else
-		GameObject go = new GameObject("_UIDrawCall [" + mat.atkName + "]");
+		GameObject go = new GameObject("_UIDrawCall [" + mat.name + "]");
 		DontDestroyOnLoad(go);
 #endif
 		go.layer = cachedGameObject.layer;
