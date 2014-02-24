@@ -114,7 +114,7 @@ public class CAttackUnit : ICommand
 		if(attack.type.strengths.Length > 0)
 		if(Array.Exists(attack.type.strengths, delegate(string t) { return t == unit.data.type.name; })) {
 			// modifier when type is very effectiv
-			typeModifier *= 2f;
+			typeModifier *= 1.5f;
 		}
 		if(attack.type.weaknesses.Length > 0)
 		if(Array.Exists(attack.type.weaknesses, delegate(string t) { return t == unit.data.type.name; })) {
