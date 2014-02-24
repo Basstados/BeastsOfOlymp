@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(UIPanel))]
 public class BCombatMenu : MonoBehaviour {
-
-	public bool moveToTarget = false;
 	public GameObject attackButtonPrefab;
 	public float attackButtonHeight;
 
@@ -16,17 +14,10 @@ public class BCombatMenu : MonoBehaviour {
 	public UIButton endTurnButton;
 	public BNotification bNotification;
 
-	BUnit bUnit;
+	public AudioSource loseSound;
+	public AudioSource winSound;
 
-	void Update() 
-	{
-		if(attackRing.activeSelf && moveToTarget) {
-			Vector3 screenPosition = Camera.main.WorldToScreenPoint(bUnit.transform.position);
-			screenPosition.x -= Screen.width/2;
-			screenPosition.y -= Screen.height/2;
-			transform.localPosition = screenPosition;
-		}
-	}
+	BUnit bUnit;
 
 	public void OpenForBUnit(BUnit bUnit) 
 	{
@@ -63,24 +54,12 @@ public class BCombatMenu : MonoBehaviour {
 
 	void RepositionAtkButtons(List<GameObject> atkButtons)
 	{
-		if(moveToTarget) {
-			float radius = 80;
-			int n = atkButtons.Count;
-
-			for (int i = 0; i < n; i++) {
-				float angle = (i)/((float) n) * 2 * Mathf.PI;
-
-				atkButtons[i].transform.localPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-				atkButtons[i].transform.localScale = Vector3.one;
-			}
-		} else {
-			for (int i = 0; i < atkButtons.Count; i++) {
-				atkButtons[i].transform.localPosition = new Vector3(0, -i*attackButtonHeight);
-				atkButtons[i].transform.localScale = Vector3.one;
-			}
-			endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*attackButtonHeight);
-			endTurnButton.transform.localScale = Vector3.one;
+		for (int i = 0; i < atkButtons.Count; i++) {
+			atkButtons[i].transform.localPosition = new Vector3(0, -i*attackButtonHeight);
+			atkButtons[i].transform.localScale = Vector3.one;
 		}
+		endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*attackButtonHeight);
+		endTurnButton.transform.localScale = Vector3.one;
 	}
 
 	public void ChooseAttack()
@@ -132,10 +111,15 @@ public class BCombatMenu : MonoBehaviour {
 		endTurnButton.gameObject.SetActive(false);
 	}
 
-	public void DisplayGameover (string text)
+	public void DisplayGameover(string text, bool playerWin)
 	{
 		gameoverPanel.SetActive(true);
 		gameoverLabel.text = text;
+		if(playerWin) {
+			winSound.Play();
+		} else {
+			loseSound.Play();
+		}
 	}
 
 	public void ShowTurnStart(BUnit bUnit)

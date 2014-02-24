@@ -235,7 +235,6 @@ public class BView : MonoBehaviour
 		BUnit bUnit = GetBUnit(e.unit);
 		bCameraMover.Focus(bUnit.transform.position);
 		bUnit.Died();
-		
 	}
 
 
@@ -250,7 +249,7 @@ public class BView : MonoBehaviour
 		else if(e.playerDefeated)
 			text = "Defeated";
 
-		bCombatMenu.DisplayGameover(text);
+		bCombatMenu.DisplayGameover(text, !e.playerDefeated);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
