@@ -3,9 +3,11 @@ using System.Collections;
 
 public class BInputManager : MonoBehaviour {
 
+	public Camera uiCamera;
 	public BCameraMover cameraMover;
 	public float tapLength = 0.3f;
 	public InputPhase phase;
+	public AudioSource tapFieldSound;
 
 
 	public enum InputPhase {
@@ -88,6 +90,12 @@ public class BInputManager : MonoBehaviour {
 
 		RaycastHit[] hits = Physics.RaycastAll(cursorRay, Mathf.Infinity, mask);
 
+		// this does not work since buttons will be Deactivate just as we cast the ray
+		// so we don't hit them anymore :(
+		if(CheckUIHit()) {
+			return;
+		}
+
 		// check all objects hit on raycast
 		foreach(RaycastHit hit in hits)  {
 			// let's see what we hit with the raycast
@@ -95,20 +103,36 @@ public class BInputManager : MonoBehaviour {
 			case UI_LAYER:
 				// we hit an ui element first
 				// stop looking for map and stuff and just return
+				Debug.LogWarning("Hit UI! Stop here");
 				return;
 			case UNIT_LAYER:
 				// find the quad the unit is standing on
 				BUnit bUnit = hit.collider.GetComponent<BUnit>();
 				// fire event for the tapped bUnit
+				tapFieldSound.Play();
 				EventProxyManager.FireEvent(this, new BUnitTappedEvent(bUnit));
 				break;
 			case GRID_LAYER:
 				// we hit an quad of the map
 				bMapTile = hit.collider.GetComponent<BMapTile>();
 				// fire event for the tapped mapTile
+				tapFieldSound.Play();
 				EventProxyManager.FireEvent(this, new BMapTileTappedEvent(bMapTile));
 				break;
 			}
+		}
+	}
+
+	private bool CheckUIHit()
+	{
+		Ray ray = uiCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		int mask = 1 << UI_LAYER;
+		Debug.DrawRay(ray.origin,ray.direction);
+		if(Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) {
+			return (hit.collider.gameObject.layer == UI_LAYER);
+		} else {
+			return false;
 		}
 	}
 }

@@ -34,7 +34,7 @@ public class BParticleManager : MonoBehaviour {
 			GameObject go = instance.particleSystems[particleName].Dequeue();
 			// place and activate particle game object
 			go.transform.position = pos;
-			go.transform.rotation = Quaternion.FromToRotation(Vector3.forward, direction);
+			go.transform.rotation = Quaternion.LookRotation(direction);
 			go.SetActive(true);
 			instance.particleSystems[particleName].Enqueue(go);
 		}
