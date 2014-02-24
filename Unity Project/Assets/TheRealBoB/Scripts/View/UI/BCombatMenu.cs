@@ -130,9 +130,9 @@ public class BCombatMenu : MonoBehaviour {
 	IEnumerator NotifyRoutine(BUnit bUnit)
 	{
 		if(bUnit.unit.team == Unit.Team.PLAYER) {
-			bNotification.Display("Dein Zug");
+			bNotification.Display("Dein " + bUnit.unit.Name + " ist am Zug");
 		} else {
-			bNotification.Display("Computer ist am Zug");
+			bNotification.Display("Gegnerische " + bUnit.unit.Name + " ist am Zug");
 		}
 		yield return new WaitForSeconds(2f);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
