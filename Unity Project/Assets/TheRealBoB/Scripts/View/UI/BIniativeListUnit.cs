@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class BIniativeListUnit : MonoBehaviour, IComparable {
 
 	public UILabel label;
+	public UISprite unitPortrait;
 	public UISprite teamSprite;
 	public UISprite typeSprite;
 	public Unit unit;
@@ -28,6 +29,7 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		this.firstYOffset = firstYOffset;
 		label.text = unit.Name;
 		typeSprite.spriteName = unit.data.type.name;
+		unitPortrait.spriteName = unit.Name;
 
 		if(unit.team == Unit.Team.AI) {
 			teamSprite.color = aiColor;
