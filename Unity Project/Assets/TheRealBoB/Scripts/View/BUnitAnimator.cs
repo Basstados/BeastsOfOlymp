@@ -112,9 +112,9 @@ public class BUnitAnimator : MonoBehaviour {
 		direction.NormalizeTo4Direction();
 		BParticleManager.PlayEffect(e.attack.name, target.transform.position, new Vector3(direction.x, 0, direction.y));
 		yield return new WaitForSeconds(0.2f);
-		foreach(BUnit bUnit in victims) {
-			bUnit.PlayHitAnimation(e.efficiency, e.damage);
-			bUnit.unitUI.ShowDamage(e.damage);
+		for (int i = 0; i < victims.Length; i++) {
+			victims[i].PlayHitAnimation(e.efficiency, e.damage[i]);
+			victims[i].unitUI.ShowDamage(e.damage[i]);
 		}
 		yield return new WaitForSeconds(0.6f);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());

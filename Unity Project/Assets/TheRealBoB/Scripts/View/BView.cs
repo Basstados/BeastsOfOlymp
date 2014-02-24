@@ -13,7 +13,6 @@ public class BView : MonoBehaviour
 	public GameObject bMoveMarkerPrefab;
 
 	public BIniativeList bInitativeList;
-	public BCombatLog bCombatLog;
 
 	// context references
 	BMapTile[][] bMapTiles;

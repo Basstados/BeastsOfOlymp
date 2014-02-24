@@ -34,7 +34,7 @@ public class CAttackUnit : ICommand
 		source.AttackPoints = 0;
 
 		float hit = (float) new Random().NextDouble();
-		int damage = 0;
+		int damageUnit = 0;
 		byte efficency = 1;
 		float typeModifier = 1;
 
@@ -45,6 +45,7 @@ public class CAttackUnit : ICommand
 			int x = 0;
 			int y = 0;
 			List<Unit> victims = new List<Unit>();
+			List<int> damage = new List<int>();
 			Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
 			// make sure the direction for the attack is one of the four standart direcitons
 			rotDir.NormalizeTo4Direction();
@@ -58,7 +59,7 @@ public class CAttackUnit : ICommand
 				x = target.x + rotPt.x;
 				y = target.y + rotPt.y;
 				// check if field is inside grid
-				if(model.IsPointOnGrid(new Vector(x,y)))
+				if(model.IsPointOnGrid(new Vector(x,y))) {
 					// check field for units
 					if(model.mapTiles[x][y].unit != null) {
 						Unit unit = model.mapTiles[x][y].unit;
@@ -66,12 +67,14 @@ public class CAttackUnit : ICommand
 						// calculate and apply damage to unit
 						typeModifier = CalcTypeModifier(attack, unit);
 						efficency = (byte) ((typeModifier > 1f) ? 2 : (typeModifier == 1f) ? 1 : 0);
-						damage = CalcDamage(source.Attack, attack.damage, typeModifier);
-						unit.LoseHealth(damage);
+						damageUnit = CalcDamage(source.Attack, attack.damage, typeModifier);
+						unit.LoseHealth(damageUnit);
 						
 						// add to list of hit units
 						victims.Add(unit);
+						damage.Add(damageUnit);
 					}
+				}
 			}
 			EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target, victims,efficency, damage));
 
@@ -141,9 +144,9 @@ public class UnitAttackedEvent : EventProxyArgs
 	public MapTile target;
 	public List<Unit> victims;
 	public byte efficiency;
-	public int damage;
+	public List<int> damage;
 
-	public UnitAttackedEvent (Attack attack, Unit source, MapTile target, List<Unit> victims, byte efficieny, int damage)
+	public UnitAttackedEvent (Attack attack, Unit source, MapTile target, List<Unit> victims, byte efficieny, List<int> damage)
 	{
 		this.name = EventName.UnitAttacked;
 		this.attack = attack;

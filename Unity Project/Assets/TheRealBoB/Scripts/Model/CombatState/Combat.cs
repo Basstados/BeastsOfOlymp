@@ -10,15 +10,6 @@ public class Combat
 	Queue<Unit> currentRound = new Queue<Unit>();
 	List<Unit> activeUnits = new List<Unit>();
 
-	public CombatLog log;
-
-	public Combat() 
-	{
-		log = new CombatLog();
-		log.Init();
-		EventProxyManager.FireEvent(this, new CombatLogInitializedEvent(log));
-	}
-
 	public void Init(List<Unit> unitList)
 	{
 		unitList.Sort();
@@ -60,18 +51,6 @@ public class Combat
 	{
 		return (currentRound.Count);
 	}
-}
-
-public class CombatLogInitializedEvent : EventProxyArgs
-{
-	public CombatLog combatLog;
-
-	public CombatLogInitializedEvent (CombatLog combatLog)
-	{
-		this.combatLog = combatLog;
-		this.name = EventName.CombatLogInitialized;
-	}
-	
 }
 
 public class RoundSetupEvent : EventProxyArgs
