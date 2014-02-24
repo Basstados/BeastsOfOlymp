@@ -237,19 +237,20 @@ public class BView : MonoBehaviour
 	}
 
 
-	void HandleGameover (object sender, EventArgs args)
+	void HandleGameover(object sender, EventArgs args)
 	{
+
 		GameoverEvent e = args as GameoverEvent;
 		string text = "";
 		if(e.playerDefeated && e.aiDefeated)
-			text = "Draw";
+			Application.LoadLevel("Defeat");
 		else if(e.aiDefeated)
-			text = "Victory";
+			Application.LoadLevel("Win");
 		else if(e.playerDefeated)
-			text = "Defeated";
-
+			Application.LoadLevel("Defeat");
+		/*
 		bCombatMenu.DisplayGameover(text, !e.playerDefeated);
-		EventProxyManager.FireEvent(this, new EventDoneEvent());
+		EventProxyManager.FireEvent(this, new EventDoneEvent());*/
 	}
 
 	void HandleDebugLog (object sender, EventProxyArgs args)
