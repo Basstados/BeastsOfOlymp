@@ -4,7 +4,7 @@ using System.Collections;
 public class BUnitAnimator : MonoBehaviour {
 
 	public Animator animator;
-	public GameObject renderObject;
+//	public GameObject renderObject;
 	public GameObject meshContainer;
 	public float movementSpeed = 4;
 	public AudioSource deathSound;
@@ -21,14 +21,14 @@ public class BUnitAnimator : MonoBehaviour {
 		this.parent = bUnit;
 
 		if(unit.team == Unit.Team.PLAYER) {
-			renderObject.renderer.material.color = new Color(0.25490f, 0.85882f, 0.23529f);
+//			renderObject.renderer.material.color = new Color(0.25490f, 0.85882f, 0.23529f);
 			meshContainer.transform.rotation = Quaternion.AngleAxis(90f,Vector3.up);
 		} else {
-			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);
+//			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);
 			meshContainer.transform.rotation = Quaternion.AngleAxis(-90f,Vector3.up);
 		}
 		
-		defaultColor = renderObject.renderer.material.color;
+//		defaultColor = renderObject.renderer.material.color;
 		flashColor = Color.red;
 	}
 
@@ -43,7 +43,7 @@ public class BUnitAnimator : MonoBehaviour {
 		deathSound.Play();
 		animator.SetTrigger("DeathTrigger");
 		yield return new WaitForSeconds(2f);
-		renderObject.SetActive(false);
+		meshContainer.SetActive(false);
 		unitUI.gameObject.SetActive(false);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -52,10 +52,7 @@ public class BUnitAnimator : MonoBehaviour {
 	{
 		BParticleManager.PlayEffect("HitEffect", this.transform.position);
 		animator.SetTrigger("DamagedTrigger");
-		//		renderObject.renderer.material.color = flashColor;
 		yield return new WaitForSeconds(0.5f);
-		//		renderObject.renderer.material.color = defaultColor;
-		
 	}
 	/// <summary>
 	/// Routine to performe a camera shake effect.
