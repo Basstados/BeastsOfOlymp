@@ -3,22 +3,83 @@ guid: 740ba8e5eb19e4f4ba452138f01cfa31
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: base_animation
+    100000: base_animation
+    100002: //RootNode
     100004: charakter_base
     100006: mino_hammer
-    400000: //RootNode
-    400002: base_animation
+    100008: polySurface46
+    100010: polySurface47
+    100012: polySurface48
+    100014: polySurface49
+    100016: polySurface50
+    100018: polySurface51
+    100020: polySurface52
+    100022: polySurface53
+    100024: polySurface54
+    100026: polySurface55
+    100028: polySurface56
+    100030: polySurface57
+    100032: polySurface58
+    100034: polySurface59
+    100036: polySurface60
+    100038: transform1
+    100040: transform10
+    100042: transform11
+    100044: transform12
+    100046: transform13
+    100048: transform2
+    100050: transform3
+    100052: transform4
+    100054: transform5
+    100056: transform6
+    100058: transform7
+    100060: transform8
+    100062: transform9
+    400000: base_animation
+    400002: //RootNode
     400004: charakter_base
     400006: mino_hammer
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: charakter_base
-    4300002: mino_hammer
-    7400000: Take 001
+    400008: polySurface46
+    400010: polySurface47
+    400012: polySurface48
+    400014: polySurface49
+    400016: polySurface50
+    400018: polySurface51
+    400020: polySurface52
+    400022: polySurface53
+    400024: polySurface54
+    400026: polySurface55
+    400028: polySurface56
+    400030: polySurface57
+    400032: polySurface58
+    400034: polySurface59
+    400036: polySurface60
+    400038: transform1
+    400040: transform10
+    400042: transform11
+    400044: transform12
+    400046: transform13
+    400048: transform2
+    400050: transform3
+    400052: transform4
+    400054: transform5
+    400056: transform6
+    400058: transform7
+    400060: transform8
+    400062: transform9
+    4300000: polySurface57
+    4300002: polySurface58
+    4300004: charakter_base
+    4300006: polySurface60
+    7400000: IDLE
+    7400002: DAMAGED
+    7400004: ATTACK
+    7400006: DEATH
     9500000: //RootNode
     13700000: charakter_base
-    13700002: mino_hammer
+    13700002: polySurface57
+    13700004: polySurface58
+    13700006: polySurface60
   materials:
     importMaterials: 1
     materialName: 0
@@ -33,7 +94,367 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: IDLE
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 1.10000002
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_hammer
+        weight: 1
+      - path: mino_hammer/polySurface46
+        weight: 1
+      - path: mino_hammer/polySurface46/transform13
+        weight: 1
+      - path: mino_hammer/polySurface47
+        weight: 1
+      - path: mino_hammer/polySurface47/transform12
+        weight: 1
+      - path: mino_hammer/polySurface48
+        weight: 1
+      - path: mino_hammer/polySurface48/transform11
+        weight: 1
+      - path: mino_hammer/polySurface49
+        weight: 1
+      - path: mino_hammer/polySurface49/transform10
+        weight: 1
+      - path: mino_hammer/polySurface50
+        weight: 1
+      - path: mino_hammer/polySurface50/transform9
+        weight: 1
+      - path: mino_hammer/polySurface51
+        weight: 1
+      - path: mino_hammer/polySurface51/transform8
+        weight: 1
+      - path: mino_hammer/polySurface52
+        weight: 1
+      - path: mino_hammer/polySurface52/transform7
+        weight: 1
+      - path: mino_hammer/polySurface53
+        weight: 1
+      - path: mino_hammer/polySurface53/transform6
+        weight: 1
+      - path: mino_hammer/polySurface54
+        weight: 1
+      - path: mino_hammer/polySurface54/transform5
+        weight: 1
+      - path: mino_hammer/polySurface55
+        weight: 1
+      - path: mino_hammer/polySurface55/transform4
+        weight: 1
+      - path: mino_hammer/polySurface56
+        weight: 1
+      - path: mino_hammer/polySurface56/transform3
+        weight: 1
+      - path: mino_hammer/polySurface57
+        weight: 1
+      - path: mino_hammer/polySurface58
+        weight: 1
+      - path: mino_hammer/polySurface59
+        weight: 1
+      - path: mino_hammer/polySurface59/transform2
+        weight: 1
+      - path: mino_hammer/transform1
+        weight: 1
+      - path: polySurface60
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: ATTACK
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 37
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_hammer
+        weight: 1
+      - path: mino_hammer/polySurface46
+        weight: 1
+      - path: mino_hammer/polySurface46/transform13
+        weight: 1
+      - path: mino_hammer/polySurface47
+        weight: 1
+      - path: mino_hammer/polySurface47/transform12
+        weight: 1
+      - path: mino_hammer/polySurface48
+        weight: 1
+      - path: mino_hammer/polySurface48/transform11
+        weight: 1
+      - path: mino_hammer/polySurface49
+        weight: 1
+      - path: mino_hammer/polySurface49/transform10
+        weight: 1
+      - path: mino_hammer/polySurface50
+        weight: 1
+      - path: mino_hammer/polySurface50/transform9
+        weight: 1
+      - path: mino_hammer/polySurface51
+        weight: 1
+      - path: mino_hammer/polySurface51/transform8
+        weight: 1
+      - path: mino_hammer/polySurface52
+        weight: 1
+      - path: mino_hammer/polySurface52/transform7
+        weight: 1
+      - path: mino_hammer/polySurface53
+        weight: 1
+      - path: mino_hammer/polySurface53/transform6
+        weight: 1
+      - path: mino_hammer/polySurface54
+        weight: 1
+      - path: mino_hammer/polySurface54/transform5
+        weight: 1
+      - path: mino_hammer/polySurface55
+        weight: 1
+      - path: mino_hammer/polySurface55/transform4
+        weight: 1
+      - path: mino_hammer/polySurface56
+        weight: 1
+      - path: mino_hammer/polySurface56/transform3
+        weight: 1
+      - path: mino_hammer/polySurface57
+        weight: 1
+      - path: mino_hammer/polySurface58
+        weight: 1
+      - path: mino_hammer/polySurface59
+        weight: 1
+      - path: mino_hammer/polySurface59/transform2
+        weight: 1
+      - path: mino_hammer/transform1
+        weight: 1
+      - path: polySurface60
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: DAMAGED
+      takeName: Take 001
+      firstFrame: 37
+      lastFrame: 61
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_hammer
+        weight: 1
+      - path: mino_hammer/polySurface46
+        weight: 1
+      - path: mino_hammer/polySurface46/transform13
+        weight: 1
+      - path: mino_hammer/polySurface47
+        weight: 1
+      - path: mino_hammer/polySurface47/transform12
+        weight: 1
+      - path: mino_hammer/polySurface48
+        weight: 1
+      - path: mino_hammer/polySurface48/transform11
+        weight: 1
+      - path: mino_hammer/polySurface49
+        weight: 1
+      - path: mino_hammer/polySurface49/transform10
+        weight: 1
+      - path: mino_hammer/polySurface50
+        weight: 1
+      - path: mino_hammer/polySurface50/transform9
+        weight: 1
+      - path: mino_hammer/polySurface51
+        weight: 1
+      - path: mino_hammer/polySurface51/transform8
+        weight: 1
+      - path: mino_hammer/polySurface52
+        weight: 1
+      - path: mino_hammer/polySurface52/transform7
+        weight: 1
+      - path: mino_hammer/polySurface53
+        weight: 1
+      - path: mino_hammer/polySurface53/transform6
+        weight: 1
+      - path: mino_hammer/polySurface54
+        weight: 1
+      - path: mino_hammer/polySurface54/transform5
+        weight: 1
+      - path: mino_hammer/polySurface55
+        weight: 1
+      - path: mino_hammer/polySurface55/transform4
+        weight: 1
+      - path: mino_hammer/polySurface56
+        weight: 1
+      - path: mino_hammer/polySurface56/transform3
+        weight: 1
+      - path: mino_hammer/polySurface57
+        weight: 1
+      - path: mino_hammer/polySurface58
+        weight: 1
+      - path: mino_hammer/polySurface59
+        weight: 1
+      - path: mino_hammer/polySurface59/transform2
+        weight: 1
+      - path: mino_hammer/transform1
+        weight: 1
+      - path: polySurface60
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: DEATH
+      takeName: Take 001
+      firstFrame: 61
+      lastFrame: 86
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_hammer
+        weight: 1
+      - path: mino_hammer/polySurface46
+        weight: 1
+      - path: mino_hammer/polySurface46/transform13
+        weight: 1
+      - path: mino_hammer/polySurface47
+        weight: 1
+      - path: mino_hammer/polySurface47/transform12
+        weight: 1
+      - path: mino_hammer/polySurface48
+        weight: 1
+      - path: mino_hammer/polySurface48/transform11
+        weight: 1
+      - path: mino_hammer/polySurface49
+        weight: 1
+      - path: mino_hammer/polySurface49/transform10
+        weight: 1
+      - path: mino_hammer/polySurface50
+        weight: 1
+      - path: mino_hammer/polySurface50/transform9
+        weight: 1
+      - path: mino_hammer/polySurface51
+        weight: 1
+      - path: mino_hammer/polySurface51/transform8
+        weight: 1
+      - path: mino_hammer/polySurface52
+        weight: 1
+      - path: mino_hammer/polySurface52/transform7
+        weight: 1
+      - path: mino_hammer/polySurface53
+        weight: 1
+      - path: mino_hammer/polySurface53/transform6
+        weight: 1
+      - path: mino_hammer/polySurface54
+        weight: 1
+      - path: mino_hammer/polySurface54/transform5
+        weight: 1
+      - path: mino_hammer/polySurface55
+        weight: 1
+      - path: mino_hammer/polySurface55/transform4
+        weight: 1
+      - path: mino_hammer/polySurface56
+        weight: 1
+      - path: mino_hammer/polySurface56/transform3
+        weight: 1
+      - path: mino_hammer/polySurface57
+        weight: 1
+      - path: mino_hammer/polySurface58
+        weight: 1
+      - path: mino_hammer/polySurface59
+        weight: 1
+      - path: mino_hammer/polySurface59/transform2
+        weight: 1
+      - path: mino_hammer/transform1
+        weight: 1
+      - path: polySurface60
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

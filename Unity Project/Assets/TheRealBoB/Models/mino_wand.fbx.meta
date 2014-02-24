@@ -7,16 +7,107 @@ ModelImporter:
     100002: charakter_base
     100004: //RootNode
     100006: mino_wand
+    100008: polySurface44
+    100010: polySurface45
+    100012: polySurface24
+    100014: polySurface25
+    100016: polySurface26
+    100018: polySurface27
+    100020: polySurface28
+    100022: polySurface29
+    100024: polySurface30
+    100026: polySurface31
+    100028: polySurface32
+    100030: polySurface33
+    100032: polySurface34
+    100034: polySurface35
+    100036: polySurface36
+    100038: polySurface37
+    100040: polySurface38
+    100042: polySurface39
+    100044: polySurface40
+    100046: polySurface41
+    100048: polySurface42
+    100050: polySurface43
+    100052: transform22
+    100054: transform23
+    100056: transform24
+    100058: transform25
+    100060: transform26
+    100062: transform27
+    100064: transform28
+    100066: transform29
+    100068: transform30
+    100070: transform31
+    100072: transform32
+    100074: transform33
+    100076: transform34
+    100078: transform35
+    100080: transform36
+    100082: transform37
+    100084: transform38
+    100086: transform39
+    100088: transform40
+    100090: transform41
+    100092: transform42
     400000: base_animation
     400002: charakter_base
     400004: //RootNode
     400006: mino_wand
-    4300000: mino_wand
+    400008: polySurface44
+    400010: polySurface45
+    400012: polySurface24
+    400014: polySurface25
+    400016: polySurface26
+    400018: polySurface27
+    400020: polySurface28
+    400022: polySurface29
+    400024: polySurface30
+    400026: polySurface31
+    400028: polySurface32
+    400030: polySurface33
+    400032: polySurface34
+    400034: polySurface35
+    400036: polySurface36
+    400038: polySurface37
+    400040: polySurface38
+    400042: polySurface39
+    400044: polySurface40
+    400046: polySurface41
+    400048: polySurface42
+    400050: polySurface43
+    400052: transform22
+    400054: transform23
+    400056: transform24
+    400058: transform25
+    400060: transform26
+    400062: transform27
+    400064: transform28
+    400066: transform29
+    400068: transform30
+    400070: transform31
+    400072: transform32
+    400074: transform33
+    400076: transform34
+    400078: transform35
+    400080: transform36
+    400082: transform37
+    400084: transform38
+    400086: transform39
+    400088: transform40
+    400090: transform41
+    400092: transform42
+    4300000: polySurface44
     4300002: charakter_base
-    7400000: Take 001
+    4300004: polySurface45
+    7400000: IDLE
+    7400002: ATTACK
+    7400004: DAMAGED
+    7400006: DEATH
     9500000: //RootNode
     13700000: charakter_base
-    13700002: mino_wand
+    13700002: polySurface44
+    13700004: polySurface45
   materials:
     importMaterials: 1
     materialName: 0
@@ -31,7 +122,159 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: IDLE
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 1.10000002
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_wand
+        weight: 1
+      - path: mino_wand/polySurface44
+        weight: 1
+      - path: polySurface45
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: ATTACK
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 37
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_wand
+        weight: 1
+      - path: mino_wand/polySurface44
+        weight: 1
+      - path: polySurface45
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: DAMAGED
+      takeName: Take 001
+      firstFrame: 37
+      lastFrame: 61
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_wand
+        weight: 1
+      - path: mino_wand/polySurface44
+        weight: 1
+      - path: polySurface45
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: DEATH
+      takeName: Take 001
+      firstFrame: 61
+      lastFrame: 86
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base_animation
+        weight: 1
+      - path: charakter_base
+        weight: 1
+      - path: mino_wand
+        weight: 1
+      - path: mino_wand/polySurface44
+        weight: 1
+      - path: polySurface45
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
