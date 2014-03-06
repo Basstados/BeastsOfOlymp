@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -122,8 +122,9 @@ public class UIAtlas : MonoBehaviour
 	{
 		get
 		{
+			if (mReplacement != null) return mReplacement.spriteList;
 			if (mSprites.Count == 0) Upgrade();
-			return (mReplacement != null) ? mReplacement.spriteList : mSprites;
+			return mSprites;
 		}
 		set
 		{
@@ -236,7 +237,7 @@ public class UIAtlas : MonoBehaviour
 	{
 		mSprites.Sort(delegate(UISpriteData s1, UISpriteData s2) { return s1.name.CompareTo(s2.name); });
 #if UNITY_EDITOR
-		UnityEditor.EditorUtility.SetDirty(this);
+		NGUITools.SetDirty(this);
 #endif
 	}
 
@@ -265,7 +266,7 @@ public class UIAtlas : MonoBehaviour
 
 	public BetterList<string> GetListOfSprites (string match)
 	{
-		if (mReplacement != null) return mReplacement.GetListOfSprites(match);
+		if (mReplacement) return mReplacement.GetListOfSprites(match);
 		if (string.IsNullOrEmpty(match)) return GetListOfSprites();
 
 		if (mSprites.Count == 0) Upgrade();
@@ -335,7 +336,7 @@ public class UIAtlas : MonoBehaviour
 	public void MarkAsChanged ()
 	{
 #if UNITY_EDITOR
-		UnityEditor.EditorUtility.SetDirty(gameObject);
+		NGUITools.SetDirty(gameObject);
 #endif
 		if (mReplacement != null) mReplacement.MarkAsChanged();
 
@@ -351,7 +352,7 @@ public class UIAtlas : MonoBehaviour
 				sp.atlas = null;
 				sp.atlas = atl;
 #if UNITY_EDITOR
-				UnityEditor.EditorUtility.SetDirty(sp);
+				NGUITools.SetDirty(sp);
 #endif
 			}
 		}
@@ -368,7 +369,7 @@ public class UIAtlas : MonoBehaviour
 				font.atlas = null;
 				font.atlas = atl;
 #if UNITY_EDITOR
-				UnityEditor.EditorUtility.SetDirty(font);
+				NGUITools.SetDirty(font);
 #endif
 			}
 		}
@@ -385,7 +386,7 @@ public class UIAtlas : MonoBehaviour
 				lbl.bitmapFont = null;
 				lbl.bitmapFont = font;
 #if UNITY_EDITOR
-				UnityEditor.EditorUtility.SetDirty(lbl);
+				NGUITools.SetDirty(lbl);
 #endif
 			}
 		}
@@ -397,7 +398,9 @@ public class UIAtlas : MonoBehaviour
 
 	bool Upgrade ()
 	{
-		if (mSprites.Count == 0 && sprites.Count > 0)
+		if (mReplacement) return mReplacement.Upgrade();
+
+		if (mSprites.Count == 0 && sprites.Count > 0 && material)
 		{
 			Texture tex = material.mainTexture;
 			int width = (tex != null) ? tex.width : 512;
@@ -437,7 +440,7 @@ public class UIAtlas : MonoBehaviour
 			}
 			sprites.Clear();
 #if UNITY_EDITOR
-			UnityEditor.EditorUtility.SetDirty(this);
+			NGUITools.SetDirty(this);
 			UnityEditor.AssetDatabase.SaveAssets();
 #endif
 			return true;

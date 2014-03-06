@@ -169,6 +169,9 @@ namespace LitJson
             ArrayMetadata data = new ArrayMetadata ();
 
             data.IsArray = type.IsArray;
+           
+
+
 
             if (type.GetInterface ("System.Collections.IList") != null)
                 data.IsList = true;
@@ -289,6 +292,7 @@ namespace LitJson
             if (conv_ops[t1].ContainsKey (t2))
                 return conv_ops[t1][t2];
 
+           
             MethodInfo op = t1.GetMethod (
                 "op_Implicit", new Type[] { t2 });
 
@@ -312,10 +316,15 @@ namespace LitJson
 
             if (reader.Token == JsonToken.Null) {
 
-                if (! inst_type.IsClass)
-                    throw new JsonException (String.Format (
-                            "Can't assign null to an instance of type {0}",
-                            inst_type));
+#if NETFX_CORE  
+                if ( !inst_type.GetIsClass()) 
+                {
+#else
+                if (!inst_type.IsClass)
+                {
+#endif
+                    throw new JsonException(String.Format("Can't assign null to an instance of type {0}",inst_type));
+                }
 
                 return null;
             }
@@ -354,8 +363,14 @@ namespace LitJson
                 }
 
                 // Maybe it's an enum
+#if NETFX_CORE 
+                if ( inst_type.GetIsEnum () ) {
+#else 
                 if (inst_type.IsEnum)
+                { 
+#endif 
                     return Enum.ToObject (inst_type, reader.Value);
+                }
 
                 // Try using an implicit conversion operator
                 MethodInfo conv_op = GetConvOp (inst_type, json_type);

@@ -8,7 +8,6 @@
  **/
 #endregion
 
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -383,8 +382,11 @@ namespace LitJson
             end_of_json  = true;
 
             if (reader_is_owned)
-                reader.Close ();
-
+#if NETFX_CORE 
+              reader.Dispose ();
+#else
+              reader.Close(); 
+#endif 
             reader = null;
         }
 

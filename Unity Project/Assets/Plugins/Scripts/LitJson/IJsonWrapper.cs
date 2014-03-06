@@ -14,7 +14,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-
+  
 namespace LitJson
 {
     public enum JsonType

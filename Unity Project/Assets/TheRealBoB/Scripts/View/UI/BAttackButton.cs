@@ -6,7 +6,7 @@ public class BAttackButton : MonoBehaviour {
 	public UILabel nameLabel;
 	public UILabel damageLabel;
 	public UISprite typeSprite;
-	public UISprite typeBackgroundSprite;
+	public UIButton typeBackground;
 	public string backgroundPostfix;
 
 	BCombatMenu parent;
@@ -19,7 +19,7 @@ public class BAttackButton : MonoBehaviour {
 		nameLabel.text = attack.name;
 		damageLabel.text = attack.damage.ToString();
 		typeSprite.spriteName = attack.type.name;
-		typeBackgroundSprite.spriteName = attack.type.name + backgroundPostfix;
+		typeBackground.normalSprite = attack.type.name + backgroundPostfix;
 	}
 
 	public void OnClick() 

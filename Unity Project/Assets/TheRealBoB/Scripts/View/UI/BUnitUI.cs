@@ -20,9 +20,12 @@ public class BUnitUI : MonoBehaviour {
 
 		// change color of life bar depending on team
 		if(parent.unit.team == Unit.Team.PLAYER) {
-			lifebar.foreground.GetComponent<UISprite>().color = playerColor;
+			UISprite sprite = (UISprite) lifebar.foregroundWidget;
+			sprite.color = playerColor;
+			//lifebar.foreground.GetComponent<UISprite>().color = playerColor;
 		} else {
-			lifebar.foreground.GetComponent<UISprite>().color = aiColor;
+			lifebar.foregroundWidget.color = aiColor;
+			//lifebar.foreground.GetComponent<UISprite>().color = aiColor;
 		}
 
 		// set name label

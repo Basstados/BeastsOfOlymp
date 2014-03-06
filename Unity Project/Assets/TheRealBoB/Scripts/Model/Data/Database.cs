@@ -135,6 +135,7 @@ public class Database {
 
 	public static void SaveAsFile()
 	{
+#if !NETFX_CORE
 		string json;
 		// save attack collection to file
 		json = LitJson.JsonMapper.ToJson(Instance.atkCollection);
@@ -148,6 +149,7 @@ public class Database {
 		// save types to file
 		json = LitJson.JsonMapper.ToJson(Instance.typeCollection);
 		File.WriteAllText(basePath + typeDataPath + ".json" ,json);
+#endif
 	}
 
 	public static void LoadFromFile()
@@ -166,7 +168,8 @@ public class Database {
 
 		TextAsset unitCollJSON = (TextAsset) Resources.Load(unitCollectionPath, typeof(TextAsset));
 		if(unitCollJSON != null) {
-			Instance.unitCollection = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
+            UnitCollection uc = LitJson.JsonMapper.ToObject<UnitCollection>(unitCollJSON.text);
+            Instance.unitCollection = uc;
 		} else {
 			Instance.unitCollection = new UnitCollection();
 		}

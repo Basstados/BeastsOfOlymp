@@ -1,9 +1,9 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-#if UNITY_EDITOR || !UNITY_FLASH
+#if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE)
 #define REFLECTION_SUPPORT
 #endif
 
@@ -56,43 +56,54 @@ public class EventDelegate
 	/// Whether the target script is actually enabled.
 	/// </summary>
 
-	public bool isEnabled { get { return (mRawDelegate && mCachedCallback != null) || (mTarget != null && mTarget.enabled); } }
+	public bool isEnabled
+	{
+		get
+		{
+			if (mRawDelegate && mCachedCallback != null) return true;
+			if (mTarget == null) return false;
+			MonoBehaviour mb = (mTarget as MonoBehaviour);
+			return (mb == null || mb.enabled);
+		}
+	}
 
 	public EventDelegate () { }
 	public EventDelegate (Callback call) { Set(call); }
 	public EventDelegate (MonoBehaviour target, string methodName) { Set(target, methodName); }
 
 	/// <summary>
-	/// Windows 8 is retarded.
+	/// GetMethodName is not supported on some platforms.
 	/// </summary>
 
-#if !UNITY_EDITOR && UNITY_WP8
-	static string GetMethodName (Callback callback)
-	{
-		System.Delegate d = callback as System.Delegate;
-		return d.Method.Name;
-	}
+#if REFLECTION_SUPPORT
+	#if !UNITY_EDITOR && UNITY_WP8
+		static string GetMethodName (Callback callback)
+		{
+			System.Delegate d = callback as System.Delegate;
+			return d.Method.Name;
+		}
 
-	static bool IsValid (Callback callback)
-	{
-		System.Delegate d = callback as System.Delegate;
-		return d != null && d.Method != null;
-	}
-#elif !UNITY_EDITOR && UNITY_METRO
-	static string GetMethodName (Callback callback)
-	{
-		System.Delegate d = callback as System.Delegate;
-		return d.GetMethodInfo().Name;
-	}
+		static bool IsValid (Callback callback)
+		{
+			System.Delegate d = callback as System.Delegate;
+			return d != null && d.Method != null;
+		}
+	#elif !UNITY_EDITOR && UNITY_METRO
+		static string GetMethodName (Callback callback)
+		{
+			System.Delegate d = callback as System.Delegate;
+			return d.GetMethodInfo().Name;
+		}
 
-	static bool IsValid (Callback callback)
-	{
-		System.Delegate d = callback as System.Delegate;
-		return d != null && d.GetMethodInfo() != null;
-	}
-#elif REFLECTION_SUPPORT
-	static string GetMethodName (Callback callback) { return callback.Method.Name; }
-	static bool IsValid (Callback callback) { return callback != null && callback.Method != null; }
+		static bool IsValid (Callback callback)
+		{
+			System.Delegate d = callback as System.Delegate;
+			return d != null && d.GetMethodInfo() != null;
+		}
+	#else
+		static string GetMethodName (Callback callback) { return callback.Method.Name; }
+		static bool IsValid (Callback callback) { return callback != null && callback.Method != null; }
+	#endif
 #else
 	static bool IsValid (Callback callback) { return callback != null; }
 #endif
@@ -113,7 +124,8 @@ public class EventDelegate
 			Callback callback = obj as Callback;
 #if REFLECTION_SUPPORT
 			if (callback.Equals(mCachedCallback)) return true;
-			return (mTarget == callback.Target && string.Equals(mMethodName, GetMethodName(callback)));
+			MonoBehaviour mb = callback.Target as MonoBehaviour;
+			return (mTarget == mb && string.Equals(mMethodName, GetMethodName(callback)));
 #elif UNITY_FLASH
 			return (callback == mCachedCallback);
 #else
@@ -144,7 +156,7 @@ public class EventDelegate
 	Callback Get ()
 	{
 #if REFLECTION_SUPPORT
-		if (!mRawDelegate && (mCachedCallback == null || mCachedCallback.Target != mTarget || GetMethodName(mCachedCallback) != mMethodName))
+		if (!mRawDelegate && (mCachedCallback == null || (mCachedCallback.Target as MonoBehaviour) != mTarget || GetMethodName(mCachedCallback) != mMethodName))
 		{
 			if (mTarget != null && !string.IsNullOrEmpty(mMethodName))
 			{
@@ -213,25 +225,33 @@ public class EventDelegate
 
 	public bool Execute ()
 	{
-#if UNITY_EDITOR
-		if (Application.isPlaying)
-#endif
-		{
-			Callback call = Get();
+		Callback call = Get();
 
-			if (call != null)
+		if (call != null)
+		{
+#if UNITY_EDITOR
+			if (Application.isPlaying)
 			{
 				call();
-				return true;
 			}
-#if !REFLECTION_SUPPORT
-			if (isValid)
+			else if (call.Target != null)
 			{
-				mTarget.SendMessage(mMethodName, SendMessageOptions.DontRequireReceiver);
-				return true;
+				System.Type type = call.Target.GetType();
+				object[] objs = type.GetCustomAttributes(typeof(ExecuteInEditMode), true);
+				if (objs != null && objs.Length > 0) call();
 			}
+#else
+			call();
 #endif
+			return true;
 		}
+#if !REFLECTION_SUPPORT
+		if (isValid)
+		{
+			mTarget.SendMessage(mMethodName, SendMessageOptions.DontRequireReceiver);
+			return true;
+		}
+#endif
 		return false;
 	}
 
@@ -281,6 +301,9 @@ public class EventDelegate
 				{
 					del.Execute();
 
+					if (i >= list.Count) break;
+					if (list[i] != del) continue;
+
 					if (del.oneShot)
 					{
 						list.RemoveAt(i);
@@ -320,6 +343,19 @@ public class EventDelegate
 		{
 			list.Clear();
 			list.Add(new EventDelegate(callback));
+		}
+	}
+
+	/// <summary>
+	/// Assign a new event delegate.
+	/// </summary>
+
+	static public void Set (List<EventDelegate> list, EventDelegate del)
+	{
+		if (list != null)
+		{
+			list.Clear();
+			list.Add(del);
 		}
 	}
 
