@@ -69,8 +69,8 @@ public class AttacksPanel : MonoBehaviour {
 			atks[i] = attackInputs[i].GetAttack();
 		}
 
-		Database.ClearAttacks();
-		Database.AddAttackArray(atks);
+		GameData.ClearAttacks();
+		GameData.AddAttackArray(atks);
 		Debug.Log("AttackDatas saved!");
 	}
 }

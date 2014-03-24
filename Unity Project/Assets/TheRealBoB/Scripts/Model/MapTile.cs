@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [System.Serializable]
 public class MapTile
@@ -6,7 +7,7 @@ public class MapTile
 	// how much is the cost to move here
 	// 0 = unpasssable
 	// 1 = default
-	byte penalty;
+	[SerializeField] byte penalty = 1;
 	public byte Penalty 
 	{
 		get

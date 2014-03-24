@@ -99,7 +99,7 @@ namespace GameDataUI {
 		}
 
 		public void AddAttack() {
-			AddAttack(Database.GetAttacks()[0].name);
+			AddAttack(GameData.GetAttacks()[0].attackName);
 		}
 
 		public void AddAttack(string name) 
@@ -140,18 +140,18 @@ namespace GameDataUI {
 
 		string[] GetAttackOptions()
 		{
-			string[] options = new string[Database.GetAttacks().Length];
+			string[] options = new string[GameData.GetAttacks().Length];
 			for(int i = 0; i < options.Length; i++) {
-				options[i] = Database.GetAttacks()[i].name;
+				options[i] = GameData.GetAttacks()[i].attackName;
 			}
 			return options;
 		}
 
 		string[] GetTypeOptions()
 		{
-			string[] options = new string[Database.GetTypes().Length];
+			string[] options = new string[GameData.GetTypes().Length];
 			for(int i = 0; i < options.Length; i++) {
-				options[i] = Database.GetTypes()[i].name;
+				options[i] = GameData.GetTypes()[i].name;
 			}
 			return options;
 		}
@@ -164,7 +164,7 @@ namespace GameDataUI {
 			unitData.baseAttack = attack;
 			unitData.baseInitiative = initative;
 			unitData.baseMoveRange = movePoints;
-			unitData.type = Database.GetType(typeInput.value);
+			unitData.type = GameData.GetType(typeInput.value);
 			string[] atkNames = new string[attacks.Count];
 			for (int i = 0; i < attacks.Count; i++) {
 				atkNames[i] = attacks[i].value;

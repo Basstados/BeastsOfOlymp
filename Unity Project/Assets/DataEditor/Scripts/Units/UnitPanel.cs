@@ -71,8 +71,8 @@ namespace GameDataUI {
 				units[i] = unitInputs[i].GetUnitData();
 			}
 
-			Database.ClearUnits();
-			Database.AddUnitDataArray(units);
+			GameData.ClearUnits();
+			GameData.AddUnitDataArray(units);
 			Debug.Log("All the UnitDatas where saved! Hurray!");
 		}
 	}

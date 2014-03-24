@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
-public class Unit : IComparable
+public class Unit : ScriptableObject, IComparable
 {
 	public UnitData data = new UnitData();
 	public MapTile mapTile { get; set; }
@@ -47,7 +48,7 @@ public class Unit : IComparable
 	{
 		this.data = data;
 		foreach(string atkName in data.attackNames) {
-			attacks.Add(atkName, Database.GetAttack(atkName));
+			attacks.Add(atkName, GameData.GetAttack(atkName));
 		}
 
 		defaultAttack = data.attackNames[0];

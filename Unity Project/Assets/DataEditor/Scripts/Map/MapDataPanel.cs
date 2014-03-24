@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace GameDataUI {
@@ -34,7 +34,7 @@ namespace GameDataUI {
 			map.teamUnits[1] = tmAIDataInput.GetTeamUnits();
 			Debug.Log("TeamSize: " + map.teamUnits[0].Length + ", " + map.teamUnits[1].Length);
 
-			Database.SetMapData(map);
+			GameData.SetMapData(map);
 			Debug.Log("MapData saved in Database");
 		}
 	}

@@ -202,14 +202,13 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\IPathFinder.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PathFinder.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Control\PathFinding\PriorityQueueB.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\DevelopPanel\DevelopPanelMaster.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\DevelopPanel\ToggleButton.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxy.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyArgs.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\EventManager\EventProxyManager.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\FixPosRotScale.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\CombatState\Combat.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\AttackCollection.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\Database.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\GameData.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\MapData.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\TypeCollection.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Data\UnitCollection.cs" />
@@ -221,6 +220,7 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Type.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Unit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Vector.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\View\BMap.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnitAnimator.cs" />

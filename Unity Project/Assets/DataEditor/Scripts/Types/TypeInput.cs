@@ -25,12 +25,12 @@ namespace GameDataUI {
 
 			if(type.weaknesses != null)
 				foreach(string weakness in type.weaknesses) {
-					AddWeakness(Database.GetType(weakness));
+					AddWeakness(GameData.GetType(weakness));
 				}
 
 			if(type.strengths != null)
 				foreach(string strength in type.strengths) {
-					AddStrength(Database.GetType(strength));
+					AddStrength(GameData.GetType(strength));
 				}
 		}
 
@@ -86,9 +86,9 @@ namespace GameDataUI {
 
 		string[] GetTypeArray()
 		{
-			string[] options = new string[Database.GetTypes().Length];
+			string[] options = new string[GameData.GetTypes().Length];
 			for (int i = 0; i < options.Length; i++) {
-				options[i] = Database.GetTypes()[i].name;
+				options[i] = GameData.GetTypes()[i].name;
 			}
 			return options;
 		}

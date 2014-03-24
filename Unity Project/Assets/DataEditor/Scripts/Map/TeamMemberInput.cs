@@ -70,9 +70,9 @@ namespace GameDataUI {
 
 		string[] GetUnitOptions()
 		{
-			string[] options = new string[Database.GetUnitsData().Length];
+			string[] options = new string[GameData.GetUnitsData().Length];
 			for (int i = 0; i < options.Length; i++) {
-				options[i] = Database.GetUnitsData()[i].name;
+				options[i] = GameData.GetUnitsData()[i].name;
 			}
 			return options;
 		}

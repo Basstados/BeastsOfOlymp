@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class AttackInput : MonoBehaviour {
@@ -64,9 +64,8 @@ public class AttackInput : MonoBehaviour {
 	public void Init(Attack attack, AttacksPanel parent) 
 	{
 		this.parent = parent;
-		if(attack.name != null)
-			atkName = attack.name;
-		apCost = attack.apCost;
+		if(attack.attackName != null)
+			atkName = attack.attackName;
 		damage = attack.damage;
 		hitChance = attack.hitChance;
 		range = attack.range;
@@ -80,12 +79,11 @@ public class AttackInput : MonoBehaviour {
 	public Attack GetAttack() 
 	{
 		Attack atk = new Attack();
-		atk.name = atkName;
-		atk.apCost = apCost;
+		atk.attackName = atkName;
 		atk.damage = damage;
 		atk.hitChance = hitChance;
 		atk.range = range;
-		atk.type = Database.GetType(typeInput.value);
+		atk.type = GameData.GetType(typeInput.value);
 		atk.area = areaInput.GetArea();
 		return atk;
 	}
@@ -98,9 +96,9 @@ public class AttackInput : MonoBehaviour {
 
 	string[] GetTypeOptions()
 	{
-		string[] options = new string[Database.GetTypes().Length];
+		string[] options = new string[GameData.GetTypes().Length];
 		for(int i = 0; i < options.Length; i++) {
-			options[i] = Database.GetTypes()[i].name;
+			options[i] = GameData.GetTypes()[i].name;
 		}
 		return options;
 	}

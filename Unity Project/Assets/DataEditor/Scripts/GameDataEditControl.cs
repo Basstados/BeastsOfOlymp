@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace GameDataUI {
@@ -12,13 +12,13 @@ namespace GameDataUI {
 		// Use this for initialization
 		void Awake () 
 		{
-			Database.LoadFromFile();
+			GameData.LoadFromFile();
 			Debug.Log ("Datas loaded from file!");
 
-			mapPanel.Init(Database.GetMapData());
-			attacksPanel.Init(Database.GetAttacks());
-			unitPanel.Init(Database.GetUnitsData());
-			typePanel.Init(Database.GetTypes ());
+			mapPanel.Init(GameData.GetMapData());
+			attacksPanel.Init(GameData.GetAttacks());
+			unitPanel.Init(GameData.GetUnitsData());
+			typePanel.Init(GameData.GetTypes ());
 		}
 
 		public void UpdateDatabase()
@@ -37,7 +37,7 @@ namespace GameDataUI {
 		public void Save() 
 		{
 			UpdateDatabase();
-			Database.SaveAsFile();
+			GameData.SaveAsFile();
 		}
 	}
 }

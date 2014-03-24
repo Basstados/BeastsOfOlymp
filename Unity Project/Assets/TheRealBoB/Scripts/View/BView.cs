@@ -7,15 +7,15 @@ using System.Collections;
 public class BView : MonoBehaviour
 {
 	public GameObject bMapTilePrefab;
-	public GameObject bUnitPrefab;
 	public GameObject bCombatMenuPrefab;
 	public GameObject bActiveMarkerPrefab;
 	public GameObject bMoveMarkerPrefab;
 
 	public BIniativeList bInitativeList;
+	public BMap bMap;
 
 	// context references
-	BMapTile[][] bMapTiles;
+	//[SerializeField] BMapTile[][] bMapTiles;
 	List<BUnit> bUnits = new List<BUnit>();
 	BUnit activeBUnit;
 	BCombatMenu bCombatMenu;
@@ -61,8 +61,16 @@ public class BView : MonoBehaviour
 		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
 		moveMarker = (GameObject) Instantiate(bMoveMarkerPrefab);
 
+
+		MapTile[][] mapTiles = new MapTile[bMap.lengthX][];
+		for (int i = 0; i < bMap.lengthX; i++) {
+			mapTiles[i] = new MapTile[bMap.lengthY];
+			for (int j = 0; j < bMap.lengthY; j++) {
+				mapTiles[i][j] = bMap[i,j].mapTile;
+			}
+		}
 		// start the game
-		controller = new Controller(this);
+		controller = new Controller(this, mapTiles);
 
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
@@ -267,24 +275,24 @@ public class BView : MonoBehaviour
 	/// <param name="mapTiles">Reference to the mapTile instances</param>
 	void InstatiateMap(MapTile[][] mapTiles) 
 	{
-		bMapTiles = new BMapTile[mapTiles.Length][];
-
-		for (int i = 0; i < bMapTiles.Length; i++) {
-			bMapTiles[i] = new BMapTile[mapTiles[i].Length];
-
-			for (int j = 0; j < mapTiles[i].Length; j++) {
-				GameObject go = Instantiate(bMapTilePrefab) as GameObject;
-				// parenting
-				go.transform.parent = this.transform;
-				// proper nameing
-				go.name = bMapTilePrefab.name + "[" + i + "," + j + "]";
-				// positioning
-				go.transform.localPosition = new Vector3(i, 0, j);
-				// set references
-				bMapTiles[i][j] = go.GetComponent<BMapTile>();
-				bMapTiles[i][j].mapTile = mapTiles[i][j];
-			}
-		}
+//		bMapTiles = new BMapTile[mapTiles.Length][];
+//
+//		for (int i = 0; i < bMapTiles.Length; i++) {
+//			bMapTiles[i] = new BMapTile[mapTiles[i].Length];
+//
+//			for (int j = 0; j < mapTiles[i].Length; j++) {
+//				GameObject go = Instantiate(bMapTilePrefab) as GameObject;
+//				// parenting
+//				go.transform.parent = this.transform;
+//				// proper nameing
+//				go.name = bMapTilePrefab.name + "[" + i + "," + j + "]";
+//				// positioning
+//				go.transform.localPosition = new Vector3(i, 0, j);
+//				// set references
+//				bMapTiles[i][j] = go.GetComponent<BMapTile>();
+//				bMapTiles[i][j].mapTile = mapTiles[i][j];
+//			}
+//		}
 	}
 
 	/// <summary>
@@ -312,8 +320,8 @@ public class BView : MonoBehaviour
 		foreach(Vector pt in area) {
 			x = bMaptile.mapTile.x + pt.x;
 			y = bMaptile.mapTile.y + pt.y;
-			if(x >= 0 && x < bMapTiles.Length && y >= 0 && y < bMapTiles[0].Length)
-				bMapTiles[x][y].ChangeColorState(BMapTile.ColorState.ATTACKAREA);
+			if(x >= 0 && x < bMap.lengthX && y >= 0 && y < bMap.lengthY)
+				bMap[x,y].ChangeColorState(BMapTile.ColorState.ATTACKAREA);
 		}
 	}
 
@@ -340,7 +348,7 @@ public class BView : MonoBehaviour
 			for (int j = 0; j < distMatrix[i].Length; j++) {
 				if(range >= distMatrix[i][j]) {
 					if(range == 0 || distMatrix[i][j] != 0)
-						HighlightBMapTile(bMapTiles[i][j], mode);
+						HighlightBMapTile(bMap[i,j], mode);
 				}
 			}
 		}
@@ -408,9 +416,11 @@ public class BView : MonoBehaviour
 	public void CleanMap ()
 	{
 		// reset color state of all maptiles
-		foreach(BMapTile[] column in bMapTiles)
-			foreach(BMapTile tile in column)
-				tile.ChangeColorState(BMapTile.ColorState.DEFAULT);
+		for (int i = 0; i < bMap.lengthX; i++) {
+			for (int j = 0; j < bMap.lengthY; j++) {
+				bMap[i,j].ChangeColorState(BMapTile.ColorState.DEFAULT);
+			}
+		}
 
 		// hide moveMarker
 		moveMarker.SetActive(false);
@@ -432,7 +442,7 @@ public class BView : MonoBehaviour
 	/// <param name="mapTile">MapTile</param>
 	public BMapTile GetBMapTile(MapTile mapTile) 
 	{
-		return bMapTiles[mapTile.x][mapTile.y];
+		return bMap[mapTile.x,mapTile.y];
 	}
 
 	/// <summary>

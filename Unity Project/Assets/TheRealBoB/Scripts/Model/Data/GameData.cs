@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 
 [System.Serializable]
-public class Database {
+public class GameData {
 
 	static string basePath = "Assets/Resources/";
 	static string attackCollectionPath = "AttackCollection";
@@ -13,22 +13,24 @@ public class Database {
 	static string mapDataPath = "MapData";
 	static string typeDataPath = "TypeData";
 
+
 	AttackCollection atkCollection = new AttackCollection();
+//	Dictionary<string, Attack> atkCollection;
 	UnitCollection unitCollection = new UnitCollection();
 	TypeCollection typeCollection = new TypeCollection();
 	MapData mapData = new MapData();
 
 	#region singelton
-	static Database instance;
-	static Database Instance 
+	static GameData instance;
+	public static GameData Instance 
 	{
 		get {
 			if(null == instance)
-				instance = new Database();
+				instance = new GameData();
 			return instance;
 		}
 	}
-	public Database() {
+	public GameData() {
 //		basePath = Application.dataPath + "/Resources/";
 	}
 	#endregion

@@ -1,13 +1,12 @@
+using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class Attack 
+public class Attack //: ScriptableObject
 {
-	public string name;
+	public string attackName = "NewAttack";
 	public Type type;
-	public float hitChance;
+	public float hitChance = 1;
 	public int damage;
 	public int range;
-	public int apCost;
 	public Vector[] area;
 }

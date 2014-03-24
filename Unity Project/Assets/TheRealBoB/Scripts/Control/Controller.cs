@@ -12,24 +12,24 @@ public class Controller
 	BView bView;
 	PathFinder pathFinder;
 
-	public Controller (BView bView)
+	public Controller (BView bView, MapTile[][] mapTiles)
 	{
 		this.bView = bView;
-		Init();
+		Init(mapTiles);
 	}
 
-	void Init() 
+	void Init(MapTile[][] mapTiles) 
 	{
 		// load database
-		Database.LoadFromFile();
-		MapData mapData = Database.GetMapData();
+		GameData.LoadFromFile();
+		MapData mapData = GameData.GetMapData();
 		// register for logic important events
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleUnitDied);
 		EventProxyManager.RegisterForEvent(EventName.TurnStarted, HandleTurnStarted);
 		// init model
 		model = new Model(this);
-		model.InitMap(mapData);
+		model.InitMap(mapTiles, mapData);
 		model.InitUnits(mapData);
 
 		// init pathFinder object

@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 
-public struct Type 
+public class Type //: ScriptableObject
 {
 	public string name;
 	public string[] weaknesses;

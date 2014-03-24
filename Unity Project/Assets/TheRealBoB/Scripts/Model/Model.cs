@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Algorithms;
@@ -22,24 +23,32 @@ public class Model
 		this.controller = controller;
 	}
 
-	public void InitMap(MapData mapData)
+	public void InitMap(MapTile[][] mapTiles, MapData mapData)
 	{
 		// init 1st dimension 
-		mapTiles = new MapTile[mapData.width][];
+		this.mapTiles = mapTiles;
 
 		// instantiate maptile from mapData
-		for (int i = 0; i < mapData.width; i++) {
-			// init 2nd dimension
-			mapTiles[i] = new MapTile[mapData.height];
-			
-			for (int j = 0; j < mapData.height; j++) {
-				mapTiles[i][j] = new MapTile(i,j);
-				mapTiles[i][j].Penalty = mapData.penalties[i][j];
-			}
-		}
+//		for (int i = 0; i < mapData.width; i++) {
+//			// init 2nd dimension
+//			mapTiles[i] = new MapTile[mapData.height];
+//			
+//			for (int j = 0; j < mapData.height; j++) {
+//				mapTiles[i][j] = new MapTile(i,j);
+//				mapTiles[i][j].Penalty = mapData.penalties[i][j];
+//			}
+//		}
 
 		grid = new byte[mapTiles.Length,mapTiles[0].Length];
 		UseMoveGrid();
+		string str = "";
+		for (int i = 0; i < grid.GetLength(0); i++) {
+			for (int j = 0; j < grid.GetLength(1); j++) {
+				str += grid[i,j] + " ";
+			}
+			str += "\n";
+		}
+		Debug.LogError("Grid: \n " + str);
 
 		// map is now initiliazed
 		EventProxyManager.FireEvent(this, new MapInitializedEvent (mapTiles));
@@ -107,7 +116,7 @@ public class Model
 		unit.mapTile = mapTile;
 		mapTile.unit = unit;
 
-		unit.Init(Database.GetUnitData(name));
+		unit.Init(GameData.GetUnitData(name));
 		unit.team = team;
 		if(Unit.Team.AI == team)
 			unit.ai = new AIHunter(this, controller, unit);

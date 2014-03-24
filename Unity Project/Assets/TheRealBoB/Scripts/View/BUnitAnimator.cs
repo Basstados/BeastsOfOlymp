@@ -107,7 +107,7 @@ public class BUnitAnimator : MonoBehaviour {
 		Vector direction = new Vector(Mathf.FloorToInt(target.transform.position.x - this.transform.position.x),
 		                              Mathf.FloorToInt(target.transform.position.z - this.transform.position.z));
 		direction.NormalizeTo4Direction();
-		BParticleManager.PlayEffect(e.attack.name, target.transform.position, new Vector3(direction.x, 0, direction.y));
+		BParticleManager.PlayEffect(e.attack.attackName, target.transform.position, new Vector3(direction.x, 0, direction.y));
 		yield return new WaitForSeconds(0.2f);
 		for (int i = 0; i < victims.Length; i++) {
 			victims[i].PlayHitAnimation(e.efficiency, e.damage[i]);

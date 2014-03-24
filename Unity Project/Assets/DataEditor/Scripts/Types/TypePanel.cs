@@ -70,8 +70,8 @@ namespace GameDataUI {
 				types[i] = typeInputs[i].GetTypeData();
 			}
 			
-			Database.ClearTypes();
-			Database.AddTypeArray(types);
+			GameData.ClearTypes();
+			GameData.AddTypeArray(types);
 			Debug.Log("Updated all the types!!!");
 		}
 		
