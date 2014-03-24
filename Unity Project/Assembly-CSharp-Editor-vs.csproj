@@ -49,6 +49,8 @@
      <Compile Include="Assets\Editor\BoBAssetsMenu.cs" />
      <Compile Include="Assets\Editor\EditorAttack.cs" />
      <Compile Include="Assets\Editor\EditorBMap.cs" />
+     <Compile Include="Assets\Editor\EditorElement.cs" />
+     <Compile Include="Assets\Editor\EditorUnitData.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />

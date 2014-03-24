@@ -16,52 +16,52 @@ namespace GameDataUI {
 		List<PopupListElementInput> weaknesses = new List<PopupListElementInput>();
 		List<PopupListElementInput> strengths = new List<PopupListElementInput>();
 
-		public void Init(Type type, TypePanel parent) 
+		public void Init(Element type, TypePanel parent) 
 		{
 			this.parent = parent;
 
-			if(type.name != null)
-				nameInput.value = type.name;
+			if(type.elementName != null)
+				nameInput.value = type.elementName;
 
 			if(type.weaknesses != null)
-				foreach(string weakness in type.weaknesses) {
-					AddWeakness(GameData.GetType(weakness));
+				foreach(Element weakness in type.weaknesses) {
+					AddWeakness(GameData.GetType(weakness.elementName));
 				}
 
 			if(type.strengths != null)
-				foreach(string strength in type.strengths) {
-					AddStrength(GameData.GetType(strength));
+				foreach(Element strength in type.strengths) {
+					AddStrength(GameData.GetType(strength.elementName));
 				}
 		}
 
 		public void AddWeakness()
 		{
-			AddWeakness(new Type());
+			AddWeakness(new Element());
 		}
 
-		public void AddWeakness(Type type)
+		public void AddWeakness(Element type)
 		{
 			AddPopup(type, weaknessesAnchor, weaknesses);
 		}
 
 		public void AddStrength()
 		{
-			AddStrength(new Type());
+			AddStrength(new Element());
 		}
 
-		public void AddStrength(Type type)
+		public void AddStrength(Element type)
 		{
 			AddPopup(type, strengthAnchor, strengths);
 		}
 
-		void AddPopup(Type type, GameObject anchor, List<PopupListElementInput> list)
+		void AddPopup(Element type, GameObject anchor, List<PopupListElementInput> list)
 		{
 			string[] options = GetTypeArray();
 			GameObject handle = (GameObject) Instantiate(popupInputPrefab);
 			handle.transform.parent = anchor.transform;
 			
 			PopupListElementInput element = handle.GetComponent<PopupListElementInput>();
-			element.Init (type.name, options, this);
+			element.Init (type.elementName, options, this);
 			list.Add(element);
 
 			UpdatePositions();
@@ -88,7 +88,7 @@ namespace GameDataUI {
 		{
 			string[] options = new string[GameData.GetTypes().Length];
 			for (int i = 0; i < options.Length; i++) {
-				options[i] = GameData.GetTypes()[i].name;
+				options[i] = GameData.GetTypes()[i].elementName;
 			}
 			return options;
 		}
@@ -118,17 +118,17 @@ namespace GameDataUI {
 			Destroy(this.gameObject);
 		}
 
-		public Type GetTypeData()
+		public Element GetTypeData()
 		{
-			Type result = new Type();
-			result.name = nameInput.value;
-			result.weaknesses = new string[weaknesses.Count];
+			Element result = new Element();
+			result.elementName = nameInput.value;
+			result.weaknesses = new Element[weaknesses.Count];
 			for (int i = 0; i < weaknesses.Count; i++) {
-				result.weaknesses[i] = weaknesses[i].value;
+//				result.weaknesses[i] = weaknesses[i].value;
 			}
-			result.strengths = new string[strengths.Count];
+			result.strengths = new Element[strengths.Count];
 			for (int i = 0; i < strengths.Count; i++) {
-				result.strengths[i] = strengths[i].value;
+//				result.strengths[i] = strengths[i].value;
 			}
 
 			return result;

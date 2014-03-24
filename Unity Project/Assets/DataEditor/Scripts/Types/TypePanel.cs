@@ -13,7 +13,7 @@ namespace GameDataUI {
 		
 		List<TypeInput> typeInputs;
 		
-		public void Init(Type[] types) 
+		public void Init(Element[] types) 
 		{
 			typeInputs = new List<TypeInput>();
 			
@@ -43,10 +43,10 @@ namespace GameDataUI {
 
 		public void Add() 
 		{
-			Add (new Type());
+			Add (new Element());
 		}
 		
-		public void Add(Type type) 
+		public void Add(Element type) 
 		{
 			GameObject handle = (GameObject) Instantiate(typeInputPrefab);
 			handle.transform.parent = this.transform;
@@ -65,7 +65,7 @@ namespace GameDataUI {
 		
 		public void Save()
 		{
-			Type[] types = new Type[typeInputs.Count];
+			Element[] types = new Element[typeInputs.Count];
 			for (int i = 0; i < typeInputs.Count; i++) {
 				types[i] = typeInputs[i].GetTypeData();
 			}

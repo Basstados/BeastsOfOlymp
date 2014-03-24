@@ -112,12 +112,12 @@ public class CAttackUnit : ICommand
 		// calculate type modifier
 		float typeModifier = 1f;
 		if(attack.type.strengths.Length > 0)
-		if(Array.Exists(attack.type.strengths, delegate(string t) { return t == unit.data.type.name; })) {
+		if(Array.Exists(attack.type.strengths, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
 			// modifier when type is very effectiv
 			typeModifier *= 1.5f;
 		}
 		if(attack.type.weaknesses.Length > 0)
-		if(Array.Exists(attack.type.weaknesses, delegate(string t) { return t == unit.data.type.name; })) {
+		if(Array.Exists(attack.type.weaknesses, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
 			// modifier when type is not effectiv
 			typeModifier *= 0.5f;
 		}

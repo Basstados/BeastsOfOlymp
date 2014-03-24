@@ -217,9 +217,10 @@
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Model.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Path.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Attack.cs" />
-     <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Type.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Element.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Unit\Unit.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\Model\Vector.cs" />
+     <Compile Include="Assets\TheRealBoB\Scripts\UnitGridPlacer.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMap.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BMapTile.cs" />
      <Compile Include="Assets\TheRealBoB\Scripts\View\BUnit.cs" />

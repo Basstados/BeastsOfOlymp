@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -107,24 +107,24 @@ public class GameData {
 	#endregion
 
 	#region type
-	public static void AddType(Type type)
+	public static void AddType(Element type)
 	{
 		Instance.typeCollection.Add(type);
 	}
 
-	public static void AddTypeArray(Type[] types)
+	public static void AddTypeArray(Element[] types)
 	{
-		foreach (Type type in types) {
+		foreach (Element type in types) {
 			Instance.typeCollection.Add(type);
 		}
 	}
 
-	public static Type GetType(string name)
+	public static Element GetType(string name)
 	{
 		return Instance.typeCollection.Get(name);
 	}
 
-	public static Type[] GetTypes()
+	public static Element[] GetTypes()
 	{
 		return Instance.typeCollection.typeDict.Values.ToArray();
 	}

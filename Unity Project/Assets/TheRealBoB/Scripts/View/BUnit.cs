@@ -20,8 +20,6 @@ public class BUnit : MonoBehaviour {
 	Action action;
 	public Action CurrentAction {get{return action;}}
 
-
-
 	public Unit unit;
 	public BCombatMenu bCombatMenu;
 
@@ -36,7 +34,7 @@ public class BUnit : MonoBehaviour {
 		this.bCombatMenu = bCombatMenu;
 		this.bUnitAnimator = GetComponent<BUnitAnimator>();
 
-		defaultAttack = unit.attacks[unit.defaultAttack];
+		defaultAttack = unit.AttacksArray[unit.defaultAttackIndex];
 
 		unitUI.Init(this);
 		bUnitAnimator.Init(unit, this);

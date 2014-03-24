@@ -69,10 +69,10 @@ public class AttackInput : MonoBehaviour {
 		damage = attack.damage;
 		hitChance = attack.hitChance;
 		range = attack.range;
-		typeInput.value = attack.type.name;
+		typeInput.value = attack.type.elementName;
 		areaInput.Refresh(attack.area);
 
-		if(attack.type.name != null) typeInput.value = attack.type.name;
+		if(attack.type.elementName != null) typeInput.value = attack.type.elementName;
 		Refresh();
 	}
 
@@ -98,7 +98,7 @@ public class AttackInput : MonoBehaviour {
 	{
 		string[] options = new string[GameData.GetTypes().Length];
 		for(int i = 0; i < options.Length; i++) {
-			options[i] = GameData.GetTypes()[i].name;
+			options[i] = GameData.GetTypes()[i].elementName;
 		}
 		return options;
 	}

@@ -70,21 +70,21 @@ namespace GameDataUI {
 		public void Init(UnitData unitData, UnitPanel parent) 
 		{
 			this.parent = parent;
-			if(unitData.name != null)
-				unitName = unitData.name;
+			if(unitData.unitName != null)
+				unitName = unitData.unitName;
 			health = unitData.baseHealth;
 			attack = unitData.baseAttack;
 			initative = unitData.baseInitiative;
 			movePoints = unitData.baseMoveRange;
-			typeInput.value = unitData.type.name;
+			typeInput.value = unitData.element.elementName;
 
 			attacks = new List<PopupListElementInput>();
-			if(unitData.attackNames != null)
-				foreach(string atk in unitData.attackNames) {
-					AddAttack(atk);
+			if(unitData.attacks != null)
+				foreach(Attack atk in unitData.attacks) {
+					AddAttack(atk.attackName);
 				}
 
-			if(unitData.type.name != null) typeInput.value = unitData.type.name;
+			if(unitData.element.elementName != null) typeInput.value = unitData.element.elementName;
 			Refresh();
 		}
 		
@@ -151,7 +151,7 @@ namespace GameDataUI {
 		{
 			string[] options = new string[GameData.GetTypes().Length];
 			for(int i = 0; i < options.Length; i++) {
-				options[i] = GameData.GetTypes()[i].name;
+				options[i] = GameData.GetTypes()[i].elementName;
 			}
 			return options;
 		}
@@ -159,17 +159,17 @@ namespace GameDataUI {
 		public UnitData GetUnitData()
 		{
 			UnitData unitData = new UnitData();
-			unitData.name = unitName;
+			unitData.unitName = unitName;
 			unitData.baseHealth = health;
 			unitData.baseAttack = attack;
 			unitData.baseInitiative = initative;
 			unitData.baseMoveRange = movePoints;
-			unitData.type = GameData.GetType(typeInput.value);
+			unitData.element = GameData.GetType(typeInput.value);
 			string[] atkNames = new string[attacks.Count];
 			for (int i = 0; i < attacks.Count; i++) {
 				atkNames[i] = attacks[i].value;
 			}
-			unitData.attackNames = atkNames;
+			//unitData.attacks = atkNames;
 
 			return unitData;
 		}

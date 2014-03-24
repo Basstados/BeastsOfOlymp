@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,9 +27,9 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		this.unit = unit;
 		this.height = height;
 		this.firstYOffset = firstYOffset;
-		label.text = unit.Name;
-		typeSprite.spriteName = unit.data.type.name;
-		unitPortrait.spriteName = unit.Name;
+		label.text = unit.UnitName;
+		typeSprite.spriteName = unit.Element.elementName;
+		unitPortrait.spriteName = unit.UnitName;
 
 		if(unit.team == Unit.Team.AI) {
 			teamSprite.color = aiColor;

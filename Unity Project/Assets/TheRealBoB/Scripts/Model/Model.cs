@@ -116,7 +116,7 @@ public class Model
 		unit.mapTile = mapTile;
 		mapTile.unit = unit;
 
-		unit.Init(GameData.GetUnitData(name));
+		unit.Init();
 		unit.team = team;
 		if(Unit.Team.AI == team)
 			unit.ai = new AIHunter(this, controller, unit);

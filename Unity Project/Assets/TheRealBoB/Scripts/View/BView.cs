@@ -300,8 +300,8 @@ public class BView : MonoBehaviour
 	/// </summary>
 	/// <param name="unit">The Unit we create an representation for</param>
 	void SpawnBUnit(Unit unit) { 
-		Debug.Log("Spawning: Character/"+unit.Name);
-		GameObject prefab = Resources.Load<GameObject>("Character/"+unit.Name);
+		Debug.Log("Spawning: Character/"+unit.UnitName);
+		GameObject prefab = Resources.Load<GameObject>("Character/"+unit.UnitName);
 		GameObject go = (GameObject) Instantiate(prefab);
 		// positioning
 		go.transform.position = GetBMapTile(unit.mapTile).transform.position;

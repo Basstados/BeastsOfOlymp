@@ -1,14 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public struct UnitData 
+public class UnitData : ScriptableObject
 {
-	public string name;
-	public Type type;
+	public string unitName = "newUnit";
+	public Element element;
 	public int baseHealth;
 	public int baseAttack;
 	public int baseInitiative;
 	public int baseMoveRange;
-	public string[] attackNames;
+	public Attack[] attacks;
 }

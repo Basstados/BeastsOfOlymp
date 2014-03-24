@@ -8,7 +8,7 @@ public class UnitCollection
 
 	public void Add(UnitData data)
 	{
-		unitDict.Add(data.name,data);
+		unitDict.Add(data.unitName,data);
 	}
 
 	public UnitData Get(string name)

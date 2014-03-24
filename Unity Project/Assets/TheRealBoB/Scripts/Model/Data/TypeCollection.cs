@@ -4,14 +4,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class TypeCollection
 {
-	public Dictionary<string,Type> typeDict = new Dictionary<string, Type>();
+	public Dictionary<string,Element> typeDict = new Dictionary<string, Element>();
 
-	public void Add(Type type)
+	public void Add(Element type)
 	{
-		typeDict.Add(type.name, type);
+		typeDict.Add(type.elementName, type);
 	}
 
-	public Type Get(string name)
+	public Element Get(string name)
 	{
 		return typeDict[name];
 	}

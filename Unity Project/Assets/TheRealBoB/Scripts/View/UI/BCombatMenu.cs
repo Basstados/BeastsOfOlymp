@@ -39,7 +39,7 @@ public class BCombatMenu : MonoBehaviour {
 			atkButtons.Clear();
 
 			// init attack buttons
-			foreach(Attack atk in bUnit.unit.attacks.Values) {
+			foreach(Attack atk in bUnit.unit.AttacksArray) {
 				GameObject handle = (GameObject) Instantiate(attackButtonPrefab);
 				handle.transform.parent = attackRing.transform;
 
@@ -130,9 +130,9 @@ public class BCombatMenu : MonoBehaviour {
 	IEnumerator NotifyRoutine(BUnit bUnit)
 	{
 		if(bUnit.unit.team == Unit.Team.PLAYER) {
-			bNotification.Display("Dein " + bUnit.unit.Name + " ist am Zug");
+			bNotification.Display("Dein " + bUnit.unit.UnitName + " ist am Zug");
 		} else {
-			bNotification.Display("Gegnerische " + bUnit.unit.Name + " ist am Zug");
+			bNotification.Display("Gegnerische " + bUnit.unit.UnitName + " ist am Zug");
 		}
 		yield return new WaitForSeconds(2f);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());

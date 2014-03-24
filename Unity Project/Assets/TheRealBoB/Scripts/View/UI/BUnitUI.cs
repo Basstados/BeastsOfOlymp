@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BUnitUI : MonoBehaviour {
@@ -29,8 +29,8 @@ public class BUnitUI : MonoBehaviour {
 		}
 
 		// set name label
-		nameLabel.text = parent.unit.Name;
-		typeSprite.spriteName = parent.unit.data.type.name;
+		nameLabel.text = parent.unit.UnitName;
+		typeSprite.spriteName = parent.unit.Element.elementName;
 
 		initalized = true;
 	}

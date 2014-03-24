@@ -139,7 +139,7 @@ public class AIHunter : IArtificalIntelligence {
 	/// <returns>The attack.</returns>
 	Attack ChooseAttack()
 	{
-		return controlledUnit.attacks[controlledUnit.defaultAttack];
+		return controlledUnit.AttacksArray[controlledUnit.defaultAttackIndex];
 	}
 
 

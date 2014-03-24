@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BAttackButton : MonoBehaviour {
@@ -18,8 +18,8 @@ public class BAttackButton : MonoBehaviour {
 		this.attack = attack;
 		nameLabel.text = attack.attackName;
 		damageLabel.text = attack.damage.ToString();
-		typeSprite.spriteName = attack.type.name;
-		typeBackground.normalSprite = attack.type.name + backgroundPostfix;
+		typeSprite.spriteName = attack.type.elementName;
+		typeBackground.normalSprite = attack.type.elementName + backgroundPostfix;
 	}
 
 	public void OnClick() 
