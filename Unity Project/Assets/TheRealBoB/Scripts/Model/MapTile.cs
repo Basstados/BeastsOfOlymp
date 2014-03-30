@@ -21,6 +21,7 @@ public class MapTile
 	}
 	public byte PenaltyIgnoreUnit {get{return penalty;}}
 	// which unit is sitting here
+	[NonSerialized]
 	public Unit unit;
 	// coordinates
 	public int x;

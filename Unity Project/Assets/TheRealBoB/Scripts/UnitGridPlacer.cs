@@ -2,6 +2,7 @@
 using System.Collections;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(BUnit))]
 public class UnitGridPlacer : MonoBehaviour {
 
 	private Vector3 position;

@@ -69,8 +69,25 @@ public class BView : MonoBehaviour
 				mapTiles[i][j] = bMap[i,j].mapTile;
 			}
 		}
+
+		BUnit[] startBUnits = GameObject.FindObjectsOfType<BUnit>();
+		bUnits = new List<BUnit>();
+		Unit[] units = new Unit[startBUnits.Length];
+		for (int i = 0; i < units.Length; i++) {
+			// add units from scene to an array
+			units[i] = startBUnits[i].unit;
+			// set maptile reference by scene position
+			int x = Mathf.FloorToInt(startBUnits[i].transform.position.x);
+			int y = Mathf.FloorToInt(startBUnits[i].transform.position.z);
+			units[i].mapTile = mapTiles[x][y];
+			mapTiles[x][y].unit = units[i];
+			// add bUnit to list
+			startBUnits[i].Init(this, bCombatMenu);
+			bUnits.Add(startBUnits[i]);
+		}
+
 		// start the game
-		controller = new Controller(this, mapTiles);
+		controller = new Controller(this, mapTiles, units);
 
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}

@@ -28,9 +28,8 @@ public class BUnit : MonoBehaviour {
 
 	BMapTile target;
 
-	public void Init(BView context, Unit unit, BCombatMenu bCombatMenu) {
+	public void Init(BView context, BCombatMenu bCombatMenu) {
 		this.context = context;
-		this.unit = unit;
 		this.bCombatMenu = bCombatMenu;
 		this.bUnitAnimator = GetComponent<BUnitAnimator>();
 
@@ -38,6 +37,11 @@ public class BUnit : MonoBehaviour {
 
 		unitUI.Init(this);
 		bUnitAnimator.Init(unit, this);
+	}
+
+	public void Init(BView context, Unit unit, BCombatMenu bCombatMenu) {
+		this.unit = unit;
+		Init(context, bCombatMenu);
 	}
 
 	public void Activate()

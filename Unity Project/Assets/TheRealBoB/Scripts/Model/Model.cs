@@ -23,7 +23,7 @@ public class Model
 		this.controller = controller;
 	}
 
-	public void InitMap(MapTile[][] mapTiles, MapData mapData)
+	public void InitMap(MapTile[][] mapTiles)
 	{
 		// init 1st dimension 
 		this.mapTiles = mapTiles;
@@ -41,29 +41,33 @@ public class Model
 
 		grid = new byte[mapTiles.Length,mapTiles[0].Length];
 		UseMoveGrid();
-		string str = "";
-		for (int i = 0; i < grid.GetLength(0); i++) {
-			for (int j = 0; j < grid.GetLength(1); j++) {
-				str += grid[i,j] + " ";
-			}
-			str += "\n";
-		}
-		Debug.LogError("Grid: \n " + str);
 
 		// map is now initiliazed
 		EventProxyManager.FireEvent(this, new MapInitializedEvent (mapTiles));
 	}
 
-	public void InitUnits(MapData mapData)
+	public void InitUnits(Unit[] startUnits)
 	{
-		// spawn units for all teams
-		int teamID = 0;
-		foreach(MapData.TeamUnit[] team in mapData.teamUnits) {
-			foreach(MapData.TeamUnit tUnit in team) {
-				SpawnUnit(mapTiles[tUnit.position.x][tUnit.position.y], (Unit.Team)teamID, tUnit.name);
+		units = new List<Unit>();
+		foreach( Unit u in startUnits) {
+			units.Add(u);
+
+			// init unit
+			u.Init();
+			// add an AI if this unit is AI controlled
+			if(u.team == Unit.Team.AI) {
+				u.ai = new AIHunter(this, controller, u);
 			}
-			teamID++;
 		}
+
+		// spawn units for all teams
+//		int teamID = 0;
+//		foreach(MapData.TeamUnit[] team in mapData.teamUnits) {
+//			foreach(MapData.TeamUnit tUnit in team) {
+//				SpawnUnit(mapTiles[tUnit.position.x][tUnit.position.y], (Unit.Team)teamID, tUnit.name);
+//			}
+//			teamID++;
+//		}
 	}
 
     public void InitCombat()
