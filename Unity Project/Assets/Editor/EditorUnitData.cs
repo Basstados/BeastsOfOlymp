@@ -18,7 +18,7 @@ public class EditorUnitData : Editor {
 		myTarget.unitName 			= EditorGUILayout.TextField("Name", myTarget.unitName);
 		EditorGUILayout.Separator();
 		// base states
-		myTarget.element 			= (Element) EditorGUILayout.ObjectField("Element", myTarget.element, typeof(Element));
+		myTarget.element 			= (Element) EditorGUILayout.ObjectField("Element", myTarget.element, typeof(Element), false);
 		myTarget.baseHealth 		= EditorGUILayout.IntField("Base Health", myTarget.baseHealth);
 		myTarget.baseAttack 		= EditorGUILayout.IntField("Base Attack", myTarget.baseAttack);
 		myTarget.baseInitiative 	= EditorGUILayout.IntField("Base Initiative", myTarget.baseInitiative);
@@ -29,7 +29,7 @@ public class EditorUnitData : Editor {
 		if(myTarget.attacks != null) {
 			for (int i = 0; i < myTarget.attacks.Length; i++) {
 				EditorGUILayout.BeginHorizontal();
-				myTarget.attacks[i] = (Attack) EditorGUILayout.ObjectField(myTarget.attacks[i], typeof(Attack));
+				myTarget.attacks[i] = (Attack) EditorGUILayout.ObjectField(myTarget.attacks[i], typeof(Attack), false);
 				if(GUILayout.Button("x", xButton))
 					RemoveFromArray<Attack>(ref myTarget.attacks, i);
 				EditorGUILayout.EndHorizontal();
@@ -37,6 +37,9 @@ public class EditorUnitData : Editor {
 		}
 		if(GUILayout.Button("Add attack"))
 			IncreaseArraySize<Attack>(ref myTarget.attacks);
+
+		// you need this to save changes in the custom inspector permanent in the .asset file
+		EditorUtility.SetDirty(target);
 
 		// sync asset name and unitName
 		AssetDatabase.RenameAsset("Assets/Database/Units/" + oldName + ".asset", myTarget.unitName);

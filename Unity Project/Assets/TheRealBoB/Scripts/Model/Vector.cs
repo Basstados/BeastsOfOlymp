@@ -41,8 +41,9 @@ public class Vector : Object {
 		if (vec == Vector.zero)
 			vec.x = 1;
 		int[,] rot = new int[2,2];
-		rot[0,0] = vec.x;	rot[0,1] = - vec.y;
-		rot[1,0] = vec.y;	rot[1,1] = vec.x;
+		// get the rotation matrix for the rotation from (0,1) to vec
+		rot[0,0] = - vec.y;	rot[0,1] = - vec.x;
+		rot[1,0] = vec.x;	rot[1,1] = - vec.y;
 		return rot;
 	}
 	#endregion

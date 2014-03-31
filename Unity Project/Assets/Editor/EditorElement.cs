@@ -44,6 +44,9 @@ public class EditorElement : Editor {
 		if(GUILayout.Button("Add strength"))
 			IncreaseArraySize<Element>(ref myTarget.strengths);
 
+		// you need this to save changes in the custom inspector permanent in the .asset file
+		EditorUtility.SetDirty(target);
+
 		// keep elementName and asset name equal
 		AssetDatabase.RenameAsset("Assets/Database/Elements/" + oldName + ".asset", myTarget.elementName);
 	}
