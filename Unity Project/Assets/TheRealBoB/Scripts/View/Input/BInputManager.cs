@@ -23,6 +23,11 @@ public class BInputManager : MonoBehaviour {
 	private float tapTime = 0f;
 	private Vector3 lastMousePosition = Vector3.zero;
 
+	private float oldDistance = 0f;
+	public float zoomFactor = 0.01f;
+	public float minZoomLevel = 3f;
+	public float maxZoomLevel = 7f;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -30,6 +35,12 @@ public class BInputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if(Input.multiTouchEnabled) {
+			if(Input.touchCount == 2) {
+				PinchZoom();
+				return;
+			}
+		}
 		// reset tap time on tap start (button down)
 		if(Input.GetButtonDown("Fire1")) {
 			tapTime = 0f;
@@ -42,9 +53,7 @@ public class BInputManager : MonoBehaviour {
 				// now we assume it's a gesture not a tap
 				OnHold();
 			}
-			//if( (lastMousePosition - Input.mousePosition).magnitude > 100) {
-				lastMousePosition = Input.mousePosition;
-			//}
+			lastMousePosition = Input.mousePosition;
 		}
 
 		if(Input.GetButtonUp("Fire1") && tapTime < tapLength) {
@@ -54,6 +63,22 @@ public class BInputManager : MonoBehaviour {
 		}
 	}
 
+	void PinchZoom()
+	{
+		Touch[] touches = Input.touches;
+		float dist = (touches[0].position - touches[1].position).magnitude;
+		// use change in touche distance to last frame
+		float delta = oldDistance - dist;
+		oldDistance = dist;
+		// prevent spikes, so the zoom does not jump at the beginning
+		if(Mathf.Abs(delta) > 50f) return;
+
+		// add delta to orthographic size since its an orthographic camera
+		float orthoSize = Camera.main.orthographicSize + delta * zoomFactor;
+		// clamp zoom
+		Camera.main.orthographicSize = Mathf.Clamp(orthoSize, minZoomLevel, maxZoomLevel);
+	}
+	
 	void OnHold()
 	{
 		Vector3 lastMousePlanePos = ScreenToPlane(lastMousePosition);
