@@ -9,6 +9,10 @@ public class BMap : MonoBehaviour {
 	[SerializeField] int gridSizeY = 10;
 	[SerializeField] BMapTile[] bMapTiles;
 
+	[SerializeField] GameObject obstaclePrefab;
+	[SerializeField] int obstacleCount = 20;
+	[SerializeField] GameObject[] obstacles;
+
 	/// <summary>
 	/// Direct access to the bMapTiles of this bMap.
 	/// </summary>
@@ -62,6 +66,55 @@ public class BMap : MonoBehaviour {
 				bMapTiles[i + j * gridSizeX] = go.GetComponent<BMapTile>();
 				bMapTiles[i + j * gridSizeX].mapTile = new MapTile(i,j);
 			}
+		}
+	}
+
+	public void SpawnObstacles() {
+		// clear old obstacles
+		foreach(GameObject ob in obstacles) {
+			// reset penalty
+			int x = Mathf.FloorToInt(ob.transform.localPosition.x);
+			int y = Mathf.FloorToInt(ob.transform.localPosition.z);
+			bMapTiles[x + y *gridSizeX].mapTile.Penalty = 1;
+			// destroy gameobject
+			if(Application.isEditor) {
+				DestroyImmediate(ob);
+			} else {
+				Destroy(ob);
+			}
+		}
+
+		// create list of taken fields
+		List<Vector> takenFields = new List<Vector>();
+		// add units in scene to taken fields
+		BUnit[] startBUnits = GameObject.FindObjectsOfType<BUnit>();
+		foreach(BUnit bUnit in startBUnits) {
+			takenFields.Add(new Vector(Mathf.FloorToInt(bUnit.transform.position.x),
+			                           Mathf.FloorToInt(bUnit.transform.position.z)));
+		}
+
+		// instatiate new obstacles at random (free) postions
+		obstacles = new GameObject[obstacleCount];
+		for (int i = 0; i < obstacleCount; i++) {
+			// find free field
+			Vector vec;
+			int safetyCount = 0;
+			do {
+				vec = new Vector(Random.Range(0,gridSizeX),Random.Range(0,gridSizeY));
+				safetyCount++; // prevent infinit loops
+				if(safetyCount > 500) {
+					Debug.LogError("No free field found!");
+					return;
+				}
+			} while(takenFields.Contains(vec));
+			// spawn obstacle at field
+			Vector3 pos = new Vector3(vec.x, 0, vec.y);
+			GameObject handle = Instantiate(obstaclePrefab, pos, obstaclePrefab.transform.rotation) as GameObject;
+			handle.transform.parent = this.transform;
+			handle.name = "Obstacle " + i;
+
+			obstacles[i] = handle;
+			bMapTiles[vec.x + vec.y * gridSizeX].mapTile.Penalty = 0;
 		}
 	}
 }

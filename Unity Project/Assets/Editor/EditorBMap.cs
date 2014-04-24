@@ -12,5 +12,7 @@ public class EditorBMap : Editor {
 		DrawDefaultInspector();
 		if(GUILayout.Button("Inistantiate Map"))
 			myTarget.InstantiateMap();
+		if(GUILayout.Button("Spawn obstacles"))
+			myTarget.SpawnObstacles();
 	}
 }

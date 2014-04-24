@@ -61,6 +61,8 @@ public class BView : MonoBehaviour
 		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
 		moveMarker = (GameObject) Instantiate(bMoveMarkerPrefab);
 
+		// re-roll obstacles on each start
+		bMap.SpawnObstacles();
 
 		MapTile[][] mapTiles = new MapTile[bMap.lengthX][];
 		for (int i = 0; i < bMap.lengthX; i++) {
