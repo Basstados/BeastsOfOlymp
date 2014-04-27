@@ -1,2 +1,14 @@
 /Library
 /Temp
+
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-Editor-vs.csproj
+Assembly-CSharp-firstpass.csproj
+Assembly-CSharp-firstpass-vs.csproj
+Assembly-CSharp-vs.csproj
+Assembly-UnityScript.unityproj
+Assembly-UnityScript-vs.unityproj
+Unity Project.sln
+Unity Project.userprefs
+Unity Project-csharp.sln
