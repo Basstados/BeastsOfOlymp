@@ -6,7 +6,8 @@ using System;
 public class BMapTile : MonoBehaviour {
 
 	public Material defaultMaterial;
-	public Material rangeMaterial;
+	public Material moveRangeMaterial;
+	public Material attackRangeMaterial;
 	public Material pathMaterial;
 	public Material attackAreaMaterial;
 	public Material clickableMaterial;
@@ -22,19 +23,13 @@ public class BMapTile : MonoBehaviour {
 
 	public bool Clickable { get; set; }
 
-	Color defaultColor;
-
 	public enum ColorState {
-		INRANGE,
+		MOVERANGE,
+		ATTACKRANGE,
 		DEFAULT,
 		PATH,
 		CLICKABLE,
 		ATTACKAREA
-	}
-
-	void Awake() 
-	{
-		defaultColor = renderer.material.color;
 	}
 
 	public void ChangeColorState(BMapTile.ColorState colorState)
@@ -43,8 +38,13 @@ public class BMapTile : MonoBehaviour {
 		this.colorState = colorState;
 
 		switch(colorState) {
-		case ColorState.INRANGE:
-			renderer.sharedMaterial = rangeMaterial;
+		case ColorState.MOVERANGE:
+			renderer.sharedMaterial = moveRangeMaterial;
+			this.Clickable = true;
+			break;
+		case ColorState.ATTACKRANGE:
+			renderer.sharedMaterial = attackRangeMaterial;
+			this.Clickable = true;
 			break;
 		case ColorState.PATH:
 			renderer.sharedMaterial = pathMaterial;

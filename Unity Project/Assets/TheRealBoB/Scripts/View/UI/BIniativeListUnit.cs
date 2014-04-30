@@ -92,9 +92,11 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		transform.localPosition = targetPostion;
 	}
 
-	/**
-	 * Unit will be compared by there speed value
-	 */ 
+	/// <summary>
+	/// Unit will be compared by there speed value
+	/// </summary>
+	/// <returns>Return value is less than 0 if this comes before obj when sorted. Value = 0 if both on the same sort position. Value > 0 if obj comes first.</returns>
+	/// <param name="obj">Object.</param>
 	public int CompareTo(object obj) 
 	{
 		if (obj == null)

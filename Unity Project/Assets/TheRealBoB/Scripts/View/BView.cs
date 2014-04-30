@@ -367,40 +367,44 @@ public class BView : MonoBehaviour
 			for (int j = 0; j < distMatrix[i].Length; j++) {
 				if(range >= distMatrix[i][j]) {
 					if(range == 0 || distMatrix[i][j] != 0)
-						HighlightBMapTile(bMap[i,j], mode);
+						HighlightBMapTile(bMap[i,j], mode, ignoreUnits);
 				}
 			}
 		}
 	}
 
-	void HighlightBMapTile(BMapTile bMapTile, int mode)
+	void HighlightBMapTile(BMapTile bMapTile, int mode, bool isAttackRange)
 	{
 		switch(mode) 
 		{
-		case DisplayRangeMode.TEAM_0_CLICKABLE:
-			// mark BMapTile as clickable if there is a unit of team 0 on top
-			// use inRange material else
-			if(bMapTile.mapTile.unit != null) {
-				if(bMapTile.mapTile.unit.team == Unit.Team.AI) 
-					bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
-			} else {
-				bMapTile.ChangeColorState(BMapTile.ColorState.INRANGE);
-			}
-			break;
-		case DisplayRangeMode.TEAM_1_CLICKABLE:
-			// mark BMapTile as clickable if there is a unit of team 1 on top
-			// use inRange material else
-			if(bMapTile.mapTile.unit != null) {
-				if(bMapTile.mapTile.unit.team == Unit.Team.PLAYER)
-					bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
-			} else {
-				bMapTile.ChangeColorState(BMapTile.ColorState.INRANGE);
-			}
-			break;
-		case DisplayRangeMode.ALL_CLICKABLE:
-			// mark the BMapTile alweays as clickable
-			bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
-			break;
+			case DisplayRangeMode.TEAM_0_CLICKABLE:
+				// mark BMapTile as clickable if there is a unit of team 0 on top
+				// use inRange material else
+				if(bMapTile.mapTile.unit != null) {
+					if(bMapTile.mapTile.unit.team == Unit.Team.AI) 
+						bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
+				} else {
+					bMapTile.ChangeColorState(BMapTile.ColorState.MOVERANGE);
+				}
+				break;
+			case DisplayRangeMode.TEAM_1_CLICKABLE:
+				// mark BMapTile as clickable if there is a unit of team 1 on top
+				// use inRange material else
+				if(bMapTile.mapTile.unit != null) {
+					if(bMapTile.mapTile.unit.team == Unit.Team.PLAYER)
+						bMapTile.ChangeColorState(BMapTile.ColorState.CLICKABLE);
+				} else {
+					bMapTile.ChangeColorState(BMapTile.ColorState.MOVERANGE);
+				}
+				break;
+			case DisplayRangeMode.ALL_CLICKABLE:
+				// mark the BMapTile alweays as clickable
+				// use different color states for attack range and move range
+				if(isAttackRange)
+					bMapTile.ChangeColorState(BMapTile.ColorState.ATTACKRANGE);
+				else
+					bMapTile.ChangeColorState(BMapTile.ColorState.MOVERANGE);
+				break;
 		}
 	}
 
