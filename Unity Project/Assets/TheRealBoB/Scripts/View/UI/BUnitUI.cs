@@ -5,6 +5,7 @@ public class BUnitUI : MonoBehaviour {
 
 	public UISprite typeSprite;
 	public UISlider lifebar;
+	public UILabel healthLabel;
 	public Color playerColor;
 	public Color aiColor;
 	public UILabel nameLabel;
@@ -31,6 +32,7 @@ public class BUnitUI : MonoBehaviour {
 		// set name label
 		nameLabel.text = parent.unit.UnitName;
 		typeSprite.spriteName = parent.unit.Element.elementName;
+		healthLabel.text = parent.unit.MaxHealthPoints + "/" + parent.unit.MaxHealthPoints;
 
 		initalized = true;
 	}
@@ -40,6 +42,7 @@ public class BUnitUI : MonoBehaviour {
 		if(!initalized) return;
 
 		lifebar.value = parent.unit.HealthPoints / (float) parent.unit.MaxHealthPoints;
+		healthLabel.text = parent.unit.HealthPoints + "/" + parent.unit.MaxHealthPoints;
 	}
 
 	public void ShowDamage(int damage)
