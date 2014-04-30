@@ -106,4 +106,12 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		else
 			throw new ArgumentException("Object is not a Unit");
 	}
+
+	public void OnClick() 
+	{
+		Vector3 pos = new Vector3(this.unit.mapTile.x, 0, this.unit.mapTile.y);
+		// BCameraMover is attached to the parent of the main camera
+		// use BCameraMover.Focus(Vector3) to let the camera focus on the unit related to this InitListUnit
+		Camera.main.transform.parent.GetComponent<BCameraMover>().Focus(pos);
+	}
 }
