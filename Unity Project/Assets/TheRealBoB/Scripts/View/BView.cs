@@ -9,7 +9,6 @@ public class BView : MonoBehaviour
 	public GameObject bMapTilePrefab;
 	public GameObject bCombatMenuPrefab;
 	public GameObject bActiveMarkerPrefab;
-	public GameObject bMoveMarkerPrefab;
 
 	public BIniativeList bInitativeList;
 	public BMap bMap;
@@ -23,7 +22,6 @@ public class BView : MonoBehaviour
 	BCameraMover bCameraMover;
 
 	GameObject unitMarker;
-	GameObject moveMarker;
 
 	Queue<EventProxyArgs> eventQueue = new Queue<EventProxyArgs>();
 	bool performingEvent = false;
@@ -59,10 +57,6 @@ public class BView : MonoBehaviour
 
 		// instatiate marker
 		unitMarker = (GameObject) Instantiate(bActiveMarkerPrefab);
-		moveMarker = (GameObject) Instantiate(bMoveMarkerPrefab);
-
-		// re-roll obstacles on each start
-		bMap.SpawnObstacles();
 
 		MapTile[][] mapTiles = new MapTile[bMap.lengthX][];
 		for (int i = 0; i < bMap.lengthX; i++) {
@@ -441,8 +435,6 @@ public class BView : MonoBehaviour
 			}
 		}
 
-		// hide moveMarker
-		moveMarker.SetActive(false);
 		BParticleManager.DisbaleEffect("FieldMarker");
 	}
 

@@ -2,8 +2,7 @@
 using System.Collections;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(BUnit))]
-public class UnitGridPlacer : MonoBehaviour {
+public class GridPlacer : MonoBehaviour {
 
 	private Vector3 position;
 	private Quaternion rotation;

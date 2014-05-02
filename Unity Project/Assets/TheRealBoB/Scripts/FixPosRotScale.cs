@@ -16,8 +16,8 @@ public class FixPosRotScale : MonoBehaviour {
 		if (Application.isPlaying)
 			Destroy(this);
 
-		position = this.transform.position;
-		rotation = this.transform.rotation;
+		position = this.transform.localPosition;
+		rotation = this.transform.localRotation;
 		scale = this.transform.localScale;
 	}
 
@@ -32,10 +32,10 @@ public class FixPosRotScale : MonoBehaviour {
 			return;
 		}
 
-		if(this.transform.position != position)
-			this.transform.position = position;
-		if(this.transform.rotation != rotation)
-			this.transform.rotation = rotation;
+		if(this.transform.localPosition != position)
+			this.transform.localPosition = position;
+		if(this.transform.localRotation != rotation)
+			this.transform.localRotation = rotation;
 		if(this.transform.localScale != scale)
 			this.transform.localScale = scale;
 	}

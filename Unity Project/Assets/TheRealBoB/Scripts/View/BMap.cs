@@ -69,7 +69,12 @@ public class BMap : MonoBehaviour {
 		}
 	}
 
-	public void SpawnObstacles() {
+	/// <summary>
+	/// Delete old obstacles and place new obstalces randomly on the map.
+	/// Doesn't place obstalce on fields taken by units.
+	/// </summary>
+	public void SpawnObstacles() 
+	{
 		// clear old obstacles
 		foreach(GameObject ob in obstacles) {
 			// reset penalty
@@ -115,6 +120,25 @@ public class BMap : MonoBehaviour {
 
 			obstacles[i] = handle;
 			bMapTiles[vec.x + vec.y * gridSizeX].mapTile.Penalty = 0;
+		}
+	}
+
+	/// <summary>
+	/// Update mapTile penaltys respecting obstacles
+	/// </summary>
+	public void UpdateMap() 
+	{
+		// reset mapTile penlatys
+		foreach(BMapTile bMapTile in bMapTiles) {
+			bMapTile.mapTile.Penalty = 1; // penalty = 1 is the default value
+		}
+
+		// apply penlaty for mapTiles taken by obstacles
+		GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+		foreach(GameObject ob in obstacles) {
+			int x = Mathf.FloorToInt(ob.transform.localPosition.x);
+			int y = Mathf.FloorToInt(ob.transform.localPosition.z); // world z is 2nd coordiante on the grid (y)
+			bMapTiles[x + y *gridSizeX].mapTile.Penalty = 0; // pentaly = 0  <=> maptile is taken
 		}
 	}
 }

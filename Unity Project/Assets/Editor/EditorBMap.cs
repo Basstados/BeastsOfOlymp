@@ -14,5 +14,7 @@ public class EditorBMap : Editor {
 			myTarget.InstantiateMap();
 		if(GUILayout.Button("Spawn obstacles"))
 			myTarget.SpawnObstacles();
+		if(GUILayout.Button("Update map"))
+			myTarget.UpdateMap();
 	}
 }
