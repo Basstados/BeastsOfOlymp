@@ -38,20 +38,14 @@ public class BMap : MonoBehaviour {
 	public void InstantiateMap()
 	{
 		if(!Application.isEditor) return;
-		// destroy old map
-//		if(bMapTiles != null)
-//			for (int i = 0; i < bMapTiles.Length; i++) {
-//				for (int j = 0; j < bMapTiles[i].Length; j++) {
-//				if(bMapTiles[i + j * gridSizeX].gameObject != null)
-//						DestroyImmediate(bMapTiles[i][j].gameObject);
-//				}
-//			}
+
 		List<GameObject> children = new List<GameObject>();
 		for (int i = 0; i < transform.childCount; i++) {
 			children.Add(transform.GetChild(i).gameObject);
 		}
 		foreach(GameObject go in children)
 			DestroyImmediate(go);
+		obstacles = null;
 
 		bMapTiles = new BMapTile[gridSizeX * gridSizeY];
 		for (int i = 0; i < gridSizeX; i++) {
@@ -76,18 +70,19 @@ public class BMap : MonoBehaviour {
 	public void SpawnObstacles() 
 	{
 		// clear old obstacles
-		foreach(GameObject ob in obstacles) {
-			// reset penalty
-			int x = Mathf.FloorToInt(ob.transform.localPosition.x);
-			int y = Mathf.FloorToInt(ob.transform.localPosition.z);
-			bMapTiles[x + y *gridSizeX].mapTile.Penalty = 1;
-			// destroy gameobject
-			if(Application.isEditor) {
-				DestroyImmediate(ob);
-			} else {
-				Destroy(ob);
+		if(obstacles != null)
+			foreach(GameObject ob in obstacles) {
+				// reset penalty
+				int x = Mathf.FloorToInt(ob.transform.localPosition.x);
+				int y = Mathf.FloorToInt(ob.transform.localPosition.z);
+				bMapTiles[x + y *gridSizeX].mapTile.Penalty = 1;
+				// destroy gameobject
+				if(Application.isEditor) {
+					DestroyImmediate(ob);
+				} else {
+					Destroy(ob);
+				}
 			}
-		}
 
 		// create list of taken fields
 		List<Vector> takenFields = new List<Vector>();

@@ -92,9 +92,11 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 		transform.localPosition = targetPostion;
 	}
 
-	/**
-	 * Unit will be compared by there speed value
-	 */ 
+	/// <summary>
+	/// Unit will be compared by there speed value
+	/// </summary>
+	/// <returns>Return value is less than 0 if this comes before obj when sorted. Value = 0 if both on the same sort position. Value > 0 if obj comes first.</returns>
+	/// <param name="obj">Object.</param>
 	public int CompareTo(object obj) 
 	{
 		if (obj == null)
@@ -105,5 +107,13 @@ public class BIniativeListUnit : MonoBehaviour, IComparable {
 			return otherUnit.Initiative.CompareTo(this.unit.Initiative);
 		else
 			throw new ArgumentException("Object is not a Unit");
+	}
+
+	public void OnClick() 
+	{
+		Vector3 pos = new Vector3(this.unit.mapTile.x, 0, this.unit.mapTile.y);
+		// BCameraMover is attached to the parent of the main camera
+		// use BCameraMover.Focus(Vector3) to let the camera focus on the unit related to this InitListUnit
+		Camera.main.transform.parent.GetComponent<BCameraMover>().Focus(pos);
 	}
 }
