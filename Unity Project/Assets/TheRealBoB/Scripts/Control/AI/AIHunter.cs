@@ -124,6 +124,10 @@ public class AIHunter : IArtificalIntelligence {
 		grid[attackTarget.mapTile.x, attackTarget.mapTile.y] = attackTarget.mapTile.PenaltyIgnoreUnit;
 
 		Path path = controller.GetPath(controlledUnit.mapTile,attackTarget.mapTile,grid);
+		if(path.Empty) {
+			attackTarget = null; // clear attack target and search a new one next turn
+			return moveDestionation;
+		}
 		path.DropLast();
 		while(path.Cost > controlledUnit.MovePoints) {
 			// remove last maptile from path until the cost are lower than action points

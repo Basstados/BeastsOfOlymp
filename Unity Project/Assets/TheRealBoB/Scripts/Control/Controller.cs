@@ -163,6 +163,7 @@ public class Controller
 				str += "\n";
 			}
 			Debug.LogError("Grid: \n " + str);
+			return new Path();
 		}
 		// convert to easy-usable path object
 		Path path = GeneratePathObject(result);

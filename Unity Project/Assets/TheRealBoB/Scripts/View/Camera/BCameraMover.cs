@@ -17,6 +17,7 @@ public class BCameraMover : MonoBehaviour {
 			return target;
 		}
 		set {
+			// ensure the focus target is inside the camera move area
 			target = value;
 			target.x = Mathf.Clamp(target.x, minX, maxX);
 			target.y = 0f;

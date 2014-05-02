@@ -27,7 +27,7 @@ public class CStartTurn : ICommand
 
 		// activate next unit
 		model.ActivateUnit(unit);
-		EventProxyManager.FireEvent (this, new TurnStartedEvent (unit, model.combat.round, model.combat.turn));
+		EventProxyManager.FireEvent(this, new TurnStartedEvent (unit, model.combat.round, model.combat.turn));
 	}
 }
 

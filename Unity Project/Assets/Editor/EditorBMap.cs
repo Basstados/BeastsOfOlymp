@@ -10,11 +10,18 @@ public class EditorBMap : Editor {
 		BMap myTarget = (BMap) target;
 
 		DrawDefaultInspector();
-		if(GUILayout.Button("Inistantiate Map"))
+		if(GUILayout.Button("Instantiate Map")) {
 			myTarget.InstantiateMap();
-		if(GUILayout.Button("Spawn obstacles"))
+			Debug.Log("Instantiate map successful!");
+		}
+		if(GUILayout.Button("Spawn obstacles")) {
 			myTarget.SpawnObstacles();
-		if(GUILayout.Button("Update map"))
+			Debug.Log("Spawning obstacles completed!");
+		}
+		if(GUILayout.Button("Update map")) {
 			myTarget.UpdateMap();
+			Debug.Log("Update map penalties completed!");
+		}
+			
 	}
 }
