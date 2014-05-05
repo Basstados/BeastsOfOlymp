@@ -12,22 +12,36 @@ public class MapTile
 	{
 		get
 		{
-			return (unit == null) ? penalty : (byte) 0;
+			return (unit == null) ? PenaltyIgnoreUnit : (byte) 0;
 		}
 		set
 		{
 			penalty = value;
 		}
 	}
-	public byte PenaltyIgnoreUnit {get{return penalty;}}
-	// which unit is sitting here
+	public byte PenaltyIgnoreUnit 
+	{
+		get
+		{
+			// return 0 if topping is blocking
+			if(topping !=null)
+				if(topping.IsBlocking()) return 0;
+
+			return penalty;
+		}
+	}
+	// which unit is sitting here right now
 	[NonSerialized]
 	public Unit unit;
+	// what ever else may be lieing/standing here
+	public Topping topping;
 	// coordinates
+	[HideInInspector]
 	public int x;
+	[HideInInspector]
 	public int y;
 
-	public MapTile (int x, int y)
+	public MapTile(int x, int y)
 	{
 		this.x = x;
 		this.y = y;

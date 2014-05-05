@@ -27,16 +27,12 @@ public class BMap : MonoBehaviour {
 	public int lengthX { get{return gridSizeX; }}
 	public int lengthY { get{return gridSizeY; }}
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	/// <summary>
 	/// Remove old map and instantiate new mapTiles.
 	/// </summary>
 	public void InstantiateMap()
 	{
+		Debug.Log("Instantiate Map");
 		if(!Application.isEditor) return;
 
 		List<GameObject> children = new List<GameObject>();

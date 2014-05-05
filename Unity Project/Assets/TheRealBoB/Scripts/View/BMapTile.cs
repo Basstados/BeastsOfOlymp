@@ -13,7 +13,9 @@ public class BMapTile : MonoBehaviour {
 	public Material clickableMaterial;
 
 	public MapTile mapTile;
-	public ColorState colorState;
+	public ToppingType topping; // the topping type wich will be instantiate on game start
+	[HideInInspector]
+	public ColorState colorState; // the current visual state of this instance
 
 	public bool InRange {
 		get {
@@ -22,6 +24,11 @@ public class BMapTile : MonoBehaviour {
 	}
 
 	public bool Clickable { get; set; }
+
+	public enum ToppingType {
+		NONE,
+		SOLID_OBSTACLE
+	}
 
 	public enum ColorState {
 		MOVERANGE,
@@ -61,6 +68,19 @@ public class BMapTile : MonoBehaviour {
 		default:
 			renderer.sharedMaterial = defaultMaterial;
 			this.Clickable = false;
+			break;
+		}
+	}
+
+	public void UpdateTopping()
+	{
+		switch(topping)
+		{
+		case ToppingType.NONE:
+			mapTile.topping = null;
+			break;
+		case ToppingType.SOLID_OBSTACLE:
+			mapTile.topping = new SolidObstacle();
 			break;
 		}
 	}

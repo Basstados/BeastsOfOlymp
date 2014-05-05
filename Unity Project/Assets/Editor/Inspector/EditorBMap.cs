@@ -5,7 +5,7 @@ using System.Collections;
 [CustomEditor(typeof(BMap))]
 public class EditorBMap : Editor {
 
-	 public override void OnInspectorGUI ()
+	public override void OnInspectorGUI ()
 	{
 		BMap myTarget = (BMap) target;
 
@@ -22,6 +22,5 @@ public class EditorBMap : Editor {
 			myTarget.UpdateMap();
 			Debug.Log("Update map penalties completed!");
 		}
-			
 	}
 }
