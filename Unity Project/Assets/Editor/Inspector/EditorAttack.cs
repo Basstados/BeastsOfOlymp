@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -21,7 +21,7 @@ public class EditorAttack : Editor {
 		string oldName = myTarget.attackName; // save old name to rename asset later
 		myTarget.attackName 	= EditorGUILayout.TextField("Name",myTarget.attackName);
 		EditorGUILayout.Separator();
-		myTarget.type			= (Element) EditorGUILayout.ObjectField("Type",myTarget.type,typeof(Element),false);
+		myTarget.element			= (Element) EditorGUILayout.ObjectField("Type",myTarget.element,typeof(Element),false);
 		myTarget.damage 		= EditorGUILayout.IntField("Damage",myTarget.damage);
 		myTarget.hitChance		= EditorGUILayout.Slider("Hit Chance", myTarget.hitChance, 0f, 1f);
 		myTarget.range			= EditorGUILayout.IntField("Range",myTarget.range);

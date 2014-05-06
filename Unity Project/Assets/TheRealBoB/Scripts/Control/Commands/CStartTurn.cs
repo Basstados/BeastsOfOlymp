@@ -25,6 +25,10 @@ public class CStartTurn : ICommand
 			return;
 		}
 
+		// execute field effect for active unit
+		if(unit.mapTile.topping != null)
+			unit.mapTile.topping.OnStayEffect(unit.mapTile, unit);
+
 		// activate next unit
 		model.ActivateUnit(unit);
 		EventProxyManager.FireEvent(this, new TurnStartedEvent (unit, model.combat.round, model.combat.turn));

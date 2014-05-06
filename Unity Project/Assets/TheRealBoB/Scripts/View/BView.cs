@@ -62,6 +62,7 @@ public class BView : MonoBehaviour
 		for (int i = 0; i < bMap.lengthX; i++) {
 			mapTiles[i] = new MapTile[bMap.lengthY];
 			for (int j = 0; j < bMap.lengthY; j++) {
+				bMap[i, j].UpdateTopping(); // this is required to tranfer the topping data to the mapTile
 				mapTiles[i][j] = bMap[i,j].mapTile;
 			}
 		}

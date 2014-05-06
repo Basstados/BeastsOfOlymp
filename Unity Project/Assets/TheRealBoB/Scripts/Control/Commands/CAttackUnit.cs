@@ -60,10 +60,14 @@ public class CAttackUnit : ICommand
 				y = target.y + rotPt.y;
 				// check if field is inside grid
 				if(model.IsPointOnGrid(new Vector(x,y))) {
+					// do attack effect on mapTile
+					if(model.mapTiles[x][y].topping != null)
+						model.mapTiles[x][y].topping.OnAttackEffect(model.mapTiles[x][y], attack);
+
 					// check field for units
 					if(model.mapTiles[x][y].unit != null) {
 						Unit unit = model.mapTiles[x][y].unit;
-						
+
 						// calculate and apply damage to unit
 						typeModifier = CalcTypeModifier(attack, unit);
 						efficency = (byte) ((typeModifier > 1f) ? 2 : (typeModifier == 1f) ? 1 : 0);
@@ -111,13 +115,13 @@ public class CAttackUnit : ICommand
 	{
 		// calculate type modifier
 		float typeModifier = 1f;
-		if(attack.type.strengths.Length > 0)
-			if(Array.Exists(attack.type.strengths, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
+		if(attack.element.strengths.Length > 0)
+			if(Array.Exists(attack.element.strengths, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
 				// modifier when type is very effectiv
 				typeModifier *= 1.5f;
 			}
-		if(attack.type.weaknesses.Length > 0)
-			if(Array.Exists(attack.type.weaknesses, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
+		if(attack.element.weaknesses.Length > 0)
+			if(Array.Exists(attack.element.weaknesses, delegate(Element t) { return t.elementName == unit.Element.elementName; })) {
 				// modifier when type is not effectiv
 				typeModifier *= 0.5f;
 			}

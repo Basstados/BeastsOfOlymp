@@ -46,7 +46,7 @@ public class BUnit : MonoBehaviour {
 
 	public void Activate()
 	{
-
+		unitUI.UpdateLifebar(); // TMP, need a better way to update lifebar regulary
 		//PopupCombatMenu();
 		ClearDisplayRange();
 		if(unit.team == Unit.Team.PLAYER)
@@ -193,7 +193,7 @@ public class BUnit : MonoBehaviour {
 	public void PlayHitAnimation(byte efficeny, int damage)
 	{
 		if(damage > 0) {
-			unitUI.UpdateLivebar();
+			unitUI.UpdateLifebar();
 			StartCoroutine(bUnitAnimator.DamageFlashRoutine());
 			StartCoroutine(bUnitAnimator.ShakeRoutine(0.25f * efficeny,0.1f * efficeny));
 		} else {

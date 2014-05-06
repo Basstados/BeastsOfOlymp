@@ -37,7 +37,7 @@ public class BUnitUI : MonoBehaviour {
 		initalized = true;
 	}
 
-	public void UpdateLivebar() 
+	public void UpdateLifebar() 
 	{
 		if(!initalized) return;
 
