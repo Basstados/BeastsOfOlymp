@@ -5,14 +5,9 @@ using System.Text;
 
 class BreakableObstacle : Topping
 {
-    /// <summary>
-    /// Determines whether this topping in blocking the field or not.
-    /// Breakable obstacles are not passable.
-    /// </summary>
-    /// <returns><c>true</c> if this topping is blocking; otherwise, <c>false</c>.</returns>
-    public override bool IsBlocking()
+    public BreakableObstacle(MapTile mapTile) : base(mapTile) 
     {
-        return true;
+        isObstacle = true;
     }
 
     /// <summary>

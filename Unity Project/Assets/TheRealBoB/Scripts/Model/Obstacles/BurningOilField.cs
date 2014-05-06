@@ -2,16 +2,11 @@ using System;
 
 public class BurningOilField : Topping
 {
-    int damagePerTurn = 1;
+    int damagePerTurn = 2;
 
-    /// <summary>
-    /// Determines whether this topping in blocking the field or not.
-    /// Oil field are passable
-    /// </summary>
-    /// <returns><c>true</c> if this topping is blocking; otherwise, <c>false</c>.</returns>
-    public override bool IsBlocking()
+    public BurningOilField(MapTile mapTile) : base(mapTile)
     {
-        return false;
+        duration = 1;
     }
 
     /// <summary>

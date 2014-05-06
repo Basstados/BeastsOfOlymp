@@ -3,14 +3,10 @@ using UnityEngine;
 
 public class SolidObstacle : Topping
 {
-	/// <summary>
-	/// The solid obstacle is always block, so it always returns true.
-	/// </summary>
-	/// <returns><c>true</c> if this instance is blocking; otherwise, <c>false</c>.</returns>
-	public override bool IsBlocking ()
-	{
-		return true;
-	}
+    public SolidObstacle(MapTile mapTile) : base(mapTile)
+    {
+        isObstacle = true;
+    }
 
 	/// <summary>
 	/// The effect that will happen, if a unit stands on the field with this topping.

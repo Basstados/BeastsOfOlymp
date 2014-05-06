@@ -3,11 +3,31 @@ using UnityEngine;
 
 public abstract class Topping {
 
-	/// <summary>
-	/// Determines whether this topping in blocking the field or not.
-	/// </summary>
-	/// <returns><c>true</c> if this topping is blocking; otherwise, <c>false</c>.</returns>
-	public abstract bool IsBlocking();
+    // Is this topping blocking the field?
+    protected bool isObstacle = false;
+    public bool IsObstacle { get { return isObstacle; } }
+    // How many turn will this topping persist?
+    protected int duration = -1; // duration < 0 leads to infinit stay
+
+    MapTile mapTile;
+
+    public Topping(MapTile mapTile)
+    {
+        this.mapTile = mapTile;
+
+        EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
+    }
+
+    /// <summary>
+    /// Count the duration down to 0; If duration == 0 remove this obstacle
+    /// </summary>
+    private void HandleRoundSetup(object sender, EventProxyArgs args)
+    {
+        Debug.Log("Duration is now: " + duration);
+        if (duration > 0) duration--;
+        if (duration == 0) mapTile.topping = null; // remove this topping
+    }
+
 	/// <summary>
 	/// The effect that will happen, if a unit stands on the field with this topping.
 	/// </summary>

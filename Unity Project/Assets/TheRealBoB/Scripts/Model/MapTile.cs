@@ -25,7 +25,7 @@ public class MapTile
 		{
 			// return 0 if topping is blocking
 			if(topping !=null)
-				if(topping.IsBlocking()) return 0;
+				if(topping.IsObstacle) return 0;
 
 			return penalty;
 		}

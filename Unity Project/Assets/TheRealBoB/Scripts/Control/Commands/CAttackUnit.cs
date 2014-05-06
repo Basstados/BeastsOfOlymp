@@ -61,8 +61,13 @@ public class CAttackUnit : ICommand
 				// check if field is inside grid
 				if(model.IsPointOnGrid(new Vector(x,y))) {
 					// do attack effect on mapTile
-					if(model.mapTiles[x][y].topping != null)
-						model.mapTiles[x][y].topping.OnAttackEffect(model.mapTiles[x][y], attack);
+                    if (model.mapTiles[x][y].topping != null)
+                    {
+                        //recursivly check all neighbour fields if they are of the same topping type
+                        checkedMapTiles.Clear(); // reset list
+                        RecursivlyEffectToppings(model.mapTiles[x][y], attack);
+                    }
+						
 
 					// check field for units
 					if(model.mapTiles[x][y].unit != null) {
@@ -93,6 +98,43 @@ public class CAttackUnit : ICommand
 			}
 		}
 	}
+
+    // to be secure we make a list of already checked mapTiles, so the recusion will not be endless
+    List<Vector> checkedMapTiles = new List<Vector>();
+
+    private void RecursivlyEffectToppings(MapTile mapTile, Attack attack)
+    {
+        // stopping condition
+        if (checkedMapTiles.Contains(new Vector(mapTile.x, mapTile.y)))
+            return;
+
+        // save which type we are looking for
+        Type toppingType = mapTile.topping.GetType();
+
+        // apply effect to current mapTile
+        mapTile.topping.OnAttackEffect(mapTile, attack);
+        checkedMapTiles.Add(new Vector(mapTile.x, mapTile.y));
+
+        // list of all relative neighbours
+        Vector[] nghb = new Vector[] {new Vector(1,0), new Vector(0,-1), new Vector(-1,0), new Vector(0,1)};
+
+        // loop over all neighbours
+        foreach (Vector vec in nghb)
+        {
+            Vector pos = new Vector(mapTile.x + vec.x, mapTile.y + vec.y);
+            if (model.IsPointOnGrid(pos))
+            {
+                if (model.mapTiles[pos.x][pos.y].topping != null)
+                {
+                    if (model.mapTiles[pos.x][pos.y].topping.GetType() == toppingType)
+                    {
+                        // this neighbour mapTile has the same topping, so spread the effect
+                        RecursivlyEffectToppings(model.mapTiles[pos.x][pos.y], attack);
+                    }
+                }
+            }
+        }
+    }
 
 	/// <summary>
 	/// Calculate the distance between to maptile with manhatten norm, ignoring its weights

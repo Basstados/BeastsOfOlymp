@@ -127,16 +127,16 @@ public class BMapTile : MonoBehaviour
                 mapTile.topping = null;
                 break;
             case ToppingType.SOLID_OBSTACLE:
-                mapTile.topping = new SolidObstacle();
+                mapTile.topping = new SolidObstacle(mapTile);
                 break;
             case ToppingType.OIL:
-                mapTile.topping = new OilField();
+                mapTile.topping = new OilField(mapTile);
                 break;
             case ToppingType.BURNING_OIL:
-                mapTile.topping = new BurningOilField();
+                mapTile.topping = new BurningOilField(mapTile);
                 break;
             case ToppingType.BREAKABLE_OBSTACLE:
-                mapTile.topping = new BreakableObstacle();
+                mapTile.topping = new BreakableObstacle(mapTile);
                 break;
         }
 

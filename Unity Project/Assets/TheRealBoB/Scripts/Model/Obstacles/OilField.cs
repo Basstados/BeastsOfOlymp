@@ -2,15 +2,8 @@ using System;
 
 public class OilField : Topping
 {
-	/// <summary>
-	/// Determines whether this topping in blocking the field or not.
-	/// Oil field are passable
-	/// </summary>
-	/// <returns><c>true</c> if this topping is blocking; otherwise, <c>false</c>.</returns>
-	public override bool IsBlocking()
-	{
-		return false;
-	}
+
+    public OilField(MapTile mapTile) : base(mapTile) { }
 
 	/// <summary>
 	/// The effect that will happen, if a unit stands on the field with this topping.
@@ -32,7 +25,7 @@ public class OilField : Topping
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
 		if(attack.element.elementName == "Feuer") {
-			mapTile.topping = new BurningOilField();
+			mapTile.topping = new BurningOilField(mapTile);
 		}
 	}
 }
