@@ -123,11 +123,54 @@ public class Controller
 	public byte[][] GetDistanceMatrix(Vector position, int range, bool ignoreUnits)
 	{
 		if(ignoreUnits) {
-			model.UseAttackGrid();
+			//model.UseAttackGrid();
+			GetAttackDistanceMatrix(position, range);
 		} else {
 			model.UseMoveGrid();
 		}
 		return pathFinder.GetDistanceMatrix(position, range);
+	}
+
+	public byte[][] GetAttackDistanceMatrix(Vector position, int range)
+	{
+		model.UseAttackGrid();
+		byte[][] grid = pathFinder.GetDistanceMatrix(position, range);
+
+		// relativ vector for all neighbour of any field
+		Vector[] nghb = new Vector[]{new Vector(1,0), new Vector(0,-1), new Vector(-1,0), new Vector(0,1)};
+
+		// get a list of all obstacles in range
+		///// maybe better: get obstacles from mobel.grid where penlaty = 0
+		List<Vector> obstaclesInRange = new List<Vector>();
+		for (int i = 0; i < grid.Length; i++) {
+			for (int j = 0; j < grid[i].Length; j++) {
+				// if any neighbour is closer than max range, we interpretate this field as an obstacle
+				if(grid[i][j] == 255) {
+					// find lowest neighbour
+					byte minNeighbour = 255;
+					foreach(Vector vec in nghb) {
+						byte x = (byte) (i + vec.x);
+						byte y = (byte) (j + vec.y);
+						// check if we are still inside the grid
+						if(grid.Length > x && grid[i].Length > y) {
+							// check for new min
+							if(minNeighbour > grid[x][y])
+								minNeighbour = grid[x][y];
+						}
+					}
+					// if min < max range, this is an unreachable field in range
+					// so we assume this is an obstacle
+					if(minNeighbour < range-1) {
+						obstaclesInRange.Add(new Vector(i,j));
+					}
+				}
+			}
+		}
+
+		// foreach obstacle find all fields which are blocked by this obstacle
+		int a = 5;
+
+		return null;
 	}
 
 	/// <summary>
