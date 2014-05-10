@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class BMainMenueCredits : MonoBehaviour {
+public class BMainMenueSubPanel : MonoBehaviour {
 
 	public GameObject mainMenuePanel;
 
