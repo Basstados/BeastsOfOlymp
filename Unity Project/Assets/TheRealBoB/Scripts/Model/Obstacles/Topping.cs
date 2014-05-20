@@ -8,8 +8,10 @@ public abstract class Topping {
     public bool IsObstacle { get { return isObstacle; } }
     // How many turn will this topping persist?
     protected int duration = -1; // duration < 0 leads to infinit stay
+    // The name of the prefab that will be instantiate on the topping position
+    public string prefabName;
 
-    MapTile mapTile;
+    protected MapTile mapTile;
 
     public Topping(MapTile mapTile)
     {
@@ -33,11 +35,11 @@ public abstract class Topping {
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="unit">The unit wich will effected by what ever will happen.</param>
-	public abstract void OnStayEffect(MapTile mapTile, Unit unit);
+	public abstract void OnStayEffect(Unit unit);
 	/// <summary>
 	/// The effect hat will happen, if this field will be hit by an attack.
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="attack">The attack wich triggerd this effect.</param>
-	public abstract void OnAttackEffect(MapTile mapTile, Attack attack);
+	public abstract void OnAttackEffect(Attack attack);
 }

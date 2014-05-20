@@ -156,8 +156,7 @@ public class BMapTile : MonoBehaviour
         // spawn prefab if there is any
         if (topping != BMapTile.ToppingType.NONE)
         {
-            Debug.Log(prefabPath + topping.ToString());
-            GameObject prefab = Resources.Load<GameObject>(prefabPath + topping.ToString()); // note: not .prefab!
+            GameObject prefab = Resources.Load<GameObject>(prefabPath + mapTile.topping.prefabName); // note: not .prefab!
             GameObject handle = (GameObject)Instantiate(prefab, Vector3.zero, prefab.transform.rotation);
             handle.transform.parent = this.transform;
             handle.transform.localPosition = Vector3.zero;

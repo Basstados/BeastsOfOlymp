@@ -27,7 +27,7 @@ public class CStartTurn : ICommand
 
 		// execute field effect for active unit
 		if(unit.mapTile.topping != null)
-			unit.mapTile.topping.OnStayEffect(unit.mapTile, unit);
+			unit.mapTile.topping.OnStayEffect(unit);
 
 		// activate next unit
 		model.ActivateUnit(unit);

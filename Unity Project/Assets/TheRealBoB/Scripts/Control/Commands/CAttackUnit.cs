@@ -112,7 +112,7 @@ public class CAttackUnit : ICommand
         Type toppingType = mapTile.topping.GetType();
 
         // apply effect to current mapTile
-        mapTile.topping.OnAttackEffect(mapTile, attack);
+        mapTile.topping.OnAttackEffect(attack);
         checkedMapTiles.Add(new Vector(mapTile.x, mapTile.y));
 
         // list of all relative neighbours

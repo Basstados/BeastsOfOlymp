@@ -8,6 +8,7 @@ class BreakableObstacle : Topping
     public BreakableObstacle(MapTile mapTile) : base(mapTile) 
     {
         isObstacle = true;
+        prefabName = "BREAKABLE_OBSTACLE";
     }
 
     /// <summary>
@@ -16,7 +17,7 @@ class BreakableObstacle : Topping
     /// </summary>
     /// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
     /// <param name="unit">The unit wich will effected by what ever will happen.</param>
-    public override void OnStayEffect(MapTile mapTile, Unit unit)
+    public override void OnStayEffect(Unit unit)
     {
         // do nothing
     }
@@ -27,7 +28,7 @@ class BreakableObstacle : Topping
     /// </summary>
     /// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
     /// <param name="attack">The attack wich triggerd this effect.</param>
-    public override void OnAttackEffect(MapTile mapTile, Attack attack)
+    public override void OnAttackEffect(Attack attack)
     {
         // remove this obstacle
         mapTile.topping = null;

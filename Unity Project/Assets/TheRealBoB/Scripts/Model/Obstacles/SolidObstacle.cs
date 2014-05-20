@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class SolidObstacle : Topping
 {
-    public SolidObstacle(MapTile mapTile) : base(mapTile)
-    {
-        isObstacle = true;
-    }
+	public SolidObstacle(MapTile mapTile) : base(mapTile)
+	{
+		isObstacle = true;
+		prefabName = "SOLID_OBSTACLE";
+	}
 
 	/// <summary>
 	/// The effect that will happen, if a unit stands on the field with this topping.
@@ -14,7 +15,7 @@ public class SolidObstacle : Topping
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="unit">The unit wich will effected by what ever will happen.</param>
-	public override void OnStayEffect (MapTile mapTile, Unit unit)
+	public override void OnStayEffect (Unit unit)
 	{
 		// do nothing
 	}
@@ -25,7 +26,7 @@ public class SolidObstacle : Topping
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="attack">The attack wich triggerd this effect.</param>
-	public override void OnAttackEffect (MapTile mapTile, Attack attack)
+	public override void OnAttackEffect (Attack attack)
 	{
 		// do nothing either
 	}
