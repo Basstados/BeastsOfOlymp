@@ -5,7 +5,7 @@ using System.Text;
 
 class BreakableObstacle : Topping
 {
-    public BreakableObstacle(MapTile mapTile) : base(mapTile) 
+    public BreakableObstacle() : base() 
     {
         isObstacle = true;
         prefabName = "BREAKABLE_OBSTACLE";

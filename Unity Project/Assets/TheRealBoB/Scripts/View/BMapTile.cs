@@ -34,10 +34,10 @@ public class BMapTile : MonoBehaviour
     public enum ToppingType
     {
         NONE,
-        SOLID_OBSTACLE,
-        BREAKABLE_OBSTACLE,
-        OIL,
-        BURNING_OIL
+        BreakableObstacle,
+        SolidObstacle,
+        OilField,
+        BurningOilField
     }
 
     public enum ColorState
@@ -97,16 +97,16 @@ public class BMapTile : MonoBehaviour
                 switch (mapTile.topping.GetType().ToString())
                 {
                     case "SolidObstacle":
-                        topping = ToppingType.SOLID_OBSTACLE;
+                        topping = ToppingType.SolidObstacle;
                         break;
                     case "OilField":
-                        topping = ToppingType.OIL;
+                        topping = ToppingType.OilField;
                         break;
                     case "BurningOilField":
-                        topping = ToppingType.BURNING_OIL;
+                        topping = ToppingType.BurningOilField;
                         break;
                     case "BreakableObstacle":
-                        topping = ToppingType.BREAKABLE_OBSTACLE;
+                        topping = ToppingType.BreakableObstacle;
                         break;
                     default:
                         topping = ToppingType.NONE;
@@ -121,26 +121,16 @@ public class BMapTile : MonoBehaviour
 
     public void UpdateTopping()
     {
-        switch (topping)
+        if (topping == ToppingType.NONE)
         {
-            case ToppingType.NONE:
-                mapTile.topping = null;
-                break;
-            case ToppingType.SOLID_OBSTACLE:
-                mapTile.topping = new SolidObstacle(mapTile);
-                break;
-            case ToppingType.OIL:
-                mapTile.topping = new OilField(mapTile);
-                break;
-            case ToppingType.BURNING_OIL:
-                mapTile.topping = new BurningOilField(mapTile);
-                break;
-            case ToppingType.BREAKABLE_OBSTACLE:
-                mapTile.topping = new BreakableObstacle(mapTile);
-                break;
+            mapTile.topping = null;
         }
-
-        // TODO make this more elegant (not copy-code)
+        else
+        {
+            Type t = Type.GetType(topping.ToString());
+            mapTile.topping = (Topping)Activator.CreateInstance(t);
+            mapTile.topping.mapTile = mapTile; // init reference to parent mapTile
+        }
 
         // if topping has changed, instantiate new prefab
 

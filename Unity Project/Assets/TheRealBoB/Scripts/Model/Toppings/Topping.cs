@@ -11,13 +11,16 @@ public abstract class Topping {
     // The name of the prefab that will be instantiate on the topping position
     public string prefabName;
 
-    protected MapTile mapTile;
+    public MapTile mapTile;
 
-    public Topping(MapTile mapTile)
+    public Topping() 
+    {
+        EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
+    }
+
+    public Topping(MapTile mapTile) : base()
     {
         this.mapTile = mapTile;
-
-        EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
     }
 
     /// <summary>
