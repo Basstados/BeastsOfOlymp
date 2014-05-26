@@ -28,7 +28,9 @@ public class OilField : Topping
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
 		if(attack.element.elementName == "Feuer") {
+            this.Destroy();
 			mapTile.topping = new BurningOilField();
+            mapTile.topping.Spawn(mapTile);
 		}
 	}
 }

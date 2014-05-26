@@ -16,7 +16,9 @@ public class BMapTile : MonoBehaviour
     public Material clickableMaterial;
 
     public MapTile mapTile;
+    BTopping bTopping;
     public ToppingType topping; // the topping type wich will be instantiate on game start
+    [HideInInspector]
     public Topping lastTopping; // used to track change of topping
     [HideInInspector]
     public ColorState colorState; // the current visual state of this instance
@@ -86,7 +88,7 @@ public class BMapTile : MonoBehaviour
 
     void Update()
     {
-        if (lastTopping != mapTile.topping)
+       /* if (lastTopping != mapTile.topping)
         {
             if (mapTile.topping == null)
             {
@@ -116,7 +118,7 @@ public class BMapTile : MonoBehaviour
             
             UpdateTopping();
         }
-
+        */
     }
 
     public void UpdateTopping()
@@ -129,19 +131,21 @@ public class BMapTile : MonoBehaviour
         {
             Type t = Type.GetType(topping.ToString());
             mapTile.topping = (Topping)Activator.CreateInstance(t);
-            mapTile.topping.mapTile = mapTile; // init reference to parent mapTile
+            mapTile.topping.Spawn(mapTile); // init reference to parent mapTile
         }
+        lastTopping = mapTile.topping;
+    }
 
-        // if topping has changed, instantiate new prefab
-
+    public void SpawnTopping()
+    {
         // remove old children objects
-        List<GameObject> children = new List<GameObject>();
+        /*List<GameObject> children = new List<GameObject>();
         for (int i = 0; i < transform.childCount; i++)
         {
             children.Add(transform.GetChild(i).gameObject);
         }
         foreach (GameObject go in children)
-            DestroyImmediate(go);
+            DestroyImmediate(go);*/
 
         // spawn prefab if there is any
         if (topping != BMapTile.ToppingType.NONE)
@@ -150,11 +154,17 @@ public class BMapTile : MonoBehaviour
             GameObject handle = (GameObject)Instantiate(prefab, Vector3.zero, prefab.transform.rotation);
             handle.transform.parent = this.transform;
             handle.transform.localPosition = Vector3.zero;
-
-
+            bTopping = handle.GetComponent<BTopping>();
+            if (bTopping == null) Debug.LogError("The Prefab for " + topping + " must have a BTopping component attached to!");
         }
+    }
 
-        lastTopping = mapTile.topping;
+    public void DestroyTopping()
+    {
+        if (bTopping == null) return;
+        
+        bTopping.DestroyTopping();
+        bTopping = null;
     }
 
     IEnumerator TweenRoutine(Material mat, Color c1, Color c2)

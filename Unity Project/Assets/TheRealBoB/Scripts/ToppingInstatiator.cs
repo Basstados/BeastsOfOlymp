@@ -40,12 +40,7 @@ public class ToppingInstatiator : MonoBehaviour {
 			if(bMapTile.topping != BMapTile.ToppingType.NONE) {
                 bMapTile.UpdateTopping();
                 Debug.Log(prefabPath + bMapTile.mapTile.topping.prefabName);
-				GameObject prefab = Resources.Load<GameObject>(prefabPath + bMapTile.mapTile.topping.prefabName); // note: not .prefab!
-				GameObject handle = (GameObject) Instantiate(prefab, Vector3.zero, prefab.transform.rotation);
-				handle.transform.parent = this.transform;
-				handle.transform.localPosition = Vector3.zero;
-				
-				
+				bMapTile.SpawnTopping();
 			}
 
 			lastTopping = bMapTile.topping;

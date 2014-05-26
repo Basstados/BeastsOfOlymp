@@ -18,19 +18,33 @@ public abstract class Topping {
         EventProxyManager.RegisterForEvent(EventName.RoundSetup, HandleRoundSetup);
     }
 
-    public Topping(MapTile mapTile) : base()
+    /// <summary>
+    /// Place this instance on a MapTile.
+    /// </summary>
+    /// <param name="mapTile">The parent MapTile where to spawn</param>
+    public void Spawn(MapTile mapTile)
     {
         this.mapTile = mapTile;
+        EventProxyManager.FireEvent(this, new ToppingSpawnEvent(this));
     }
 
     /// <summary>
-    /// Count the duration down to 0; If duration == 0 remove this obstacle
+    /// Remove this Topping from the game.
+    /// </summary>
+    public void Destroy()
+    {
+        this.mapTile.topping = null;
+        EventProxyManager.FireEvent(this, new ToppingDestroyedEvent(this));
+    }
+
+    /// <summary>
+    /// Count the duration down to 0; If duration == 0 remove this obstacle;
+    /// If duration is < 0 this instance will stay forever
     /// </summary>
     private void HandleRoundSetup(object sender, EventProxyArgs args)
     {
-        Debug.Log("Duration is now: " + duration);
         if (duration > 0) duration--;
-        if (duration == 0) mapTile.topping = null; // remove this topping
+        if (duration == 0) Destroy();// remove this topping
     }
 
 	/// <summary>
@@ -45,4 +59,26 @@ public abstract class Topping {
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="attack">The attack wich triggerd this effect.</param>
 	public abstract void OnAttackEffect(Attack attack);
+}
+
+public class ToppingSpawnEvent : EventProxyArgs
+{
+    public Topping target;
+
+    public ToppingSpawnEvent(Topping topping)
+    {
+        this.name = EventName.ToppingSpawned;
+        this.target = topping;
+    }
+}
+
+public class ToppingDestroyedEvent : EventProxyArgs
+{
+    public Topping target;
+
+    public ToppingDestroyedEvent(Topping topping)
+    {
+        this.name = EventName.ToppingDestroyed;
+        this.target = topping;
+    }
 }

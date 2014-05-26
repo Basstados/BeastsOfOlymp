@@ -32,6 +32,12 @@ public class CMoveUnit : ICommand
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
 			model.MoveUnit(unit, target);
+			// trigger OnStayEffect on each topping on the path
+			for(int i=0; i<path.Length; i++) {
+				if(path[i].topping != null)
+					path[i].topping.OnStayEffect(unit);
+			}
+
 			// clear units move resource, since only one move per turn is permitted
 			unit.MovePoints = 0;
 		}

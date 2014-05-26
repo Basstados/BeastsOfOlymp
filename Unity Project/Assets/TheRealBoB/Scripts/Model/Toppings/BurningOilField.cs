@@ -11,9 +11,9 @@ public class BurningOilField : Topping
     public BurningOilField() : base()
     {
         // How many round will this topping life?
-        duration = 1;
+        duration = 3;
         // Does units must move around this topping?
-        isObstacle = true;
+        isObstacle = false;
         // What is the name of the Prefab to be instantiate? (without ".prefab")
         prefabName = "BURNING_OIL"; // Prefab path is: Asset/Resources/Toppings/
     }
@@ -41,7 +41,7 @@ public class BurningOilField : Topping
         if (attack.element.elementName == "Wasser")
         {
             // remove this topping
-            mapTile.topping = null;
+            Destroy();
         }
     }
 }

@@ -14,7 +14,6 @@ public class BView : MonoBehaviour
 	public BMap bMap;
 
 	// context references
-	//[SerializeField] BMapTile[][] bMapTiles;
 	List<BUnit> bUnits = new List<BUnit>();
 	BUnit activeBUnit;
 	BCombatMenu bCombatMenu;
@@ -47,6 +46,8 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleEvent);
+        EventProxyManager.RegisterForEvent(EventName.ToppingSpawned, HandleEvent);
+        EventProxyManager.RegisterForEvent(EventName.ToppingDestroyed, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.Gameover, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.EventDone, HandleEventDone);
 		EventProxyManager.RegisterForEvent(EventName.DebugLog, HandleDebugLog);
@@ -114,42 +115,49 @@ public class BView : MonoBehaviour
 			EventProxyArgs eventArgs = eventQueue.Dequeue();
 			Debug.Log(eventArgs.name);
 			performingEvent = true;
-			// call handler for the next event in the queue
-			switch(eventArgs.name) {
-			case EventName.Initialized:
-				HandleInitialized(sender , eventArgs);
-				break;
-			case EventName.UnitSpawned:
-				HandleUnitSpawned(sender, eventArgs);
-				break;
-			case EventName.RoundSetup:
-				HandleRoundSetup(sender, eventArgs);
-				break;
-			case EventName.UnitActivated:
-				HandleUnitActivated(sender, eventArgs);
-				break;
-			case EventName.TurnStarted:
-				HandleTurnStarted(sender, eventArgs);
-				break;
-			case EventName.BMapTileTapped:
-				HandleBMapTileTapped(sender, eventArgs);
-				break;
-			case EventName.BUnitTapped:
-				HandleBUnitTapped(sender, eventArgs);
-				break;
-			case EventName.UnitMoved:
-				HandleUnitMoved(sender, eventArgs);
-				break;
-			case EventName.UnitAttacked:
-				HandleUnitAttacked(sender, eventArgs);
-				break;
-			case EventName.UnitDied:
-				HandleUnitDied(sender, eventArgs);
-				break;
-			case EventName.Gameover:
-				HandleGameover(sender, eventArgs);
-				break;
-			}
+            // call handler for the next event in the queue
+            switch (eventArgs.name)
+            {
+                case EventName.Initialized:
+                    HandleInitialized(sender, eventArgs);
+                    break;
+                case EventName.UnitSpawned:
+                    HandleUnitSpawned(sender, eventArgs);
+                    break;
+                case EventName.RoundSetup:
+                    HandleRoundSetup(sender, eventArgs);
+                    break;
+                case EventName.UnitActivated:
+                    HandleUnitActivated(sender, eventArgs);
+                    break;
+                case EventName.TurnStarted:
+                    HandleTurnStarted(sender, eventArgs);
+                    break;
+                case EventName.BMapTileTapped:
+                    HandleBMapTileTapped(sender, eventArgs);
+                    break;
+                case EventName.BUnitTapped:
+                    HandleBUnitTapped(sender, eventArgs);
+                    break;
+                case EventName.UnitMoved:
+                    HandleUnitMoved(sender, eventArgs);
+                    break;
+                case EventName.UnitAttacked:
+                    HandleUnitAttacked(sender, eventArgs);
+                    break;
+                case EventName.UnitDied:
+                    HandleUnitDied(sender, eventArgs);
+                    break;
+                case EventName.ToppingSpawned:
+                    HandleToppingSpawned(sender, eventArgs);
+                    break;
+                case EventName.ToppingDestroyed:
+                    HandleToppingDestroyed(sender, eventArgs);
+                    break;
+                case EventName.Gameover:
+                    HandleGameover(sender, eventArgs);
+                    break;
+            }
 		} else {
 			// we are done with event queue
 			performingEvent = false;
@@ -258,6 +266,21 @@ public class BView : MonoBehaviour
 		bUnit.Died();
 	}
 
+    void HandleToppingSpawned(object sender, EventArgs args)
+    {
+        ToppingSpawnEvent e = args as ToppingSpawnEvent;
+        BMapTile bMapTile = GetBMapTile(e.target.mapTile);
+        bMapTile.SpawnTopping();
+        EventProxyManager.FireEvent(this, new EventDoneEvent());
+    }
+
+    void HandleToppingDestroyed(object sender, EventArgs args)
+    {
+		ToppingDestroyedEvent e = args as ToppingDestroyedEvent;
+        BMapTile bMapTile = GetBMapTile(e.target.mapTile);
+        bMapTile.DestroyTopping();
+        EventProxyManager.FireEvent(this, new EventDoneEvent());
+    }
 
 	void HandleGameover(object sender, EventArgs args)
 	{
