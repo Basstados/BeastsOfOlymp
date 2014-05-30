@@ -5,11 +5,12 @@ public class BMainMenue : MonoBehaviour {
 
 	public GameObject mainMenueCreditsPanel;
     public GameObject prototypePanel;
-	public string gameSceneName;
+	public GameObject levelSelectionPanel;
 
 	public void OnStartGameClick() 
 	{
-		Application.LoadLevel(gameSceneName);
+		gameObject.SetActive(false);
+		levelSelectionPanel.SetActive(true);
 	}
 
 	public void OnCreditsClick() 

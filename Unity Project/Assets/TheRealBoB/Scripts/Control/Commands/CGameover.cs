@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class CGameover : ICommand
 {
@@ -36,6 +37,19 @@ public class CGameover : ICommand
 			aiDefeated = true;
 
 		if(playerDefeated || aiDefeated) {
+			if(aiDefeated) { // player has won
+				// get current level ID
+				int lastLevel = int.Parse(Application.loadedLevelName.Substring(6));
+				// check highest level
+				int highestLevel = PlayerPrefs.GetInt("HighestLevel");
+				if(highestLevel < lastLevel) {
+					highestLevel = lastLevel;
+				}
+				// update player prefs
+				PlayerPrefs.SetInt("LastLevel", lastLevel);
+				PlayerPrefs.SetInt("HighestLevel", highestLevel);
+			}
+
 			model.matchRunning = false;
 			EventProxyManager.FireEvent(this, new GameoverEvent(playerDefeated,aiDefeated));
 		}

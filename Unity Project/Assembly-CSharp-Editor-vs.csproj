@@ -51,6 +51,8 @@
      <Compile Include="Assets\Editor\Inspector\EditorBMap.cs" />
      <Compile Include="Assets\Editor\Inspector\EditorElement.cs" />
      <Compile Include="Assets\Editor\Inspector\EditorUnitData.cs" />
+     <Compile Include="Assets\Editor\PlayerPrefsEditor\PlayerPrefStore.cs" />
+     <Compile Include="Assets\Editor\PlayerPrefsEditor\PlayerPrefsEditor.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
