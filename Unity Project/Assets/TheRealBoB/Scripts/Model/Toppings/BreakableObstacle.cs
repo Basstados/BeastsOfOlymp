@@ -31,6 +31,6 @@ class BreakableObstacle : Topping
     public override void OnAttackEffect(Attack attack)
     {
         // remove this obstacle
-        mapTile.topping = null;
+        this.Destroy();
     }
 }

@@ -86,41 +86,6 @@ public class BMapTile : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-       /* if (lastTopping != mapTile.topping)
-        {
-            if (mapTile.topping == null)
-            {
-                topping = ToppingType.NONE;
-            }
-            else
-            {
-                switch (mapTile.topping.GetType().ToString())
-                {
-                    case "SolidObstacle":
-                        topping = ToppingType.SolidObstacle;
-                        break;
-                    case "OilField":
-                        topping = ToppingType.OilField;
-                        break;
-                    case "BurningOilField":
-                        topping = ToppingType.BurningOilField;
-                        break;
-                    case "BreakableObstacle":
-                        topping = ToppingType.BreakableObstacle;
-                        break;
-                    default:
-                        topping = ToppingType.NONE;
-                        break;
-                }
-            }
-            
-            UpdateTopping();
-        }
-        */
-    }
-
     public void UpdateTopping()
     {
         if (topping == ToppingType.NONE)
@@ -139,13 +104,15 @@ public class BMapTile : MonoBehaviour
     public void SpawnTopping()
     {
         // remove old children objects
-        /*List<GameObject> children = new List<GameObject>();
+		// this deletion is required since all toppings spawned in editor mode wont be refert properly
+		// HACK
+        List<GameObject> children = new List<GameObject>();
         for (int i = 0; i < transform.childCount; i++)
         {
             children.Add(transform.GetChild(i).gameObject);
         }
         foreach (GameObject go in children)
-            DestroyImmediate(go);*/
+            DestroyImmediate(go);
 
         // spawn prefab if there is any
         if (topping != BMapTile.ToppingType.NONE)
@@ -162,7 +129,6 @@ public class BMapTile : MonoBehaviour
     public void DestroyTopping()
     {
         if (bTopping == null) return;
-        
         bTopping.DestroyTopping();
         bTopping = null;
     }
