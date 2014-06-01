@@ -4,74 +4,120 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(UIPanel))]
 public class BCombatMenu : MonoBehaviour {
+	public int manualHeight = 720;
+	public float radius = 200f;
+	public float angleOffset = 0f;
+	public int circleSlots = 5;
+	public GameObject circleAnchor;
+	
 	public GameObject attackButtonPrefab;
-	public float attackButtonHeight;
-
-	public GameObject gameoverPanel;
-	public UILabel gameoverLabel;
-	public GameObject attackRing;
 	public UIButton backButton;
 	public UIButton endTurnButton;
+
+	#region notification variables
+	public GameObject gameoverPanel;
+	public UILabel gameoverLabel;
+
 	public BNotification bNotification;
 
 	public AudioSource loseSound;
 	public AudioSource winSound;
+	#endregion
 
 	BUnit bUnit;
+	bool followUnit = false;
+
+	void Update() {
+		if(followUnit && bUnit != null) {
+			// move above active unit
+			// transplate world postion of unity into screen coordinates
+			Vector3 screenPos = Camera.main.WorldToScreenPoint(bUnit.transform.position);
+			// tranlate screen coordinates into UI-coordinates
+			screenPos.x = screenPos.x / Screen.height * manualHeight;
+			screenPos.y = screenPos.y / Screen.height * manualHeight;
+			this.transform.localPosition = screenPos;
+		}
+	}
 
 	public void OpenForBUnit(BUnit bUnit) 
 	{
 		this.bUnit = bUnit;
 		if(bUnit.unit.AIControled) {
-			attackRing.SetActive(false);
+			// if a AI-unit is active, don't show the menu
+			circleAnchor.SetActive(false);
 			backButton.gameObject.SetActive(false);
+			followUnit = false;
 		} else {
+			// the player controls this unit
+			followUnit = true;
+
 			if(bUnit.unit.CanAttack) {
-				attackRing.SetActive(true);
+				circleAnchor.SetActive(true);
 			}
 			endTurnButton.gameObject.SetActive(true);
 			backButton.gameObject.SetActive(false);
 
 			// clear attack ring ui
-			List<GameObject> atkButtons = new List<GameObject>();
-			foreach(Transform child in attackRing.transform) atkButtons.Add(child.gameObject);
-			foreach(GameObject child in atkButtons) Destroy(child);
-			atkButtons.Clear();
+			List<GameObject> circleButtons = new List<GameObject>();
+			foreach(Transform child in circleAnchor.transform) circleButtons.Add(child.gameObject);
+			foreach(GameObject child in circleButtons) Destroy(child);
+			circleButtons.Clear();
 
 			// init attack buttons
 			foreach(Attack atk in bUnit.unit.AttacksArray) {
 				GameObject handle = (GameObject) Instantiate(attackButtonPrefab);
-				handle.transform.parent = attackRing.transform;
+				handle.transform.parent = circleAnchor.transform;
 
 				handle.GetComponent<BAttackButton>().Init(atk,this);
-				atkButtons.Add(handle);
+				circleButtons.Add(handle);
 			}
+			circleButtons.Add(endTurnButton.gameObject);
 
-			// arrange attack buttons
-			RepositionAtkButtons(atkButtons);
+			// arrange buttons
+			RepositionButtons(circleButtons);
 		}
 	}
 
-	void RepositionAtkButtons(List<GameObject> atkButtons)
+	/// <summary>
+	/// Position the list of buttons on a circle.
+	/// </summary>
+	/// <param name="buttons">The buttons which will placed on a circle.</param>
+	void RepositionButtons(List<GameObject> buttons)
 	{
-		for (int i = 0; i < atkButtons.Count; i++) {
-			atkButtons[i].transform.localPosition = new Vector3(0, -i*attackButtonHeight);
-			atkButtons[i].transform.localScale = Vector3.one;
+		int n = circleSlots; // number of items on the circle
+
+		for (int i = 0; i < buttons.Count; i++) {
+			float angle = i/((float)n) * 2 * Mathf.PI + Mathf.Deg2Rad * angleOffset;
+			buttons[i].transform.localPosition = new Vector3(radius * Mathf.Cos(angle),radius * Mathf.Sin(angle));
+			buttons[i].transform.localScale = Vector3.one;
 		}
-		endTurnButton.transform.localPosition = new Vector3(452, -atkButtons.Count*attackButtonHeight);
-		endTurnButton.transform.localScale = Vector3.one;
 	}
 
+	public void ActionCompleted()
+	{
+		if(bUnit != null)
+			OpenForBUnit(bUnit);
+	}
+	
+	public void Hide() 
+	{
+		circleAnchor.SetActive(false);
+		backButton.gameObject.SetActive(false);
+		endTurnButton.gameObject.SetActive(false);
+		followUnit = false;
+	}
+
+	#region button actions
 	public void ChooseAttack()
 	{
 		backButton.gameObject.SetActive(true);
 		endTurnButton.gameObject.SetActive(false);
-		attackRing.SetActive(true);
+		circleAnchor.SetActive(true);
 	}
 	
 	public void ActionAttack(Attack attack) 
 	{
-		attackRing.SetActive(false);
+		circleAnchor.SetActive(false);
 		backButton.gameObject.SetActive(true);
 		endTurnButton.gameObject.SetActive(false);
 		bUnit.ClearDisplayRange();
@@ -93,24 +139,16 @@ public class BCombatMenu : MonoBehaviour {
 	public void Back()
 	{
 		backButton.gameObject.SetActive(false);
-		attackRing.SetActive(true);
+		circleAnchor.SetActive(true);
 		endTurnButton.gameObject.SetActive(true);
 		bUnit.ClearDisplayRange();
 		bUnit.DisplayMovementRange();
 	}
+	#endregion
 
-	public void ActionCompleted()
-	{
-		OpenForBUnit (bUnit);
-	}
-	
-	public void Hide() 
-	{
-		attackRing.SetActive(false);
-		backButton.gameObject.SetActive(false);
-		endTurnButton.gameObject.SetActive(false);
-	}
 
+
+	#region notifications
 	public void DisplayGameover(string text, bool playerWin)
 	{
 		gameoverPanel.SetActive(true);
@@ -137,4 +175,5 @@ public class BCombatMenu : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
+	#endregion
 }

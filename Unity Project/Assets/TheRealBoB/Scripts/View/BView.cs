@@ -205,7 +205,6 @@ public class BView : MonoBehaviour
 	{
 		TurnStartedEvent e = args as TurnStartedEvent;
 		BUnit bUnit = GetBUnit(e.unit);
-		bUnit.PopupCombatMenu();
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
@@ -217,6 +216,17 @@ public class BView : MonoBehaviour
 			activeBUnit.SetMoveTarget(e.bMapTile);
 			activeBUnit.SetAttackTarget(e.bMapTile);
 		}
+		// check unit on the field for beeing the active unit
+		if(e.bMapTile.mapTile.unit != null) {
+			BUnit bUnit = GetBUnit(e.bMapTile.mapTile.unit);
+			if(bUnit == activeBUnit && bUnit.CurrentAction != BUnit.Action.CONFIRMATTACK)
+				bUnit.PopupCombatMenu();
+		} else {
+			// while beeing in move-mode; close menu on mapTile click
+			if(activeBUnit.CurrentAction != BUnit.Action.ATTACK)
+				bCombatMenu.Hide();
+		}
+
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 

@@ -47,7 +47,6 @@ public class BUnit : MonoBehaviour {
 	public void Activate()
 	{
 		unitUI.UpdateLifebar(); // TMP, need a better way to update lifebar regulary
-		//PopupCombatMenu();
 		ClearDisplayRange();
 		if(unit.team == Unit.Team.PLAYER)
 			DisplayMovementRange();
