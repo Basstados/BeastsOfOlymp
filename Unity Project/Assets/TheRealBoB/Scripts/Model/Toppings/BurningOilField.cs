@@ -37,6 +37,10 @@ public class BurningOilField : Topping
     /// <param name="attack">The attack which triggered this effect.</param>
     public override void OnAttackEffect(Attack attack)
     {
+		// another example
+		// if (mapTile.unit != null && attack.element.elementName == "Blitz")
+		// 	 mapTile.unit.LoseHealth(10);
+
         // do something when hit by a water attack
         if (attack.element.elementName == "Wasser")
         {
