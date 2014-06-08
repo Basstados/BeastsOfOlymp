@@ -28,7 +28,7 @@ class BreakableObstacle : Topping
     /// </summary>
     /// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
     /// <param name="attack">The attack wich triggerd this effect.</param>
-    public override void OnAttackEffect(Attack attack)
+    public override void OnAttackEffect(Attack attack, Model model)
     {
         // remove this obstacle
         this.Destroy();

@@ -35,7 +35,7 @@ public class BurningOilField : Topping
     /// </summary>
     /// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
     /// <param name="attack">The attack which triggered this effect.</param>
-    public override void OnAttackEffect(Attack attack)
+	public override void OnAttackEffect(Attack attack, Model model)
     {
 		// another example
 		// if (mapTile.unit != null && attack.element.elementName == "Blitz")

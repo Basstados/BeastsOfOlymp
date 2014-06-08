@@ -24,7 +24,7 @@ public class OilField : Topping
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="attack">The attack wich triggerd this effect.</param>
-	public override void OnAttackEffect(Attack attack)
+	public override void OnAttackEffect(Attack attack, Model model)
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
 		if(attack.element.elementName == "Feuer") {

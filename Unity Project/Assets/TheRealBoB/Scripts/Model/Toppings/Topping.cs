@@ -58,7 +58,7 @@ public abstract class Topping {
 	/// </summary>
 	/// <param name="mapTile">The mapTile the obstacle and the unit stand on.</param>
 	/// <param name="attack">The attack wich triggerd this effect.</param>
-	public abstract void OnAttackEffect(Attack attack);
+	public abstract void OnAttackEffect(Attack attack, Model model);
 }
 
 public class ToppingSpawnEvent : EventProxyArgs

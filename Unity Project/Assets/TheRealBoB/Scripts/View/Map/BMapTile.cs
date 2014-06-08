@@ -39,7 +39,8 @@ public class BMapTile : MonoBehaviour
         BreakableObstacle,
         SolidObstacle,
         OilField,
-        BurningOilField
+        BurningOilField,
+		OilVase
     }
 
     public enum ColorState
@@ -115,15 +116,12 @@ public class BMapTile : MonoBehaviour
             DestroyImmediate(go);
 
         // spawn prefab if there is any
-        if (topping != BMapTile.ToppingType.NONE)
-        {
-            GameObject prefab = Resources.Load<GameObject>(prefabPath + mapTile.topping.prefabName); // note: not .prefab!
-            GameObject handle = (GameObject)Instantiate(prefab, Vector3.zero, prefab.transform.rotation);
-            handle.transform.parent = this.transform;
-            handle.transform.localPosition = Vector3.zero;
-            bTopping = handle.GetComponent<BTopping>();
-            if (bTopping == null) Debug.LogError("The Prefab for " + topping + " must have a BTopping component attached to!");
-        }
+	    GameObject prefab = Resources.Load<GameObject>(prefabPath + mapTile.topping.prefabName); // note: not .prefab!
+	    GameObject handle = (GameObject)Instantiate(prefab, Vector3.zero, prefab.transform.rotation);
+	    handle.transform.parent = this.transform;
+	    handle.transform.localPosition = Vector3.zero;
+	    bTopping = handle.GetComponent<BTopping>();
+	    if (bTopping == null) Debug.LogError("The Prefab for " + topping + " must have a BTopping component attached to!");
     }
 
     public void DestroyTopping()
