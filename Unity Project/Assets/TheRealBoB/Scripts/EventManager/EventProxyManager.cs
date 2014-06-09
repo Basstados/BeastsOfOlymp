@@ -72,6 +72,7 @@ public enum EventName {
 	UnitActivated,
 	UnitMoved,
 	UnitAttacked,
+	UnitLoseHealth,
 	UnitDied,
 	BMapTileTapped,
 	BUnitTapped,

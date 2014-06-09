@@ -39,62 +39,67 @@ public class CAttackUnit : ICommand
 		float typeModifier = 1;
 
 		// check hit chance
-		if(attack.hitChance >= hit) {
-			// attack is succesfull
-			// apply damage to all unit in attack area
-			int x = 0;
-			int y = 0;
-			List<Unit> victims = new List<Unit>();
-			List<int> damage = new List<int>();
-			Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
-			// make sure the direction for the attack is one of the four standart direcitons
-			rotDir.NormalizeTo4Direction();
-			int[,] rot = Vector.RotateToMatrix(rotDir);
-			// perform attack for eacht field in the attack area
-			foreach(Vector pt in attack.area) {
-				// apply rotation to field
-				Vector rotPt = pt.Clone();
-				if(rotDir != Vector.zero)
-					rotPt.ApplyMatrix(rot);
-				x = target.x + rotPt.x;
-				y = target.y + rotPt.y;
-				// check if field is inside grid
-				if(model.IsPointOnGrid(new Vector(x,y))) {
-					// do attack effect on mapTile
-                    if (model.mapTiles[x][y].topping != null)
-                    {
-                        //recursivly check all neighbour fields if they are of the same topping type
-                        checkedMapTiles.Clear(); // reset list
-                        RecursivlyEffectToppings(model.mapTiles[x][y], attack);
-                    }
-						
+		if(attack.hitChance < hit)  return;
 
-					// check field for units
-					if(model.mapTiles[x][y].unit != null) {
-						Unit unit = model.mapTiles[x][y].unit;
+		// attack is succesfull
+		// apply damage to all unit in attack area
+		int x = 0;
+		int y = 0;
+		List<Unit> victims = new List<Unit>();
+		List<int> damage = new List<int>();
+		Vector rotDir = new Vector(target.x - source.mapTile.x, target.y - source.mapTile.y);
+		// make sure the direction for the attack is one of the four standart direcitons
+		rotDir.NormalizeTo4Direction();
+		int[,] rot = Vector.RotateToMatrix(rotDir);
+		// perform attack for eacht field in the attack area
+		foreach(Vector pt in attack.area) {
+			// apply rotation to field
+			Vector rotPt = pt.Clone();
+			if(rotDir != Vector.zero)
+				rotPt.ApplyMatrix(rot);
+			x = target.x + rotPt.x;
+			y = target.y + rotPt.y;
+			// check if field is inside grid
+			if(model.IsPointOnGrid(new Vector(x,y))) {
+				// do attack effect on mapTile
+            if (model.mapTiles[x][y].topping != null)
+            {
+                //recursivly check all neighbour fields if they are of the same topping type
+                checkedMapTiles.Clear(); // reset list
+                RecursivlyEffectToppings(model.mapTiles[x][y], attack);
+            }
+					
 
-						// calculate and apply damage to unit
-						typeModifier = CalcTypeModifier(attack, unit);
-						efficency = (byte) ((typeModifier > 1f) ? 2 : (typeModifier == 1f) ? 1 : 0);
-						damageUnit = CalcDamage(source.Attack, attack.damage, typeModifier);
-						unit.LoseHealth(damageUnit);
-						
-						// add to list of hit units
-						victims.Add(unit);
-						damage.Add(damageUnit);
-					}
+				// check field for units
+				if(model.mapTiles[x][y].unit != null) {
+					Unit unit = model.mapTiles[x][y].unit;
+
+					// calculate and apply damage to unit
+					typeModifier = CalcTypeModifier(attack, unit);
+					efficency = (byte) ((typeModifier > 1f) ? 2 : (typeModifier == 1f) ? 1 : 0);
+					damageUnit = CalcDamage(source.Attack, attack.damage, typeModifier);
+
+					
+					// add to list of hit units
+					victims.Add(unit);
+					damage.Add(damageUnit);
 				}
 			}
-			EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target, victims,efficency, damage));
 
-			// when target died fire event AFTER attack was performed
-			foreach(Unit u in victims) {
-				if(u.HealthPoints <= 0) {
-					// remove target from map
-					u.mapTile.unit = null;
-					// fire event
-					EventProxyManager.FireEvent(this, new UnitDiedEvent(u));
-				}
+		}
+		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target, victims,efficency, damage));
+		
+		for(int i=0; i<victims.Count; i++) {
+			victims[i].LoseHealth(damage[i]);
+		}
+
+		// when target died fire event AFTER attack was performed
+		foreach(Unit u in victims) {
+			if(u.HealthPoints <= 0) {
+				// remove target from map
+				u.mapTile.unit = null;
+				// fire event
+				EventProxyManager.FireEvent(this, new UnitDiedEvent(u));
 			}
 		}
 	}

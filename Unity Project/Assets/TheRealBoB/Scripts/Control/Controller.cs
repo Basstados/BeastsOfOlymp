@@ -187,6 +187,8 @@ public class Controller
 	/// <param name="goal">Goal.</param>
 	/// <param name="grid">Grid.</param>
 	public Path GetPath(MapTile start, MapTile goal, byte[,] grid) {
+		if(start == goal) return new Path(new MapTile[]{start});
+
 		if(grid != null) {
 			model.grid = grid;
 		}

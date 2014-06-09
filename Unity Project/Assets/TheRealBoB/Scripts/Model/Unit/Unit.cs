@@ -59,6 +59,7 @@ public class Unit : IComparable
 	public void LoseHealth (int damage)
 	{
 		currentHealth -= damage;
+		EventProxyManager.FireEvent(EventName.UnitLoseHealth,new UnitLoseHealthEvent(this, damage));
 	}
 
 	public void ResetTurn()
@@ -83,4 +84,15 @@ public class Unit : IComparable
 	}
 }
 
+public class UnitLoseHealthEvent : EventProxyArgs {
 
+	public Unit unit;
+	public int damage;
+
+	public UnitLoseHealthEvent (Unit unit, int damage)
+	{
+		this.name = EventName.UnitLoseHealth;
+		this.unit = unit;
+		this.damage = damage;
+	}
+}	

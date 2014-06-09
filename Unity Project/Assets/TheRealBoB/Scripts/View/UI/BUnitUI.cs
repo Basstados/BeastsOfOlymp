@@ -14,6 +14,7 @@ public class BUnitUI : MonoBehaviour {
 	BUnit parent;
 
 	bool initalized = false;
+	int currentHealth = 0;
 
 	public void Init(BUnit parent) 
 	{
@@ -32,17 +33,22 @@ public class BUnitUI : MonoBehaviour {
 		// set name label
 		nameLabel.text = parent.unit.UnitName;
 		typeSprite.spriteName = parent.unit.Element.elementName;
-		healthLabel.text = parent.unit.MaxHealthPoints + "/" + parent.unit.MaxHealthPoints;
+		// init lifebar
+		currentHealth = parent.unit.MaxHealthPoints;
+		lifebar.value = currentHealth / (float) parent.unit.MaxHealthPoints;
+		healthLabel.text = currentHealth + "/" + parent.unit.MaxHealthPoints;
 
 		initalized = true;
 	}
 
-	public void UpdateLifebar() 
+	public void UpdateLifebar(int damage) 
 	{
 		if(!initalized) return;
 
-		lifebar.value = parent.unit.HealthPoints / (float) parent.unit.MaxHealthPoints;
-		healthLabel.text = parent.unit.HealthPoints + "/" + parent.unit.MaxHealthPoints;
+		currentHealth -= damage;
+
+		lifebar.value = currentHealth / (float) parent.unit.MaxHealthPoints;
+		healthLabel.text = currentHealth + "/" + parent.unit.MaxHealthPoints;
 	}
 
 	public void ShowDamage(int damage)

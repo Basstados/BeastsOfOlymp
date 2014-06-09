@@ -45,6 +45,7 @@ public class BView : MonoBehaviour
 		EventProxyManager.RegisterForEvent(EventName.BUnitTapped, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitMoved, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitAttacked, HandleEvent);
+		EventProxyManager.RegisterForEvent(EventName.UnitLoseHealth, HandleEvent);
 		EventProxyManager.RegisterForEvent(EventName.UnitDied, HandleEvent);
         EventProxyManager.RegisterForEvent(EventName.ToppingSpawned, HandleEvent);
         EventProxyManager.RegisterForEvent(EventName.ToppingDestroyed, HandleEvent);
@@ -145,6 +146,9 @@ public class BView : MonoBehaviour
                 case EventName.UnitAttacked:
                     HandleUnitAttacked(sender, eventArgs);
                     break;
+				case EventName.UnitLoseHealth:
+					HandleUnitLoseHealth(sender, eventArgs);
+					break;
                 case EventName.UnitDied:
                     HandleUnitDied(sender, eventArgs);
                     break;
@@ -280,6 +284,14 @@ public class BView : MonoBehaviour
 
 		GetBUnit(e.source).PlayAttack(e, bMapTile, bUnits);
 		CleanMap();
+	}
+
+	void HandleUnitLoseHealth (object sender, EventProxyArgs eventArgs)
+	{
+		UnitLoseHealthEvent e = eventArgs as UnitLoseHealthEvent;
+		BUnit bUnit = GetBUnit(e.unit);
+		bUnit.unitUI.UpdateLifebar(e.damage);
+		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 
 	void HandleUnitDied (object sender, EventArgs args)
