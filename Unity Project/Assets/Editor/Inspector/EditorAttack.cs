@@ -57,6 +57,12 @@ public class EditorAttack : Editor {
 		}
 		myTarget.area = areaFields.ToArray();
 
+		EditorGUILayout.Separator();
+		EditorGUILayout.LabelField("Animation/Effects");
+		myTarget.fullAnimationTime = EditorGUILayout.FloatField("Animation Time", myTarget.fullAnimationTime);
+		myTarget.effectDelay = EditorGUILayout.FloatField("Effect Delay", myTarget.effectDelay);
+		myTarget.hitDelay = EditorGUILayout.FloatField("Hit Delay", myTarget.hitDelay);
+
 		// you need this to save changes in the custom inspector permanent in the .asset file
 		EditorUtility.SetDirty(target);
 

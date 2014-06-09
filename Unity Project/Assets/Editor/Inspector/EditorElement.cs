@@ -21,7 +21,7 @@ public class EditorElement : Editor {
 		if(myTarget.weaknesses != null) {
 			for (int i = 0; i < myTarget.weaknesses.Length; i++) {
 				EditorGUILayout.BeginHorizontal();
-				myTarget.weaknesses[i] = (Element) EditorGUILayout.ObjectField(myTarget.weaknesses[i], typeof(Element));
+				myTarget.weaknesses[i] = (Element) EditorGUILayout.ObjectField(myTarget.weaknesses[i], typeof(Element),false);
 				if(GUILayout.Button("x", xButton))
 					RemoveFromArray<Element>(ref myTarget.weaknesses, i);
 				EditorGUILayout.EndHorizontal();
@@ -35,7 +35,7 @@ public class EditorElement : Editor {
 		if(myTarget.strengths != null) {
 			for (int i = 0; i < myTarget.strengths.Length; i++) {
 				EditorGUILayout.BeginHorizontal();
-				myTarget.strengths[i] = (Element) EditorGUILayout.ObjectField(myTarget.strengths[i], typeof(Element));
+				myTarget.strengths[i] = (Element) EditorGUILayout.ObjectField(myTarget.strengths[i], typeof(Element), false);
 				if(GUILayout.Button("x", xButton))
 					RemoveFromArray<Element>(ref myTarget.strengths, i);
 				EditorGUILayout.EndHorizontal();

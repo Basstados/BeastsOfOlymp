@@ -9,4 +9,8 @@ public class Attack : ScriptableObject
 	public int damage;
 	public int range;
 	public Vector[] area;
+
+	public float effectDelay = 0.4f;
+	public float hitDelay = 0.2f;
+	public float fullAnimationTime = 1.2f;
 }

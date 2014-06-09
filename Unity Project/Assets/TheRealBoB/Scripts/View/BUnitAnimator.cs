@@ -4,7 +4,6 @@ using System.Collections;
 public class BUnitAnimator : MonoBehaviour {
 
 	public Animator animator;
-//	public GameObject renderObject;
 	public GameObject meshContainer;
 	public float movementSpeed = 4;
 	public AudioSource deathSound;
@@ -21,14 +20,11 @@ public class BUnitAnimator : MonoBehaviour {
 		this.parent = bUnit;
 
 		if(unit.team == Unit.Team.PLAYER) {
-//			renderObject.renderer.material.color = new Color(0.25490f, 0.85882f, 0.23529f);
 			meshContainer.transform.rotation = Quaternion.AngleAxis(90f,Vector3.up);
 		} else {
-//			renderObject.renderer.material.color = new Color(0.77255f, 0.21961f, 0.21961f);
 			meshContainer.transform.rotation = Quaternion.AngleAxis(-90f,Vector3.up);
 		}
-		
-//		defaultColor = renderObject.renderer.material.color;
+
 		flashColor = Color.red;
 	}
 
@@ -103,17 +99,23 @@ public class BUnitAnimator : MonoBehaviour {
 		attackSound.Play();
 		// animation
 		animator.SetTrigger("AttackTrigger");
-		yield return new WaitForSeconds(0.4f);
+		// wait some time before starting the attack effect
+		yield return new WaitForSeconds(e.attack.effectDelay);
+		// caluclate the direction of the attack and project it on one of the 4 vectors: (0,1),(1,0),(0,-1),(-1,0)
 		Vector direction = new Vector(Mathf.FloorToInt(target.transform.position.x - this.transform.position.x),
 		                              Mathf.FloorToInt(target.transform.position.z - this.transform.position.z));
 		direction.NormalizeTo4Direction();
 		BParticleManager.PlayEffect(e.attack.attackName, target.transform.position, new Vector3(direction.x, 0, direction.y));
-		yield return new WaitForSeconds(0.2f);
+
+		// wait some time before trigger the hit animtion/effect
+		yield return new WaitForSeconds(e.attack.hitDelay);
 		for (int i = 0; i < victims.Length; i++) {
 			victims[i].PlayHitAnimation(e.efficiency, e.damage[i]);
 			victims[i].unitUI.ShowDamage(e.damage[i]);
 		}
-		yield return new WaitForSeconds(0.6f);
+
+		// wait the rest of the time for the animation before contuine with next event
+		yield return new WaitForSeconds(e.attack.fullAnimationTime - e.attack.effectDelay - e.attack.hitDelay);
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
 	}
 	
