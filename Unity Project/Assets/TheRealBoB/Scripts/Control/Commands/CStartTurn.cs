@@ -25,9 +25,11 @@ public class CStartTurn : ICommand
 			return;
 		}
 
-		// execute field effect for active unit
-		if(unit.mapTile.topping != null)
-			unit.mapTile.topping.OnStayEffect(unit);
+		// execute field effect for all unit
+		foreach(Unit u in model.units) {
+			if(u.mapTile.topping != null)
+				u.mapTile.topping.OnStayEffect(unit);
+		}
 
 		// activate next unit
 		model.ActivateUnit(unit);
