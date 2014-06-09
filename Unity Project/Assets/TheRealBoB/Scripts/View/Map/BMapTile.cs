@@ -70,7 +70,7 @@ public class BMapTile : MonoBehaviour
                 break;
             case ColorState.PATH:
                 renderer.sharedMaterial = pathMaterial;
-                StartCoroutine(TweenRoutine(pathMaterial, Color.yellow, Color.gray));
+				this.Clickable = true;
                 break;
             case ColorState.CLICKABLE:
                 renderer.sharedMaterial = clickableMaterial;

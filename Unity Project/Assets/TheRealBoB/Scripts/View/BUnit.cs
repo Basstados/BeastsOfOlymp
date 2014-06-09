@@ -27,6 +27,7 @@ public class BUnit : MonoBehaviour {
 	Attack selectedAttack;
 
 	BMapTile target;
+	public Path path;
 
 	public void Init(BView context, BCombatMenu bCombatMenu) {
 		this.context = context;
@@ -47,9 +48,11 @@ public class BUnit : MonoBehaviour {
 	public void Activate()
 	{
 		unitUI.UpdateLifebar(); // TMP, need a better way to update lifebar regulary
+		target = context.GetBMapTile(this.unit.mapTile);
+		path = new Path(new MapTile[]{this.unit.mapTile});
 		ClearDisplayRange();
 		if(unit.team == Unit.Team.PLAYER)
-			DisplayMovementRange();
+			DisplayMovementRange(this.unit.mapTile, unit.MovePoints);
 	}
 
 	public void PopupCombatMenu() 
@@ -57,22 +60,23 @@ public class BUnit : MonoBehaviour {
 		bCombatMenu.OpenForBUnit(this);
 	}
 
-	public void DisplayMovementRange()
+	public void DisplayMovementRange(MapTile mapTile, int range)
 	{
 		action = Action.MOVE;
-		context.DisplayRange(this, unit.MovePoints, DisplayRangeMode.ALL_CLICKABLE);
+		context.DisplayRange(mapTile, range, DisplayRangeMode.ALL_CLICKABLE, false);
 	}
 
-	public void SelectMovementTarget(BMapTile bMapTile)
+	public void SelectMovementTarget(Path path)
 	{
 		// save selected target
-		target = bMapTile;
+		this.path.Add(path);
+		target = context.GetBMapTile(this.path.Last);
 		
 		ClearDisplayRange();
-		DisplayMovementRange();
+		DisplayMovementRange(target.mapTile, unit.MovePoints - this.path.Cost);
 		// display calculated path
-		context.HighlightMovementPath(this, bMapTile);
-		context.SetFieldMarker(bMapTile);
+		context.HighlightMovementPath(this.path);
+		context.SetFieldMarker(target);
 		
 		action = Action.CONFIRMMOVE;
 	}
@@ -121,7 +125,7 @@ public class BUnit : MonoBehaviour {
 		}
 		action = Action.ATTACK;
 		
-		context.DisplayRange(this, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE);
+		context.DisplayRange(this.unit.mapTile, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE, true);
 	}
 
 	public void ClearDisplayRange ()
@@ -131,20 +135,20 @@ public class BUnit : MonoBehaviour {
 		context.CleanMap();
 	}
 
-	public void SetMoveTarget(BMapTile bMapTile)
+	public void SetMoveTarget(Path path)
 	{
 		Debug.Log("SetMoveTarget action="+action);
 		switch (action) {
 		case Action.MOVE:
-			SelectMovementTarget(bMapTile);
+			SelectMovementTarget(path);
 			break;
 		case Action.CONFIRMMOVE:
-			if (bMapTile == target) {
+			if (context.GetBMapTile(path[path.Length-1]) == target) {
 				// use target for move
-				context.controller.MoveUnit (unit, bMapTile.mapTile);
+				context.controller.MoveUnit(unit, this.path);
 				action = Action.IDLE;
 			} else {
-				SelectMovementTarget (bMapTile);
+				SelectMovementTarget(path);
 			}
 			break;
 		}
@@ -166,6 +170,11 @@ public class BUnit : MonoBehaviour {
 			}
 			break;
 		}
+	}
+
+	public void CancleTargetSelection() 
+	{
+		Activate();
 	}
 
 	public void EndTurn()

@@ -8,7 +8,7 @@ using Algorithms;
 
 public class Controller
 {
-	Model model;
+	public Model model;
 	BView bView;
 	PathFinder pathFinder;
 
@@ -86,7 +86,13 @@ public class Controller
 	/// <param name="mapTile">Map tile to move to</param>
 	public void MoveUnit(Unit unit, MapTile mapTile)
 	{
-		new CMoveUnit(model,unit,mapTile, this).Execute();
+		Path path = GetPath(unit.mapTile, mapTile);
+		MoveUnit(unit, path);
+	}
+
+	public void MoveUnit(Unit unit, Path path)
+	{
+		new CMoveUnit(model,unit,path, this).Execute();
 	}
 
 	/// <summary>

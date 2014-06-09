@@ -212,9 +212,23 @@ public class BView : MonoBehaviour
 	{
 		// forward maptile to active unit 
 		BMapTileTappedEvent e = args as BMapTileTappedEvent;
-		if(e.bMapTile.Clickable) {
-			activeBUnit.SetMoveTarget(e.bMapTile);
-			activeBUnit.SetAttackTarget(e.bMapTile);
+		// handle taps while moveing
+		if(activeBUnit.CurrentAction == BUnit.Action.MOVE 
+			|| activeBUnit.CurrentAction == BUnit.Action.CONFIRMMOVE) {
+			if(e.bMapTile.Clickable) {
+				// ignore the active unit on the grid, since it is the one who will move
+				byte[,] grid = controller.model.grid;
+				grid[activeBUnit.unit.mapTile.x, activeBUnit.unit.mapTile.y] = 1;
+				// calculate path with new grid
+				Path path = controller.GetPath(activeBUnit.path.Last, e.bMapTile.mapTile, grid);
+				activeBUnit.SetMoveTarget(path);
+			} else {
+				activeBUnit.CancleTargetSelection();
+			}
+		} else {
+			if(e.bMapTile.Clickable) {
+				activeBUnit.SetAttackTarget(e.bMapTile);
+			} 
 		}
 		// check unit on the field for beeing the active unit
 		if(e.bMapTile.mapTile.unit != null) {
@@ -376,19 +390,15 @@ public class BView : MonoBehaviour
 	/// Get the distance matrix from the controller and use it to display a range.
 	/// </summary>
 	/// <param name="movementRange">Maximum range for the distance matrix.</param>
-	public void DisplayRange(BUnit bUnit, int range, int mode)
+	public void DisplayRange(MapTile mapTile, int range, int mode, bool ignoreUnits)
 	{
 		// update InputPhase
 		bInputManager.phase = BInputManager.InputPhase.PICKTARGET;
 
-		bool ignoreUnits = false;
-		if(bUnit.CurrentAction == BUnit.Action.ATTACK)
-			ignoreUnits = true;
-
 		Debug.Log(bInputManager.phase);
 		
 		// get distance matrix
-		Vector position = new Vector(bUnit.unit.mapTile.x, bUnit.unit.mapTile.y);
+		Vector position = new Vector(mapTile.x, mapTile.y);
 		byte[][] distMatrix = controller.GetDistanceMatrix(position, range, ignoreUnits);
 		// change color of all BMapTiles in range
 		for (int i = 0; i < distMatrix.Length; i++) {
@@ -442,10 +452,8 @@ public class BView : MonoBehaviour
 	/// </summary>
 	/// <param name="bUnit">BUnit where the path starts</param>
 	/// <param name="bMapTile">BMapTile the goal of the path</param>
-	public Path HighlightMovementPath(BUnit bUnit, BMapTile bMapTile)
+	public Path HighlightMovementPath(Path path)
 	{
-		// get path from unit to maptile with pathfinding algorithm
-		Path path = controller.GetPath(bUnit.unit.mapTile, bMapTile.mapTile);
 		for (int i = 0; i < path.Length; i++) {
 			GetBMapTile(path[i]).ChangeColorState(BMapTile.ColorState.PATH);
 		}

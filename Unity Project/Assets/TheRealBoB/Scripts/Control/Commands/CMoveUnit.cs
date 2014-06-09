@@ -7,31 +7,28 @@ public class CMoveUnit : ICommand
 	Model model;
 	Controller controller;
 	Unit unit;
-	MapTile target;
+	Path path;
 
-	public CMoveUnit (Model model, Unit unit, MapTile target, Controller controller)
+	public CMoveUnit (Model model, Unit unit, Path path, Controller controller)
 	{
 		this.model = model;
 		this.unit = unit;
-		this.target = target;
+		this.path = path;
 		this.controller = controller;
 	}
 
 
 	public void Execute()
 	{
-		Path path = new Path(new MapTile[]{unit.mapTile});
 		// check if start and destination are the same
-		if(unit.mapTile != target) {
-			// get path from pathfinder
-			path = controller.GetPath(unit.mapTile, target);
+		if(unit.mapTile != path.Last) {
 			// stop if target is to far away for unit move
 			if(path.Cost > unit.MovePoints)
 				return;
 
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
-			model.MoveUnit(unit, target);
+			model.MoveUnit(unit, path.Last);
 			// trigger OnStayEffect on each topping on the path
 			for(int i=0; i<path.Length; i++) {
 				if(path[i].topping != null)

@@ -127,7 +127,7 @@ public class BCombatMenu : MonoBehaviour {
 	public void ActionMove() 
 	{
 		backButton.gameObject.SetActive(true);
-		bUnit.DisplayMovementRange();
+		bUnit.DisplayMovementRange(bUnit.unit.mapTile, bUnit.unit.MovePoints);
 	}
 
 	public void ActionEndTurn()
@@ -142,7 +142,7 @@ public class BCombatMenu : MonoBehaviour {
 		circleAnchor.SetActive(true);
 		endTurnButton.gameObject.SetActive(true);
 		bUnit.ClearDisplayRange();
-		bUnit.DisplayMovementRange();
+		bUnit.DisplayMovementRange(bUnit.unit.mapTile, bUnit.unit.MovePoints);
 	}
 	#endregion
 
