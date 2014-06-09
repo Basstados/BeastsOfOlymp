@@ -13,6 +13,8 @@ public class OilVase : Topping
 		duration = -1; // this one will stay forever (or till destroyed)
 		// Does units must move around this topping?
 		isObstacle = true;
+		isTargetable = true; // this is a obstacle with an OnAttackEffect
+
 		// What is the name of the Prefab to be instantiate? (without ".prefab")
 		prefabName = "OilVase"; // Prefab path is: Asset/Resources/Toppings/
 	}

@@ -6,6 +6,7 @@ public class SolidObstacle : Topping
 	public SolidObstacle() : base()
 	{
 		isObstacle = true;
+		isTargetable = false;
 		prefabName = "SOLID_OBSTACLE";
 	}
 

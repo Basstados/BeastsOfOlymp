@@ -121,7 +121,7 @@ public class AIHunter : IArtificalIntelligence {
 		model.UseMoveGrid();
 		byte[,] grid = model.grid;
 		// ignore target unit on grid so a* can get a result
-		grid[attackTarget.mapTile.x, attackTarget.mapTile.y] = attackTarget.mapTile.PenaltyIgnoreUnit;
+		grid[attackTarget.mapTile.x, attackTarget.mapTile.y] = attackTarget.mapTile.PenaltyAttack;
 
 		Path path = controller.GetPath(controlledUnit.mapTile,attackTarget.mapTile,grid);
 		if(path.Empty) {

@@ -12,20 +12,24 @@ public class MapTile
 	{
 		get
 		{
-			return (unit == null) ? PenaltyIgnoreUnit : (byte) 0;
+			// return 0 if topping is blocking
+			if(topping !=null)
+				if(topping.IsObstacle) return 0;
+			// return 0 if there is a unit on this mapTile; return "penalty" otherwise
+			return (unit == null) ? penalty : (byte) 0;
 		}
 		set
 		{
 			penalty = value;
 		}
 	}
-	public byte PenaltyIgnoreUnit 
+	public byte PenaltyAttack 
 	{
 		get
 		{
-			// return 0 if topping is blocking
+			// return 0 if topping is not targetable
 			if(topping !=null)
-				if(topping.IsObstacle) return 0;
+				if(!topping.IsTargetable) return 0;
 
 			return penalty;
 		}
@@ -50,6 +54,6 @@ public class MapTile
 
 	public override string ToString ()
 	{
-		return string.Format("[MapTile: Penalty={0}, PenaltyIgnoreUnit={1}, (x,y)=({2},{3})]", Penalty, PenaltyIgnoreUnit, x, y);
+		return string.Format("[MapTile: Penalty={0}, PenaltyIgnoreUnit={1}, (x,y)=({2},{3})]", Penalty, PenaltyAttack, x, y);
 	}
 }

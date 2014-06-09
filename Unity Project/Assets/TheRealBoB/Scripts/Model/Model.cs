@@ -98,7 +98,7 @@ public class Model
 	{
 		for (int i = 0; i < mapTiles.Length; i++) {
 			for (int j = 0; j < mapTiles[i].Length; j++) {
-				grid[i,j] = mapTiles[i][j].PenaltyIgnoreUnit;
+				grid[i,j] = mapTiles[i][j].PenaltyAttack;
 			}
 		}
 	}

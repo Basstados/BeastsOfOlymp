@@ -8,6 +8,8 @@ class BreakableObstacle : Topping
     public BreakableObstacle() : base() 
     {
         isObstacle = true;
+		isTargetable = true;
+
         prefabName = "BREAKABLE_OBSTACLE";
     }
 

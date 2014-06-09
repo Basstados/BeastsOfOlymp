@@ -6,6 +6,9 @@ public abstract class Topping {
     // Is this topping blocking the field?
     protected bool isObstacle = false;
     public bool IsObstacle { get { return isObstacle; } }
+	// Can a attack performed on this topping?
+	protected bool isTargetable = true;
+	public bool IsTargetable { get {return isTargetable; } }
     // How many turn will this topping persist?
     protected int duration = -1; // duration < 0 leads to infinit stay
     // The name of the prefab that will be instantiate on the topping position
