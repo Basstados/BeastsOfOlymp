@@ -104,6 +104,9 @@ public class CAttackUnit : ICommand
 
     private void RecursivlyEffectToppings(MapTile mapTile, Attack attack)
     {
+		// When the topping is not linked, the effect will not spread and we return here
+		bool linked = (mapTile.topping.IsLinked);
+
         // stopping condition
         if (checkedMapTiles.Contains(new Vector(mapTile.x, mapTile.y)))
             return;
@@ -114,6 +117,8 @@ public class CAttackUnit : ICommand
         // apply effect to current mapTile
         mapTile.topping.OnAttackEffect(attack, model);
         checkedMapTiles.Add(new Vector(mapTile.x, mapTile.y));
+
+		if(!linked) return;
 
         // list of all relative neighbours
         Vector[] nghb = new Vector[] {new Vector(1,0), new Vector(0,-1), new Vector(-1,0), new Vector(0,1)};

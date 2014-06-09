@@ -14,7 +14,7 @@ public class OilVase : Topping
 		// Does units must move around this topping?
 		isObstacle = true;
 		isTargetable = true; // this is a obstacle with an OnAttackEffect
-
+		isLinked = false;
 		// What is the name of the Prefab to be instantiate? (without ".prefab")
 		prefabName = "OilVase"; // Prefab path is: Asset/Resources/Toppings/
 	}

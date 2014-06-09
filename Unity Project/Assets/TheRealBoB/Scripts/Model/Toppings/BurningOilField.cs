@@ -14,6 +14,10 @@ public class BurningOilField : Topping
         duration = 3;
         // Does units must move around this topping?
         isObstacle = false;
+		// Can this topping be attacked directly?
+		isTargetable = true; // this should be true for all toppings with "OnAttackEffect"
+		// Will the on attack effect spread out over neihgbour toppings?
+		isLinked = false;
         // What is the name of the Prefab to be instantiate? (without ".prefab")
         prefabName = "BURNING_OIL"; // Prefab path is: Asset/Resources/Toppings/
     }

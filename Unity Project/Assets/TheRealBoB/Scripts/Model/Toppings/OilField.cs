@@ -5,6 +5,8 @@ public class OilField : Topping
 
     public OilField() : base() {
         isObstacle = false;
+		isTargetable = true;
+		isLinked = true;
         prefabName = "OIL";
     }
 

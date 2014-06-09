@@ -9,6 +9,7 @@ class BreakableObstacle : Topping
     {
         isObstacle = true;
 		isTargetable = true;
+		isLinked = false;
 
         prefabName = "BREAKABLE_OBSTACLE";
     }
