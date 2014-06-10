@@ -11,7 +11,7 @@ public class BurningOilField : Topping
     public BurningOilField() : base()
     {
         // How many round will this topping life?
-        duration = 3;
+        //duration = 3;
         // Does units must move around this topping?
         isObstacle = false;
 		// Can this topping be attacked directly?
