@@ -29,10 +29,12 @@ public class WaterField : Topping
 	public override void OnAttackEffect(Attack attack, Model model)
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
-		if(attack.element.elementName == "Grass") {
-			this.Destroy();
-			mapTile.topping = new BurningOilField();
-			mapTile.topping.Spawn(mapTile);
+		//if(attack.element.elementName == "Grass") {
+			if (mapTile.unit != null && attack.element.elementName == "Grass"){
+				mapTile.unit.LoseHealth(5);
+			//this.Destroy();
+			/*mapTile.topping = new BurningOilField();
+			mapTile.topping.Spawn(mapTile);*/
 		}
 	}
 }
