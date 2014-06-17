@@ -8,6 +8,7 @@ public class BMainMenue : MonoBehaviour {
 	public GameObject levelSelectionPanel;
 	public GameObject tutorialPanel;
 	public GameObject tutorialBewegungsPanel;
+	public GameObject kameraPanel;
 
 
 	public void OnStartGameClick() 
@@ -27,6 +28,12 @@ public class BMainMenue : MonoBehaviour {
         gameObject.SetActive(false);
         prototypePanel.SetActive(true);
     }
+
+	public void OnKameraClick()
+	{
+		gameObject.SetActive(false);
+		kameraPanel.SetActive(true);
+	}
 
 	public void OnTutorialClick()
 	{
