@@ -17,13 +17,13 @@ public class BCameraMover : MonoBehaviour {
 			return target;
 		}
 		set {
+			// ensure the focus target is inside the camera move area
 			target = value;
 			target.x = Mathf.Clamp(target.x, minX, maxX);
 			target.y = 0f;
 			target.z = Mathf.Clamp(target.z, minZ, maxZ);
 		}
 	}
-	bool routineIsRunning = false;
 
 	void Awake() 
 	{
@@ -37,9 +37,7 @@ public class BCameraMover : MonoBehaviour {
 
 	void Update() {
 		float distance = (target - transform.position).magnitude;
-		if(distance < threshold) {
-			Vector3 translation = (target - transform.position).normalized * Time.deltaTime * minSpeed;
-		} else {
+		if(distance >= threshold) {
 			transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * movementDamping);
 		}
 	}
