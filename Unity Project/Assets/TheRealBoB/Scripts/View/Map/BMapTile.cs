@@ -54,6 +54,7 @@ public class BMapTile : MonoBehaviour
         CLICKABLE,
         ATTACKAREA
     }
+	
 
     public void ChangeColorState(BMapTile.ColorState colorState)
     {
@@ -65,14 +66,17 @@ public class BMapTile : MonoBehaviour
             case ColorState.MOVERANGE:
                 renderer.sharedMaterial = moveRangeMaterial;
                 this.Clickable = true;
+				animation.Play("GridMOVERANGE");
                 break;
             case ColorState.ATTACKRANGE:
                 renderer.sharedMaterial = attackRangeMaterial;
+				animation.Play("GridMOVERANGE");
                 this.Clickable = true;
                 break;
             case ColorState.PATH:
                 renderer.sharedMaterial = pathMaterial;
 				this.Clickable = true;
+				animation.Stop();
                 break;
             case ColorState.CLICKABLE:
                 renderer.sharedMaterial = clickableMaterial;
@@ -80,11 +84,13 @@ public class BMapTile : MonoBehaviour
                 break;
             case ColorState.ATTACKAREA:
                 renderer.sharedMaterial = attackAreaMaterial;
+				animation.Play("GridMOVERANGE");
                 break;
             case ColorState.DEFAULT:
             default:
                 renderer.sharedMaterial = defaultMaterial;
                 this.Clickable = false;
+				animation.Stop();
                 break;
         }
     }
