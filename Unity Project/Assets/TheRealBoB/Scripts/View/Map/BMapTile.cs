@@ -64,33 +64,33 @@ public class BMapTile : MonoBehaviour
         switch (colorState)
         {
             case ColorState.MOVERANGE:
-                renderer.sharedMaterial = moveRangeMaterial;
+                //renderer.sharedMaterial = moveRangeMaterial;
                 this.Clickable = true;
-				animation.Play("GridMOVERANGE");
+				animation.Play("Grid_MOVERANGE");
                 break;
             case ColorState.ATTACKRANGE:
-                renderer.sharedMaterial = attackRangeMaterial;
-				animation.Play("GridMOVERANGE");
+                //renderer.sharedMaterial = attackRangeMaterial;
+				animation.Play("Grid_ATTACKRANGE");
                 this.Clickable = true;
                 break;
             case ColorState.PATH:
-                renderer.sharedMaterial = pathMaterial;
+                //renderer.sharedMaterial = pathMaterial;
+				animation.Play("Grid_PATH");
 				this.Clickable = true;
-				animation.Stop();
                 break;
             case ColorState.CLICKABLE:
-                renderer.sharedMaterial = clickableMaterial;
+                //renderer.sharedMaterial = clickableMaterial;
                 this.Clickable = true;
                 break;
             case ColorState.ATTACKAREA:
-                renderer.sharedMaterial = attackAreaMaterial;
-				animation.Play("GridMOVERANGE");
+                //renderer.sharedMaterial = attackAreaMaterial;
+				animation.Play("Grid_ATTACKAREA");
                 break;
             case ColorState.DEFAULT:
             default:
-                renderer.sharedMaterial = defaultMaterial;
+                //renderer.sharedMaterial = defaultMaterial;
+				animation.Play("Grid_DEFAULT");
                 this.Clickable = false;
-				animation.Stop();
                 break;
         }
     }
