@@ -20,12 +20,15 @@ public class CMoveUnit : ICommand
 
 	public void Execute()
 	{
-		// check if start and destination are the same
-		if(unit.mapTile != path.Last) {
-			// stop if target is to far away for unit move
-			if(path.Cost > unit.MovePoints)
-				return;
-
+		// stop if start and destination are the same
+		if((unit.mapTile == path.Last)
+			// or if target is to far away for unit move
+			|| (path.Cost > unit.MovePoints))
+		{
+			path = new Path();
+		}
+		else
+		{
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
 			model.MoveUnit(unit, path.Last);
