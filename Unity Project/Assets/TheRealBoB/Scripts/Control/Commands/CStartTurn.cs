@@ -31,6 +31,12 @@ public class CStartTurn : ICommand
 				u.mapTile.topping.OnStayEffect(u);
 		}
 
+		// check again if this unit is dead (might have died from field effects)
+		if(!unit.Alive) {
+			controller.EndTurn();
+			return;
+		}
+
 		// activate next unit
 		model.ActivateUnit(unit);
 		EventProxyManager.FireEvent(this, new TurnStartedEvent (unit, model.combat.round, model.combat.turn));

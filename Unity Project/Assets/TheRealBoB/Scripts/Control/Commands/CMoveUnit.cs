@@ -26,12 +26,15 @@ public class CMoveUnit : ICommand
 			|| (path.Cost > unit.MovePoints))
 		{
 			path = new Path(new MapTile[]{path.Last});
+			EventProxyManager.FireEvent(this,new UnitMovedEvent(unit, path));
 		}
 		else
 		{
 			// we are now sure, that unit is allowed to move and target is in range
 			// now performce actual move
 			model.MoveUnit(unit, path.Last);
+			EventProxyManager.FireEvent(this,new UnitMovedEvent(unit, path));
+
 			// trigger OnStayEffect on each topping on the path
 			for(int i=0; i<path.Length; i++) {
 				if(path[i].topping != null)
@@ -41,9 +44,6 @@ public class CMoveUnit : ICommand
 			// clear units move resource, since only one move per turn is permitted
 			unit.MovePoints = 0;
 		}
-
-		// after movement fire event
-		EventProxyManager.FireEvent(this,new UnitMovedEvent(unit, path));
 	}
 }
 

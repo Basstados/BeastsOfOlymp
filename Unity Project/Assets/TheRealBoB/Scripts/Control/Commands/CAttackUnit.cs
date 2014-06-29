@@ -43,6 +43,10 @@ public class CAttackUnit : ICommand
 
 		// attack is succesfull
 		// apply damage to all unit in attack area
+		// don't trigger the toppings right away, otherwise breaking oil vases would ignite right away in most cases
+		List<KeyValuePair<MapTile, Topping> > affectedToppings = new List<KeyValuePair<MapTile, Topping> >();
+		// to be secure we make a list of already checked mapTiles, so the recusion will not be endless
+		List<Vector> checkedMapTiles = new List<Vector>();
 		int x = 0;
 		int y = 0;
 		List<Unit> victims = new List<Unit>();
@@ -65,8 +69,7 @@ public class CAttackUnit : ICommand
             if (model.mapTiles[x][y].topping != null)
             {
                 //recursivly check all neighbour fields if they are of the same topping type
-                checkedMapTiles.Clear(); // reset list
-                RecursivlyEffectToppings(model.mapTiles[x][y], attack);
+                RecursivlyEffectToppings(model.mapTiles[x][y], attack, ref checkedMapTiles, ref affectedToppings);
             }
 					
 
@@ -87,6 +90,17 @@ public class CAttackUnit : ICommand
 			}
 
 		}
+
+		// apply the attack effect to all hit toppings
+		foreach (KeyValuePair<MapTile, Topping> pair in affectedToppings)
+		{
+			// check that the topping still exists and wasn't destroyed by a neighbouring topping
+			if (pair.Key.topping == pair.Value)
+			{
+				pair.Value.OnAttackEffect(attack, model);
+			}
+		}
+
 		EventProxyManager.FireEvent(this, new UnitAttackedEvent(attack,source,target, victims,efficency, damage));
 		
 		for(int i=0; i<victims.Count; i++) {
@@ -94,13 +108,10 @@ public class CAttackUnit : ICommand
 		}
 
 		// when target died fire event AFTER attack was performed
-		this.model.CheckForDeadUnits();
+		this.model.combat.CheckForDeadUnits();
 	}
-
-    // to be secure we make a list of already checked mapTiles, so the recusion will not be endless
-    List<Vector> checkedMapTiles = new List<Vector>();
-
-    private void RecursivlyEffectToppings(MapTile mapTile, Attack attack)
+	
+	private void RecursivlyEffectToppings(MapTile mapTile, Attack attack, ref List<Vector> checkedMapTiles, ref List<KeyValuePair<MapTile, Topping> > affectedToppings)
     {
 		// When the topping is not linked, the effect will not spread and we return here
 		bool linked = (mapTile.topping.IsLinked);
@@ -112,8 +123,8 @@ public class CAttackUnit : ICommand
         // save which type we are looking for
         Type toppingType = mapTile.topping.GetType();
 
-        // apply effect to current mapTile
-        mapTile.topping.OnAttackEffect(attack, model);
+		// remember the map tile as triggered
+		affectedToppings.Add(new KeyValuePair<MapTile, Topping>(mapTile, mapTile.topping));
         checkedMapTiles.Add(new Vector(mapTile.x, mapTile.y));
 
 		if(!linked) return;
@@ -132,7 +143,7 @@ public class CAttackUnit : ICommand
                     if (model.mapTiles[pos.x][pos.y].topping.GetType() == toppingType)
                     {
                         // this neighbour mapTile has the same topping, so spread the effect
-                        RecursivlyEffectToppings(model.mapTiles[pos.x][pos.y], attack);
+						RecursivlyEffectToppings(model.mapTiles[pos.x][pos.y], attack, ref checkedMapTiles, ref affectedToppings);
                     }
                 }
             }

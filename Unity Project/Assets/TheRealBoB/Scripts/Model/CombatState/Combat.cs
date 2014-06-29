@@ -51,6 +51,25 @@ public class Combat
 	{
 		return (currentRound.Count);
 	}
+	
+	/// <summary>
+	/// Checks every unit's hp and calls the death event if necessary.
+	/// </summary>
+	public void CheckForDeadUnits()
+	{
+		foreach(Unit unit in activeUnits)
+		{
+			if(!unit.Alive)
+			{
+				// no need to remove the unit from activeUnits, that happens in GetNextUnit
+
+				// remove target from map
+				unit.mapTile.unit = null;
+				// fire event
+				EventProxyManager.FireEvent(this, new UnitDiedEvent(unit));
+			}
+		}
+	}
 }
 
 public class RoundSetupEvent : EventProxyArgs

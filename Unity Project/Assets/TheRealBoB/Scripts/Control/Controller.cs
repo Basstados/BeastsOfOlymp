@@ -74,6 +74,13 @@ public class Controller
 			TurnPlan plan = e.unit.ai.DoPlanning();
 			// execute turn plan
 			MoveUnit(e.unit, plan.movementTarget);
+			
+			// check again if this unit is dead (might have died from field effects)
+			if(!e.unit.Alive) {
+				EndTurn();
+				return;
+			}
+
 			AttackMapTile(e.unit, plan.attackTarget.mapTile, plan.attack);
 		}
 	}
@@ -87,6 +94,11 @@ public class Controller
 	public void MoveUnit(Unit unit, MapTile mapTile)
 	{
 		Path path = GetPath(unit.mapTile, mapTile);
+		if (path.Empty)
+		{
+			// HACK: a path may never be empty due to implementation reasons
+			path = new Path(new MapTile[]{unit.mapTile});
+		}
 		MoveUnit(unit, path);
 	}
 
