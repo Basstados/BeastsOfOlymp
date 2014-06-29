@@ -43,6 +43,8 @@ public class CMoveUnit : ICommand
 
 			// clear units move resource, since only one move per turn is permitted
 			unit.MovePoints = 0;
+
+			model.combat.CheckForDeadUnits();
 		}
 	}
 }

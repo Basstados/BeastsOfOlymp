@@ -40,7 +40,8 @@ public class Combat
 		if(currentRound.Count == 0) return null;
 		Unit unit = currentRound.Dequeue();
 
-		if(!unit.Alive) {
+		if(!unit.Alive && activeUnits.Contains(unit)) 
+		{
 			activeUnits.Remove(unit);
 		}
 
@@ -57,17 +58,24 @@ public class Combat
 	/// </summary>
 	public void CheckForDeadUnits()
 	{
+		List<Unit> deadUnits = new List<Unit>();
+
 		foreach(Unit unit in activeUnits)
 		{
 			if(!unit.Alive)
 			{
-				// no need to remove the unit from activeUnits, that happens in GetNextUnit
-
+				// add to deceased units
+				deadUnits.Add(unit);
 				// remove target from map
 				unit.mapTile.unit = null;
 				// fire event
 				EventProxyManager.FireEvent(this, new UnitDiedEvent(unit));
 			}
+		}
+
+		foreach(Unit deceased in deadUnits)
+		{
+			activeUnits.Remove(deceased);
 		}
 	}
 }

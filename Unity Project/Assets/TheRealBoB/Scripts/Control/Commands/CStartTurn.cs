@@ -31,6 +31,8 @@ public class CStartTurn : ICommand
 				u.mapTile.topping.OnStayEffect(u);
 		}
 
+		model.combat.CheckForDeadUnits();
+
 		// check again if this unit is dead (might have died from field effects)
 		if(!unit.Alive) {
 			controller.EndTurn();
