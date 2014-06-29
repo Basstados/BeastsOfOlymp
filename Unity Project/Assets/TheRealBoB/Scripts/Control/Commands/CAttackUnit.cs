@@ -94,14 +94,7 @@ public class CAttackUnit : ICommand
 		}
 
 		// when target died fire event AFTER attack was performed
-		foreach(Unit u in victims) {
-			if(u.HealthPoints <= 0) {
-				// remove target from map
-				u.mapTile.unit = null;
-				// fire event
-				EventProxyManager.FireEvent(this, new UnitDiedEvent(u));
-			}
-		}
+		this.model.CheckForDeadUnits();
 	}
 
     // to be secure we make a list of already checked mapTiles, so the recusion will not be endless

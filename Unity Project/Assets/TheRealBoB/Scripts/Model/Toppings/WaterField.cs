@@ -34,17 +34,6 @@ public class WaterField : Topping
 		{
 			mapTile.unit.LoseHealth(5);
 
-			// FIXME: this code should better be located inside the LoseHealth-method, 
-			// but in order to avoid unknown consequences I kept using the code pattern found in CAttackUnit:96
-			// when target died fire event AFTER burning was performed
-			if(mapTile.unit.HealthPoints <= 0) {
-				Unit victim = mapTile.unit;
-				// remove target from map
-				mapTile.unit = null;
-				// fire event
-				EventProxyManager.FireEvent(this, new UnitDiedEvent(victim));
-			}
-
 			//this.Destroy();
 			/*mapTile.topping = new BurningOilField();
 			mapTile.topping.Spawn(mapTile);*/

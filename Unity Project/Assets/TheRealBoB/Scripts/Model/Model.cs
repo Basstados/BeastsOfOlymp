@@ -152,6 +152,26 @@ public class Model
 	{
 		return (pt.x >= 0 && pt.x < mapTiles.Length && pt.y >= 0 && pt.y < mapTiles[0].Length);
 	}
+
+	/// <summary>
+	/// Checks every unit's hp and calls the death event if necessary.
+	/// </summary>
+	public void CheckForDeadUnits()
+	{
+		foreach(Unit unit in units)
+		{
+			// if the unit is dead but is still registered on a tile
+			if(!unit.Alive 
+			   && unit.mapTile != null
+			   && unit.mapTile.unit != null)
+			{
+				// remove target from map
+				unit.mapTile.unit = null;
+				// fire event
+				EventProxyManager.FireEvent(this, new UnitDiedEvent(unit));
+			}
+		}
+	}
 }
 
 public class MapInitializedEvent : EventProxyArgs
