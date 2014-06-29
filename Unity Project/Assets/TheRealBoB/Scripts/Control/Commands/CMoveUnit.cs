@@ -25,7 +25,7 @@ public class CMoveUnit : ICommand
 			// or if target is to far away for unit move
 			|| (path.Cost > unit.MovePoints))
 		{
-			path = new Path();
+			path = new Path(new MapTile[]{path.Last});
 		}
 		else
 		{
