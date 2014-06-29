@@ -30,8 +30,20 @@ public class WaterField : Topping
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
 		//if(attack.element.elementName == "Grass") {
-			if (mapTile.unit != null && attack.element.elementName == "Grass"){
-				mapTile.unit.LoseHealth(5);
+		if (mapTile.unit != null && attack.element.elementName == "Grass")
+		{
+			mapTile.unit.LoseHealth(5);
+
+			// FIXME: this code should better be located inside the LoseHealth-method, 
+			// but in order to avoid unknown consequences I kept using the code pattern found in CAttackUnit:96
+			// when target died fire event AFTER burning was performed
+			if(mapTile.unit.HealthPoints <= 0) {
+				// remove target from map
+				mapTile.unit.mapTile.unit = null;
+				// fire event
+				EventProxyManager.FireEvent(this, new UnitDiedEvent(mapTile.unit));
+			}
+
 			//this.Destroy();
 			/*mapTile.topping = new BurningOilField();
 			mapTile.topping.Spawn(mapTile);*/

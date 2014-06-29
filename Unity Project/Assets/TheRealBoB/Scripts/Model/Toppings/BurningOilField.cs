@@ -32,7 +32,17 @@ public class BurningOilField : Topping
     {
         // damage the unit which stays on this mapTile
         unit.LoseHealth(damagePerTurn);
-    }
+
+		// FIXME: this code should better be located inside the LoseHealth-method, 
+		// but in order to avoid unknown consequences I kept using the code pattern found in CAttackUnit:96
+		// when target died fire event AFTER burning was performed
+		if(unit.HealthPoints <= 0) {
+			// remove target from map
+			unit.mapTile.unit = null;
+			// fire event
+			EventProxyManager.FireEvent(this, new UnitDiedEvent(unit));
+		}
+	}
 
     /// <summary>
     /// The effect that will happen, if this field will be hit by an attack.
