@@ -12,7 +12,10 @@ public abstract class Topping {
 	// Does the OnAttackEffect spread over neighbour toppings?
 	protected bool isLinked = true;
 	public bool IsLinked { get {return isLinked; } }
-    // How many turn will this topping persist?
+	// Does the OnAttackEffect spread over neighbour toppings if the element of the attack is Fire?
+	protected bool isLinkedForFire = true;
+	public bool IsLinkedForFire { get {return isLinkedForFire; } }
+	// How many turn will this topping persist?
     protected int duration = -1; // duration < 0 leads to infinit stay
     // The name of the prefab that will be instantiate on the topping position
     public string prefabName;

@@ -14,7 +14,8 @@ public class OilVase : Topping
 		// Does units must move around this topping?
 		isObstacle = true;
 		isTargetable = true; // this is a obstacle with an OnAttackEffect
-		isLinked = true;
+		isLinked = false;
+		isLinkedForFire = true;
 		// What is the name of the Prefab to be instantiate? (without ".prefab")
 		prefabName = "OilVase"; // Prefab path is: Asset/Resources/Toppings/
 	}
@@ -63,7 +64,14 @@ public class OilVase : Topping
 				// if the seleced mapTile has no topping jet, it will now get an OilField
 				if(neighbourMaptile.topping == null) {
 					// add the new topping
-					neighbourMaptile.topping = new OilField();
+					if(attack.element.elementName == "Feuer") 
+					{
+						neighbourMaptile.topping = new BurningOilField();
+					}
+					else
+					{
+						neighbourMaptile.topping = new OilField();
+					}
 					// don't forget to call respawn after placeing a new topping
 					neighbourMaptile.topping.Spawn(neighbourMaptile);
 				}

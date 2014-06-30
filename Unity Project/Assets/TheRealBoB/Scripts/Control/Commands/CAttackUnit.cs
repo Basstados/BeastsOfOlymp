@@ -116,6 +116,12 @@ public class CAttackUnit : ICommand
 		// When the topping is not linked, the effect will not spread and we return here
 		bool linked = (mapTile.topping.IsLinked);
 
+		// fire effects spread differently
+		if (attack.element.elementName == "Feuer")
+		{
+			linked = (mapTile.topping.IsLinkedForFire);
+		}
+
         // stopping condition
         if (checkedMapTiles.Contains(new Vector(mapTile.x, mapTile.y)))
             return;
