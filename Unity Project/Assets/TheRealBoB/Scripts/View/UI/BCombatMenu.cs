@@ -9,9 +9,11 @@ public class BCombatMenu : MonoBehaviour {
 	public float angleOffset = 0f;
 	public int circleSlots = 5;
 	public GameObject circleAnchor;
+	public GameObject locked;
 	
 	public GameObject attackButtonPrefab;
 	public UIButton backButton;
+	//public UIButton lockedAttack;
 	public UIButton endTurnButton;
 
 	#region notification variables
@@ -54,6 +56,8 @@ public class BCombatMenu : MonoBehaviour {
 			if(bUnit.unit.CanAttack) {
 				circleAnchor.SetActive(true);
 			}
+			//lockedAttack.gameObject.SetActive(true);
+			locked.gameObject.SetActiveRecursively(true);
 			endTurnButton.gameObject.SetActive(true);
 			backButton.gameObject.SetActive(false);
 
@@ -71,7 +75,11 @@ public class BCombatMenu : MonoBehaviour {
 				handle.GetComponent<BAttackButton>().Init(atk,this);
 				circleButtons.Add(handle);
 			}
+
+			//circleButtons.Add(lockedAttack.gameObject);
+			locked.gameObject.SetActiveRecursively(true);
 			circleButtons.Add(endTurnButton.gameObject);
+
 
 			// arrange buttons
 			RepositionButtons(circleButtons);
@@ -103,6 +111,8 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		circleAnchor.SetActive(false);
 		backButton.gameObject.SetActive(false);
+		locked.gameObject.SetActiveRecursively(false);
+		//lockedAttack.gameObject.SetActive(false);
 		endTurnButton.gameObject.SetActive(false);
 		followUnit = false;
 	}
@@ -111,6 +121,8 @@ public class BCombatMenu : MonoBehaviour {
 	public void ChooseAttack()
 	{
 		backButton.gameObject.SetActive(true);
+		locked.gameObject.SetActiveRecursively(false);
+		//lockedAttack.gameObject.SetActive(false);
 		endTurnButton.gameObject.SetActive(false);
 		circleAnchor.SetActive(true);
 	}
@@ -119,6 +131,8 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		circleAnchor.SetActive(false);
 		backButton.gameObject.SetActive(true);
+		//lockedAttack.gameObject.SetActive(false);
+		locked.gameObject.SetActiveRecursively(false);
 		endTurnButton.gameObject.SetActive(false);
 		bUnit.ClearDisplayRange();
 		bUnit.DisplayAttackRange(attack);
@@ -140,6 +154,8 @@ public class BCombatMenu : MonoBehaviour {
 	{
 		backButton.gameObject.SetActive(false);
 		circleAnchor.SetActive(true);
+		//lockedAttack.gameObject.SetActive(true);
+		locked.gameObject.SetActiveRecursively(true);
 		endTurnButton.gameObject.SetActive(true);
 		bUnit.ClearDisplayRange();
 		bUnit.DisplayMovementRange(bUnit.unit.mapTile, bUnit.unit.MovePoints);
