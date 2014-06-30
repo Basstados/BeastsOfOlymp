@@ -7,6 +7,7 @@ public class OilField : Topping
         isObstacle = false;
 		isTargetable = true;
 		isLinked = true;
+		isLinkedForFire = true;
         prefabName = "OIL";
     }
 
