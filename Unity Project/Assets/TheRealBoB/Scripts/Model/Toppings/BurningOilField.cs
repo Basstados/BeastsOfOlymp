@@ -2,7 +2,7 @@ using System;
 
 public class BurningOilField : Topping
 {
-    int damagePerTurn = 2;
+    int damagePerTurn = 1;
 
     /// <summary>
     /// Constructor.

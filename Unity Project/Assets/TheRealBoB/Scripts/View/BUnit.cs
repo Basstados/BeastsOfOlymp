@@ -29,6 +29,11 @@ public class BUnit : MonoBehaviour {
 	BMapTile target;
 	public Path path;
 
+	/*public void Update (){
+		bCombatMenu.backButton.gameObject.OpenForBUnit(this);
+		//bCombatMenu.backButton.gameObject.SetActive(true);
+	}*/
+
 	public void Init(BView context, BCombatMenu bCombatMenu) {
 		this.context = context;
 		this.bCombatMenu = bCombatMenu;
@@ -52,6 +57,7 @@ public class BUnit : MonoBehaviour {
 		ClearDisplayRange();
 		if(unit.team == Unit.Team.PLAYER)
 			DisplayMovementRange(this.unit.mapTile, unit.MovePoints);
+
 	}
 
 	public void PopupCombatMenu() 
@@ -119,11 +125,13 @@ public class BUnit : MonoBehaviour {
 	{
 		if (attack == null) {
 			selectedAttack = defaultAttack;
+			bCombatMenu.backButton.gameObject.SetActive(false);
 		} else {
 			selectedAttack = attack;
+			bCombatMenu.backButton.gameObject.SetActive(true);
 		}
 		action = Action.ATTACK;
-		
+
 		context.DisplayRange(this.unit.mapTile, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE, true);
 	}
 
