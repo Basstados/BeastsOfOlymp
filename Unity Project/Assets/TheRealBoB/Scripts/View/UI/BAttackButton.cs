@@ -18,7 +18,8 @@ public class BAttackButton : MonoBehaviour {
 		this.attack = attack;
 		nameLabel.text = attack.attackName;
 		damageLabel.text = attack.damage.ToString();
-		typeSprite.spriteName = attack.element.elementName;
+		//typeSprite.spriteName = attack.element.elementName;
+		typeSprite.spriteName = attack.name;
 		typeBackground.normalSprite = attack.element.elementName + backgroundPostfix;
 	}
 
