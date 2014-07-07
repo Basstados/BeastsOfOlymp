@@ -30,7 +30,7 @@ public class WaterField : Topping
 	{
 		// since elements are scriptable object, we need to check them via name - ugly :( 
 		//if(attack.element.elementName == "Grass") {
-		if (mapTile.unit != null && attack.element.elementName == "Grass")
+		if (mapTile.unit != null && attack.element.elementName == "lightning")
 		{
 			mapTile.unit.LoseHealth(5);
 
