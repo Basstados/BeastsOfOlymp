@@ -11,6 +11,9 @@ public class BMainMenue : MonoBehaviour {
 	public GameObject tutorialBewegungsScreen1;
 	public GameObject tutorialBewegungsScreen2;
 	public GameObject tutorialBewegungsScreen3;
+	public GameObject tutorialAngriffsPanel;
+	public GameObject tutorialAngriffsScreen1;
+	public GameObject tutorialAngriffsScreen2;
 	public GameObject kameraPanel;
 
 
@@ -72,6 +75,24 @@ public class BMainMenue : MonoBehaviour {
 	{
 		tutorialBewegungsScreen3.gameObject.SetActive(false);
 		tutorialBewegungsScreen2.SetActive(true);
+	}
+
+	public void OnTutorialAngriffClick()
+	{
+		tutorialPanel.gameObject.SetActive(false);
+		tutorialAngriffsPanel.SetActive(true);
+	}
+	
+	public void OnAngriffsScreen1VorClick()
+	{
+		tutorialAngriffsScreen1.gameObject.SetActive(false);
+		tutorialAngriffsScreen2.SetActive(true);
+	}
+	
+	public void OnAngriffsScreen2BackClick()
+	{
+		tutorialAngriffsScreen2.gameObject.SetActive(false);
+		tutorialAngriffsScreen1.SetActive(true);
 	}
 
 	public void OnExitGameClick() 
