@@ -8,7 +8,7 @@ public class SolidObstacle : Topping
 		isObstacle = true;
 		isTargetable = false;
 		isLinked = false;
-		prefabName = "SOLID_OBSTACLE";
+		prefabName = "Firewall";
 	}
 
 	/// <summary>

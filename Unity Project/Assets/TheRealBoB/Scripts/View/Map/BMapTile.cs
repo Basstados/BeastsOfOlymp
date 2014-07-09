@@ -42,7 +42,8 @@ public class BMapTile : MonoBehaviour
         BurningOilField,
 		OilVase,
 		WaterField,
-		WaterVase
+		WaterVase,
+		Firewall
     }
 
     public enum ColorState
