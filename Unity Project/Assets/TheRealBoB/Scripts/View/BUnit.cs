@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(BUnitAnimator))]
 public class BUnit : MonoBehaviour {
-
+	
 	public enum Action{
 		MOVE,
 		CONFIRMMOVE,
@@ -12,44 +12,44 @@ public class BUnit : MonoBehaviour {
 		CONFIRMATTACK,
 		IDLE
 	}
-
+	
 	public BUnitUI unitUI;
-
+	
 	BView context;
 	BUnitAnimator bUnitAnimator;
 	Action action;
 	public Action CurrentAction {get{return action;}}
-
+	
 	public Unit unit;
 	public BCombatMenu bCombatMenu;
-
+	
 	Attack defaultAttack;
 	Attack selectedAttack;
-
+	
 	BMapTile target;
 	public Path path;
-
+	
 	/*public void Update (){
 		bCombatMenu.backButton.gameObject.OpenForBUnit(this);
 		//bCombatMenu.backButton.gameObject.SetActive(true);
 	}*/
-
+	
 	public void Init(BView context, BCombatMenu bCombatMenu) {
 		this.context = context;
 		this.bCombatMenu = bCombatMenu;
 		this.bUnitAnimator = GetComponent<BUnitAnimator>();
-
+		
 		defaultAttack = unit.AttacksArray[unit.defaultAttackIndex];
-
+		
 		unitUI.Init(this);
 		bUnitAnimator.Init(unit, this);
 	}
-
+	
 	public void Init(BView context, Unit unit, BCombatMenu bCombatMenu) {
 		this.unit = unit;
 		Init(context, bCombatMenu);
 	}
-
+	
 	public void Activate()
 	{
 		target = context.GetBMapTile(this.unit.mapTile);
@@ -57,20 +57,20 @@ public class BUnit : MonoBehaviour {
 		ClearDisplayRange();
 		if(unit.team == Unit.Team.PLAYER)
 			DisplayMovementRange(this.unit.mapTile, unit.MovePoints);
-
+		
 	}
-
+	
 	public void PopupCombatMenu() 
 	{
 		bCombatMenu.OpenForBUnit(this);
 	}
-
+	
 	public void DisplayMovementRange(MapTile mapTile, int range)
 	{
 		action = Action.MOVE;
 		context.DisplayRange(mapTile, range, DisplayRangeMode.ALL_CLICKABLE, false);
 	}
-
+	
 	public void SelectMovementTarget(Path path)
 	{
 		// save selected target
@@ -85,7 +85,7 @@ public class BUnit : MonoBehaviour {
 		
 		action = Action.CONFIRMMOVE;
 	}
-
+	
 	public void SelectAttackTarget(BMapTile bMapTile)
 	{
 		// save selected target
@@ -97,6 +97,8 @@ public class BUnit : MonoBehaviour {
 		context.SetFieldMarker(bMapTile);
 		
 		action = Action.CONFIRMATTACK;
+		
+		bCombatMenu.HideAttackinfo();
 	}
 	
 	private Vector[] RotateArea(Vector[] area)
@@ -120,7 +122,7 @@ public class BUnit : MonoBehaviour {
 	}
 	
 	
-
+	
 	public void DisplayAttackRange(Attack attack)
 	{
 		if (attack == null) {
@@ -131,17 +133,17 @@ public class BUnit : MonoBehaviour {
 			bCombatMenu.backButton.gameObject.SetActive(true);
 		}
 		action = Action.ATTACK;
-
+		
 		context.DisplayRange(this.unit.mapTile, selectedAttack.range, DisplayRangeMode.ALL_CLICKABLE, true);
 	}
-
+	
 	public void ClearDisplayRange ()
 	{
 		action = Action.IDLE;
 		// reset map marker
 		context.CleanMap();
 	}
-
+	
 	public void SetMoveTarget(Path path)
 	{
 		Debug.Log("SetMoveTarget action="+action);
@@ -160,15 +162,19 @@ public class BUnit : MonoBehaviour {
 			break;
 		}
 	}
-
+	
 	public void SetAttackTarget(BMapTile bMapTile)
 	{
 		Debug.Log("SetAttackTarget action="+action);
-		switch(action) {
+		switch(action) 
+		{
 		case Action.ATTACK:
+		{
 			SelectAttackTarget(bMapTile);
 			break;
+		}
 		case Action.CONFIRMATTACK:
+		{
 			if (bMapTile == target) {
 				context.controller.AttackMapTile(this.unit, bMapTile.mapTile, selectedAttack);
 				action = Action.IDLE;
@@ -177,30 +183,31 @@ public class BUnit : MonoBehaviour {
 			}
 			break;
 		}
+		}
 	}
-
+	
 	public void CancleTargetSelection() 
 	{
 		Activate();
 	}
-
+	
 	public void EndTurn()
 	{
 		context.EndTurn();
 	}
-
+	
 	public void MoveAlongPath(BMapTile[] path)
 	{
 		bCombatMenu.ActionCompleted();
 		bCombatMenu.Hide();
 		StartCoroutine(bUnitAnimator.MoveRoutine(path, bCombatMenu));
 	}
-
+	
 	public void PlayAttack(UnitAttackedEvent e, BMapTile target, BUnit[] victims)
 	{
 		StartCoroutine(bUnitAnimator.AttackRoutine(e, target, victims, bCombatMenu));
 	}
-
+	
 	/// <summary>
 	/// Plaies the hit animation.
 	/// </summary>
@@ -215,11 +222,11 @@ public class BUnit : MonoBehaviour {
 			EventProxyManager.FireEvent(this, new EventDoneEvent());
 		}
 	}
-
+	
 	public void Died()
 	{
 		StartCoroutine(bUnitAnimator.DeathRoutine(unitUI));
 	}
-
-
+	
+	
 }
