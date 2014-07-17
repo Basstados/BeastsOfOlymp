@@ -242,7 +242,8 @@ public class BView : MonoBehaviour
 		} else {
 			// while beeing in move-mode; close menu on mapTile click
 			if(activeBUnit.CurrentAction != BUnit.Action.ATTACK)
-				bCombatMenu.Hide();
+				Debug.Log("dont hide back button");
+				//bCombatMenu.Hide();
 		}
 
 		EventProxyManager.FireEvent(this, new EventDoneEvent());
@@ -389,6 +390,8 @@ public class BView : MonoBehaviour
 	{
 		int x = 0;
 		int y = 0;
+
+		//bCombatMenu.backButton.gameObject.SetActive(true);
 
 		foreach(Vector pt in area) {
 			x = bMaptile.mapTile.x + pt.x;
