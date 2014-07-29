@@ -1,8 +1,11 @@
+using UnityEngine;
 using System;
+using System.Collections;
+
 
 public class BurningOilField : Topping
 {
-    int damagePerTurn = 1;
+    public int damagePerTurn = 1;
 
     /// <summary>
     /// Constructor.
@@ -30,9 +33,18 @@ public class BurningOilField : Topping
     /// <param name="unit">The unit which will affected by whatever will happen.</param>
     public override void OnStayEffect(Unit unit)
     {
+
         // damage the unit which stays on this mapTile
         unit.LoseHealth(damagePerTurn);
+		//BUnitUI.ShowDamage (damagePerTurn);
+		/*BDamageNumber damageNumber;
+		damageNumber = GameObject.GetComponent("BDamageNumber") as BDamageNumber;
+		damageNumber.Display(damagePerTurn.ToString());
+*/
+
 	}
+
+
 
     /// <summary>
     /// The effect that will happen, if this field will be hit by an attack.
