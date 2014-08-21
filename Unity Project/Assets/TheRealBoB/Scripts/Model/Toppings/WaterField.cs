@@ -32,7 +32,7 @@ public class WaterField : Topping
 		//if(attack.element.elementName == "Grass") {
 		if (mapTile.unit != null && attack.element.elementName == "lightning")
 		{
-			mapTile.unit.LoseHealth(5);
+			mapTile.unit.LoseHealth(4);
 
 			//this.Destroy();
 			/*mapTile.topping = new BurningOilField();
