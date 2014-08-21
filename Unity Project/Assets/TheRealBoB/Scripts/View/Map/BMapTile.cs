@@ -38,14 +38,14 @@ public class BMapTile : MonoBehaviour
         NONE,
         BreakableObstacle,
         SolidObstacle,
-		SolidWallCorner,
-		SolidWallMiddle,
-		SolidWallEnd,
         OilField,
         BurningOilField,
 		OilVase,
 		WaterField,
-		WaterVase
+		WaterVase,
+		SolidWallCorner,
+		SolidWallMiddle,
+		SolidWallEnd
     }
 
     public enum ColorState
