@@ -45,7 +45,8 @@ public class BMapTile : MonoBehaviour
 		WaterVase,
 		SolidWallCorner,
 		SolidWallMiddle,
-		SolidWallEnd
+		SolidWallEnd,
+		WaterFieldS4
     }
 
     public enum ColorState
