@@ -62,6 +62,10 @@ public class BUnit : MonoBehaviour {
 	
 	public void PopupCombatMenu() 
 	{
+		// reset movement display
+		Activate();
+			
+
 		bCombatMenu.OpenForBUnit(this);
 	}
 	
