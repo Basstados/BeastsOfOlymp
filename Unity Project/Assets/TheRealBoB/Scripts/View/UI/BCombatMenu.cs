@@ -15,6 +15,7 @@ public class BCombatMenu : MonoBehaviour {
 	public UIButton backButton;
 	//public UIButton lockedAttack;
 	public UIButton endTurnButton;
+	public UIButton cancelButton;
 
 	public UISprite ZeusGewitterzorn;
 	public UISprite Blitzbolzen;
@@ -60,6 +61,7 @@ public class BCombatMenu : MonoBehaviour {
 			
 			if(bUnit.unit.CanAttack) {
 				circleAnchor.SetActive(true);
+				cancelButton.gameObject.SetActive(true);
 			}
 			//lockedAttack.gameObject.SetActive(true);
 			locked.gameObject.SetActiveRecursively(true);
@@ -114,8 +116,18 @@ public class BCombatMenu : MonoBehaviour {
 	
 	public void Hide() 
 	{
+		StartCoroutine(HideRoutine());
+	}
+
+	IEnumerator HideRoutine() {
+		// Ugly hack! 
+		// Hide UI at the end of the frame, incase it was opend again 
+		// by a tap on the units maptile in the same frame.
+		yield return new WaitForEndOfFrame();
+
 		circleAnchor.SetActive(false);
 		backButton.gameObject.SetActive(false);
+		cancelButton.gameObject.SetActive(false);
 		locked.gameObject.SetActiveRecursively(false);
 		//lockedAttack.gameObject.SetActive(false);
 		endTurnButton.gameObject.SetActive(false);
