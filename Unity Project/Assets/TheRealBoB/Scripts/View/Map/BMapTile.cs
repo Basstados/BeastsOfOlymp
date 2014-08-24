@@ -80,7 +80,7 @@ public class BMapTile : MonoBehaviour
             case ColorState.PATH:
                 //renderer.sharedMaterial = pathMaterial;
 				animation.Play("Grid_PATH");
-				this.Clickable = true;
+				this.Clickable = false;
                 break;
             case ColorState.CLICKABLE:
                 //renderer.sharedMaterial = clickableMaterial;

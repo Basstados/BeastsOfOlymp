@@ -219,6 +219,11 @@ public class BView : MonoBehaviour
 		// handle taps while moveing
 		if(activeBUnit.CurrentAction == BUnit.Action.MOVE 
 			|| activeBUnit.CurrentAction == BUnit.Action.CONFIRMMOVE) {
+			if(e.bMapTile.colorState == BMapTile.ColorState.PATH) {
+				EventProxyManager.FireEvent(this, new EventDoneEvent());
+				return;
+			}
+				
 			if(e.bMapTile.Clickable) {
 				// ignore the active unit on the grid, since it is the one who will move
 				byte[,] grid = controller.model.grid;
