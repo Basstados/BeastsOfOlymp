@@ -220,6 +220,8 @@ public class BView : MonoBehaviour
 		if(activeBUnit.CurrentAction == BUnit.Action.MOVE 
 			|| activeBUnit.CurrentAction == BUnit.Action.CONFIRMMOVE) {
 			if(e.bMapTile.colorState == BMapTile.ColorState.PATH) {
+				if(e.bMapTile == activeBUnit.Target)
+					activeBUnit.SetMoveTarget(new Path(new MapTile[]{e.bMapTile.mapTile}));
 				EventProxyManager.FireEvent(this, new EventDoneEvent());
 				return;
 			}

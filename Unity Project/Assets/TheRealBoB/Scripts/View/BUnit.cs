@@ -25,7 +25,8 @@ public class BUnit : MonoBehaviour {
 	
 	Attack defaultAttack;
 	Attack selectedAttack;
-	
+
+	public BMapTile Target {get {return target;}}
 	BMapTile target;
 	public Path path;
 	
