@@ -138,6 +138,7 @@ public class BCombatMenu : MonoBehaviour {
 	public void ChooseAttack()
 	{
 		backButton.gameObject.SetActive(true);
+		cancelButton.gameObject.SetActive(false);
 		locked.gameObject.SetActiveRecursively(false);
 		//lockedAttack.gameObject.SetActive(false);
 		endTurnButton.gameObject.SetActive(false);
@@ -147,6 +148,7 @@ public class BCombatMenu : MonoBehaviour {
 	public void ActionAttack(Attack attack) 
 	{
 		circleAnchor.SetActive(false);
+		cancelButton.gameObject.SetActive(false);
 		backButton.gameObject.SetActive(true);
 		//lockedAttack.gameObject.SetActive(false);
 		locked.gameObject.SetActiveRecursively(false);
